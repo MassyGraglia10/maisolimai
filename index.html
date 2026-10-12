@@ -37,7 +37,6 @@
             position: relative;
         }
 
-        /* Selettore Lingue in alto a destra */
         .lang-selector {
             position: absolute;
             top: 15px;
@@ -479,7 +478,7 @@
                     <select id="settore" required>
                         <option value="Curva Sud Agostino Di Bartolomei">Curva Sud "Agostino Di Bartolomei"</option>
                         <option value="Tribuna Francesco Totti">Tribuna "Francesco Totti"</option>
-                        <option value="Tribuna Falcão">Tribuna "Paulo Roberto Falcão"</option>
+                        <option value="Tribuna Paulo Roberto Falcão">Tribuna "Paulo Roberto Falcão"</option>
                         <option value="Tribuna Franco Tancredi">Tribuna "Franco Tancredi"</option>
                     </select>
                 </div>
@@ -515,6 +514,8 @@
     </footer>
 
     <script>
+        let currentLang = 'it';
+
         // Traduzioni multilingua
         const translations = {
             it: {
@@ -535,6 +536,16 @@
                 lblFoto: "Carica le tue foto (puoi selezionarne più di una)",
                 btnSubmit: "Invia la tua storia e ottieni il Posto",
                 footerSub: "Iniziativa creata in occasione del 50° Compleanno di Massimo Graglia",
+                // Traduzioni per il Pass / Popup
+                passTitle: "Pass Ufficiale",
+                postoLabel: "POSTO",
+                founderLabel: "FONDATORE",
+                fanLabel: "TIFOSO",
+                storyHeader: "La Scintilla e la Storia:",
+                difficultHeader: "Nei momenti difficili:",
+                galleryHeader: "Galleria Foto:",
+                btnEdit: "Modifica",
+                btnDelete: "Elimina",
                 manifestoText: `
                     <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                     <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
@@ -560,6 +571,16 @@
                 lblFoto: "Upload your photos (you can select multiple)",
                 btnSubmit: "Submit your story and get your Seat",
                 footerSub: "Initiative created for Massimo Graglia's 50th Birthday",
+                // Pass / Popup Translations
+                passTitle: "Official Pass",
+                postoLabel: "SEAT",
+                founderLabel: "FOUNDER",
+                fanLabel: "SUPPORTER",
+                storyHeader: "The Spark and the Story:",
+                difficultHeader: "In difficult moments:",
+                galleryHeader: "Photo Gallery:",
+                btnEdit: "Edit",
+                btnDelete: "Delete",
                 manifestoText: `
                     <p>It all started on an evening in 1984. I was a child in Piedmont watching the European Cup final: Roma-Liverpool. It wasn't a victory that enchanted me, but the drama, the passion in the stands, the tragic and visceral beauty of those colors. From there, inspired by Franco Tancredi's saves, I became a goalkeeper and a Romanista.</p>
                     <p>Supporting Roma from here, amidst the fog of Piedmont and daily battles, has never been an easy choice. But in 49 years of life, in happy days and especially in the darkest ones, this team has been an unwavering anchor. A consolation.</p>
@@ -585,6 +606,16 @@
                 lblFoto: "Sube tus fotos (puedes seleccionar varias)",
                 btnSubmit: "Envía tu historia y obtén tu Asiento",
                 footerSub: "Iniciativa creada en ocasión del 50 cumpleaños de Massimo Graglia",
+                // Pass / Popup Translations
+                passTitle: "Pase Oficial",
+                postoLabel: "ASIENTO",
+                founderLabel: "FUNDADOR",
+                fanLabel: "AFICIONADO",
+                storyHeader: "La Chispa y la Historia:",
+                difficultHeader: "En los momentos difíciles:",
+                galleryHeader: "Galería de Fotos:",
+                btnEdit: "Editar",
+                btnDelete: "Eliminar",
                 manifestoText: `
                     <p>Todo comenzó una noche de 1984. Era un niño en el Piamonte y veía la final de la Copa de Europa: Roma-Liverpool. No fue una victoria lo que me cautivó, sino el drama, la pasión en las gradas, la belleza trágica y visceral de esos colores. A partir de ahí, inspirado por Franco Tancredi, me convertí en portero y romanista.</p>
                     <p>Apoyar a la Roma desde aquí, entre las nieblas del Piamonte, nunca ha sido fácil. Pero en 49 años de vida, en los días felices y sobre todo en los más oscuros, este equipo ha sido un ancla inquebrantable. Un consuelo.</p>
@@ -610,6 +641,16 @@
                 lblFoto: "Téléchargez vos photos (vous pouvez en sélectionner plusieurs)",
                 btnSubmit: "Envoyez votre histoire et obtenez votre Place",
                 footerSub: "Initiative créée à l'occasion du 50e anniversaire de Massimo Graglia",
+                // Pass / Popup Translations
+                passTitle: "Pass Officiel",
+                postoLabel: "SIÈGE",
+                founderLabel: "FONDATEUR",
+                fanLabel: "SUPPORTER",
+                storyHeader: "L'Étincelle et l'Histoire :",
+                difficultHeader: "Dans les moments difficiles :",
+                galleryHeader: "Galerie Photos :",
+                btnEdit: "Modifier",
+                btnDelete: "Supprimer",
                 manifestoText: `
                     <p>Tout a commencé un soir de 1984. J'étais un enfant dans le Piémont et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique de ces couleurs. De là, inspiré par Franco Tancredi, je suis devenu gardien et romanista.</p>
                     <p>Supporter la Roma d'ici, parmi les brumes du Piémont, n'a jamais été un choix facile. Mais en 49 ans de vie, dans les jours heureux et surtout les plus sombres, cette équipe a été un ancrage inébranlable. Une consolation.</p>
@@ -620,6 +661,7 @@
         };
 
         function changeLanguage(lang) {
+            currentLang = lang;
             const t = translations[lang];
             document.getElementById('t-subtitle').innerText = t.subtitle;
             document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span>`;
@@ -639,6 +681,8 @@
             document.getElementById('t-lbl-foto').innerText = t.lblFoto;
             document.getElementById('t-btn-submit').innerText = t.btnSubmit;
             document.getElementById('t-footer-sub').innerText = t.footerSub;
+
+            renderStadium();
         }
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
@@ -646,9 +690,9 @@
                 id: 1,
                 nome: "Massimo Graglia",
                 citta: "Torino (Italia)",
-                settore: "Curva Sud Agostino Di Bartolomei",
-                storia: "Tifo dal 1984, ispirato da Franco Tancredi durante la finale Roma-Liverpool. In viaggio per lo Scudetto il 17 giugno 2001 con il treno della notte.",
-                difficili: "In 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, la Roma è stata un appiglio incrollabile. Una consolazione.",
+                settore: "Tribuna Francesco Totti",
+                storia: "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
+                difficili: "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.",
                 fotos: []
             }
         ];
@@ -669,6 +713,7 @@
 
         function renderStadium(filter = '') {
             stadiumSectors.innerHTML = '';
+            const t = translations[currentLang];
 
             const filteredMembers = members.filter(m => 
                 m.nome.toLowerCase().includes(filter.toLowerCase()) || 
@@ -682,7 +727,7 @@
             }
 
             sectorsList.forEach(secName => {
-                const secMembers = filteredMembers.filter(m => (m.settore || "Curva Sud Agostino Di Bartolomei") === secName);
+                const secMembers = filteredMembers.filter(m => (m.settore || "Tribuna Francesco Totti") === secName);
                 if(secMembers.length > 0) {
                     const secBlock = document.createElement('div');
                     secBlock.className = 'sector-block';
@@ -693,8 +738,8 @@
                         gridHtml += `
                             <div class="ticket-card" onclick="openTicketDetail(${member.id})">
                                 <div class="ticket-header">
-                                    <span class="ticket-number">POSTO #${formattedId}</span>
-                                    <span style="color: var(--roma-gold); font-size:0.75rem;">${member.id === 1 ? 'FONDATORE' : 'TIFOSO'}</span>
+                                    <span class="ticket-number">${t.postoLabel} #${formattedId}</span>
+                                    <span style="color: var(--roma-gold); font-size:0.75rem;">${member.id === 1 ? t.founderLabel : t.fanLabel}</span>
                                 </div>
                                 <div class="ticket-holder">${escapeHtml(member.nome)}</div>
                                 <div class="ticket-location">📍 ${escapeHtml(member.citta)}</div>
@@ -711,6 +756,7 @@
         function openTicketDetail(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
+            const t = translations[currentLang];
             const formattedId = String(member.id).padStart(3, '0');
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
 
@@ -718,7 +764,7 @@
             if(fotos.length > 0) {
                 galleryHtml = `
                     <div style="margin-top:15px;">
-                        <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">Galleria Foto:</strong>
+                        <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.galleryHeader}</strong>
                         <div class="photo-gallery">
                             ${fotos.map(f => `<div class="photo-item"><img src="${f}"></div>`).join('')}
                         </div>
@@ -726,27 +772,27 @@
             }
 
             modalBody.innerHTML = `
-                <div style="font-size:0.85rem; color:var(--roma-gold); text-transform:uppercase; margin-bottom:5px;">Pass Ufficiale - ${escapeHtml(member.settore || 'Stadio Virtuale')}</div>
-                <h2 style="color:#fff; font-size:1.6rem; margin-bottom:5px;">POSTO #${formattedId}</h2>
+                <div style="font-size:0.85rem; color:var(--roma-gold); text-transform:uppercase; margin-bottom:5px;">${t.passTitle} - ${escapeHtml(member.settore || 'Stadio Virtuale')}</div>
+                <h2 style="color:#fff; font-size:1.6rem; margin-bottom:5px;">${t.postoLabel} #${formattedId}</h2>
                 <div style="font-size:1.2rem; font-weight:bold; color:var(--roma-gold); margin-bottom:5px;">${escapeHtml(member.nome)}</div>
                 <div style="font-size:0.95rem; color:#fff; margin-bottom:15px;">📍 ${escapeHtml(member.citta)}</div>
                 
                 <div style="margin-bottom:12px;">
-                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">La Scintilla e la Storia:</strong>
+                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.storyHeader}</strong>
                     <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.storia)}"</p>
                 </div>
 
                 ${member.difficili ? `
                 <div style="margin-bottom:12px;">
-                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">Nei momenti difficili:</strong>
+                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.difficultHeader}</strong>
                     <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.difficili)}"</p>
                 </div>` : ''}
 
                 ${galleryHtml}
 
                 <div class="modal-actions">
-                    <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">Modifica</button>
-                    <button class="btn-action btn-delete" onclick="deleteMember(${member.id})">Elimina</button>
+                    <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">${t.btnEdit}</button>
+                    <button class="btn-action btn-delete" onclick="deleteMember(${member.id})">${t.btnDelete}</button>
                 </div>
             `;
             ticketModal.style.display = 'flex';
@@ -755,6 +801,7 @@
         window.openEditForm = function(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
+            const t = translations[currentLang];
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
 
             let photosManagerHtml = '';
