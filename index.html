@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAI SOLI MAI - La Roma non si discute, si ama</title>
+    <title>MAI SOLI MAI - Archivio del Tifo a Distanza</title>
     <style>
         :root {
             --roma-bordeaux: #6b0014;
@@ -32,30 +32,9 @@
         header {
             background: linear-gradient(135deg, var(--roma-dark-bordeaux) 0%, var(--roma-bordeaux) 100%);
             border-bottom: 3px solid var(--roma-gold);
-            padding: 2rem 1rem;
+            padding: 2.5rem 1rem;
             text-align: center;
             position: relative;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-
-        .header-logo {
-            width: 75px;
-            height: 75px;
-            object-fit: contain;
-            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.6));
-        }
-
-        .header-titles {
-            text-align: center;
         }
 
         .lang-selector {
@@ -77,22 +56,18 @@
 
         header h1 {
             color: var(--roma-gold);
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 900;
-            margin-bottom: 0.1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            font-weight: 800;
+            margin-bottom: 0.3rem;
         }
 
         header p.subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #ffffff;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-style: italic;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            font-weight: 300;
+            letter-spacing: 1px;
         }
 
         .container {
@@ -449,15 +424,8 @@
                 <option value="fr">🇫🇷 Français</option>
             </select>
         </div>
-        
-        <div class="header-content">
-            <img src="asr.webp" alt="Stemma ASR" class="header-logo">
-            <div class="header-titles">
-                <h1 id="t-title">MAI SOLI MAI</h1>
-                <p class="subtitle" id="t-subtitle">La Roma non si discute, si ama</p>
-            </div>
-            <img src="lupetto.webp" alt="Lupetto di Gratton" class="header-logo">
-        </div>
+        <h1 id="t-title">MAI SOLI MAI</h1>
+        <p class="subtitle" id="t-subtitle">Archivio Istituzionale del Tifo a Distanza</p>
     </header>
 
     <div class="container">
@@ -508,11 +476,10 @@
                 <div class="form-group">
                     <label for="settore" id="t-lbl-settore">Scegli il tuo Settore nello Stadio Virtuale *</label>
                     <select id="settore" required>
-                        <option value="Curva Sud Agostino Di Bartolomei-Daniele De Rossi">Curva Sud Agostino Di Bartolomei-Daniele De Rossi</option>
-                        <option value="Tribuna Giuseppe Giannini-Bruno Conti">Tribuna Giuseppe Giannini-Bruno Conti</option>
-                        <option value="Tribuna Paulo Roberto Falcão-Giacomo Losi">Tribuna Paulo Roberto Falcão-Giacomo Losi</option>
-                        <option value="Tribuna Franco Tancredi-Gabriel Omar Batistuta">Tribuna Franco Tancredi-Gabriel Omar Batistuta</option>
-                        <option value="Curva Cafù-Candelà">Curva Cafù-Candelà</option>
+                        <option value="Curva Sud Agostino Di Bartolomei-Daniele De Rossi">Curva Sud Agostino Di Bartolomei-Daniele De Rossi"</option>
+                        <option value="Tribuna Giuseppe Giannini-Bruno Conti">Tribuna Giuseppe Giannini-Bruno Conti"</option>
+                        <option value="Tribuna Paulo Roberto Falcão-Giacomo Losi">Tribuna Paulo Roberto Falcão-Giacomo Losi"</option>
+                        <option value="Tribuna Franco Tancredi-Pluto Aldair">Tribuna "Tribuna Franco Tancredi-Pluto Aldair"</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -542,20 +509,17 @@
     </div>
 
     <footer>
-        <p>MAI SOLI MAI - La Roma non si discute, si ama</p>
+        <p>MAI SOLI MAI - Archivio Digitale del Tifo Romanista a Distanza</p>
         <p style="margin-top:0.3rem;" id="t-footer-sub">Iniziativa creata in occasione del 50° Compleanno di Massimo Graglia</p>
     </footer>
 
     <script>
         let currentLang = 'it';
 
-        const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
-        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
-
         // Traduzioni multilingua
         const translations = {
             it: {
-                subtitle: "La Roma non si discute, si ama",
+                subtitle: "Archivio Istituzionale del Tifo a Distanza - La Roma non si discute si ama",
                 manifestoTitle: "Il Manifesto",
                 commTitle: "Punto di Ritrovo & Community",
                 commDesc: "Rimaniamo uniti senza passare dai social network. Unisciti al gruppo diretto o entra nella stanza vocale per le partite:",
@@ -581,17 +545,17 @@
                 galleryHeader: "Galleria Foto:",
                 btnEdit: "Modifica",
                 btnDelete: "Elimina",
-                founderStoria: defaultStoriaIT,
-                founderDifficili: defaultDifficiliIT,
+                founderStoria: "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
+                founderDifficili: "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.",
                 manifestoText: `
                     <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
-                    <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
+                    <p>Tifare Roma da hier, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                     <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
                     <p>Per i miei 50 anni voglio costruire una casa per tutti noi. Un luogo virtuale ma tangibile dove raccogliere le storie di chi, da ogni parte d'Italia e del mondo, vive questa stessa fede a distanza. Unisciti all'Archivio, prendi il tuo posto nello Stadio Virtuale e raccontaci la tua storia.</p>
                 `
             },
             en: {
-                subtitle: "Roma is not to be debated, it is to be loved",
+                subtitle: "Institutional Archive of Remote Support",
                 manifestoTitle: "The Manifesto",
                 commTitle: "Meeting Point & Community",
                 commDesc: "Stay united without relying on social networks. Join our direct group or enter the voice room for matches:",
@@ -627,7 +591,7 @@
                 `
             },
             es: {
-                subtitle: "La Roma no se discute, se ama",
+                subtitle: "Archivo Institucional del Apoyo a Distancia",
                 manifestoTitle: "El Manifiesto",
                 commTitle: "Punto de Encuentro y Comunidad",
                 commDesc: "Permanezcamos unidos sin depender de las redes sociales. Únete al grupo directo o entra a la sala de voz para los partidos:",
@@ -663,7 +627,7 @@
                 `
             },
             fr: {
-                subtitle: "La Roma ne se discute pas, elle s'aime",
+                subtitle: "Archives Institutionnelles du Soutien à Distance",
                 manifestoTitle: "Le Manifeste",
                 commTitle: "Point de Rencontre & Communauté",
                 commDesc: "Restons unis sans dépendre des réseaux sociaux. Rejoignez le groupe direct ou entrez dans le salon vocal pour les matchs :",
@@ -694,7 +658,7 @@
                 manifestoText: `
                     <p>Tout a commencé un soir de 1984. J'étais un enfant dans le Piémont et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique de ces couleurs. De là, inspiré par Franco Tancredi, je suis devenu gardien et romanista.</p>
                     <p>Supporter la Roma d'ici, parmi les brumes du Piémont, n'a jamais été un choix facile. Mais en 49 ans de vie, dans les jours heureux et surtout les plus sombres, cette équipe a été un ancrage inébranlable. Une consolation.</p>
-                    <p>Je me souviens du train de nuit pris seul de Turin pour être à l'Olimpico le 17 juin 2001. Ceux qui supportent la Roma de loin vivent una solitude spéciale, faite de kilomètres et de trains de nuit.</p>
+                    <p>Je me souviens du train de nuit pris seul de Turin pour être à l'Olimpico le 17 juin 2001. Ceux qui supportent la Roma de loin vivent une solitude spéciale, faite de kilomètres et de trains de nuit.</p>
                     <p>Pour mes 50 ans, je veux construire un foyer pour nous tous. Un lieu virtuel mais tangible pour rassembler les histoires de ceux qui vivent cette même foi à distance. Rejoignez l'Archive et prenez votre place dans le Stade Virtuel.</p>
                 `
             }
@@ -725,25 +689,17 @@
             renderStadium();
         }
 
-        let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
-
-        // Forziamo sempre la presenza della tessera #001 di Massimo Graglia
-        const founderTicket = {
-            id: 1,
-            nome: "Massimo Graglia",
-            citta: "Torino (Italia)",
-            settore: "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
-            storia: defaultStoriaIT,
-            difficili: defaultDifficiliIT,
-            fotos: []
-        };
-
-        const existingFounderIndex = members.findIndex(m => m.id === 1);
-        if (existingFounderIndex !== -1) {
-            members[existingFounderIndex] = founderTicket;
-        } else {
-            members.unshift(founderTicket);
-        }
+        let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
+            {
+                id: 1,
+                nome: "Massimo Graglia",
+                citta: "Torino (Italia)",
+                settore: "Tribuna Francesco Totti",
+                storia: "",
+                difficili: "",
+                fotos: []
+            }
+        ];
 
         const stadiumSectors = document.getElementById('stadiumSectors');
         const tifoForm = document.getElementById('tifoForm');
@@ -753,11 +709,10 @@
         const closeModal = document.getElementById('closeModal');
 
         const sectorsList = [
-            "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
-            "Tribuna Giuseppe Giannini-Bruno Conti",
-            "Tribuna Paulo Roberto Falcão-Giacomo Losi",
-            "Tribuna Franco Tancredi-Gabriel Omar Batistuta",
-            "Curva Cafù-Candelà"
+            "Curva Sud Agostino Di Bartolomei",
+            "Tribuna Francesco Totti",
+            "Tribuna Paulo Roberto Falcão",
+            "Tribuna Franco Tancredi"
         ];
 
         function renderStadium(filter = '') {
@@ -776,7 +731,7 @@
             }
 
             sectorsList.forEach(secName => {
-                const secMembers = filteredMembers.filter(m => (m.settore || "Curva Sud Agostino Di Bartolomei-Daniele De Rossi") === secName);
+                const secMembers = filteredMembers.filter(m => (m.settore || "Tribuna Francesco Totti") === secName);
                 if(secMembers.length > 0) {
                     const secBlock = document.createElement('div');
                     secBlock.className = 'sector-block';
@@ -861,8 +816,8 @@
             const t = translations[currentLang];
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
 
-            let storyText = member.storia || defaultStoriaIT;
-            let diffText = member.difficili || defaultDifficiliIT;
+            let storyText = member.storia || (member.id === 1 ? t.founderStoria : '');
+            let diffText = member.difficili || (member.id === 1 ? t.founderDifficili : '');
 
             let photosManagerHtml = '';
             if(fotos.length > 0) {
