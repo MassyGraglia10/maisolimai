@@ -230,7 +230,6 @@
             transform: scale(1.05);
         }
 
-        /* ANGOLO DELLO SCAMBIO / CURIOSITÀ A DISTANZA */
         .exchange-card {
             background-color: var(--roma-card-bg);
             border: 1px dashed var(--roma-gold);
@@ -360,7 +359,6 @@
             color: var(--roma-gold);
         }
 
-        /* MAPPA INTERATTIVA SETTORI IN FONDO CON FONT COMPATTO */
         .interactive-map-card {
             background: linear-gradient(145deg, #181818, #221217);
             border: 1px solid rgba(212, 160, 23, 0.4);
@@ -456,7 +454,6 @@
             background-color: #b88a10;
         }
 
-        /* MODAL E PASSAPORTO DIGITALE */
         .modal {
             display: none;
             position: fixed;
@@ -889,7 +886,6 @@
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
 
-        // Inizializzazione sicura della tessera #001 che preserva le foto salvate
         const founderIndex = members.findIndex(m => m.id === 1);
         if (founderIndex !== -1) {
             members[founderIndex].nome = "Massimo Graglia";
