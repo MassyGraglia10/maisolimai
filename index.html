@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAI SOLI MAI - Archivio del Tifo a Distanza</title>
+    <style>
+        :root {
+            --roma-bordeaux: #6b0014;
+            --roma-dark-bordeaux: #4a000e;
+            --roma-gold: #d4a017;
+            --roma-dark: #121212;
+            --roma-card-bg: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --wa-green: #25d366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--roma-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--roma-dark-bordeaux) 0%, var(--roma-bordeaux) 100%);
+            border-bottom: 3px solid var(--roma-gold);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Selettore Lingue in alto a destra */
+        .lang-selector {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+
+        .lang-selector select {
+            background: rgba(0,0,0,0.6);
+            color: var(--roma-gold);
+            border: 1px solid var(--roma-gold);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        header h1 {
+            color: var(--roma-gold);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        header p.subtitle {
+            font-size: 1.1rem;
+            color: #ffffff;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .manifesto-card {
+            background-color: var(--roma-card-bg);
+            border-left: 5px solid var(--roma-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .manifesto-card h2 {
+            color: var(--roma-gold);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .manifesto-text p {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+            color: #e0e0e0;
+            text-align: justify;
+        }
+
+        .manifesto-text p:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--roma-gold);
+        }
+
+        .community-card {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a1a1f 100%);
+            border: 1px solid var(--roma-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .community-card h3 {
+            color: var(--roma-gold);
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            letter-spacing: 1px;
+        }
+
+        .community-card p {
+            color: #ddd;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-room {
+            display: inline-block;
+            background-color: var(--roma-gold);
+            color: #000;
+            font-weight: bold;
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-wa {
+            background-color: var(--wa-green);
+            color: #fff;
+        }
+
+        .btn-room:hover, .btn-wa:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-title {
+            color: var(--roma-gold);
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--roma-gold);
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 0.9rem;
+            width: 250px;
+        }
+
+        .sector-block {
+            margin-bottom: 2.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 160, 23, 0.2);
+        }
+
+        .sector-title {
+            color: var(--roma-gold);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed rgba(212, 160, 23, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .stadium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .ticket-card {
+            background: linear-gradient(145deg, var(--roma-bordeaux), var(--roma-dark-bordeaux));
+            border: 1px solid var(--roma-gold);
+            border-radius: 8px;
+            padding: 1.2rem;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .ticket-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(212, 160, 23, 0.3);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(212, 160, 23, 0.4);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .ticket-number {
+            color: var(--roma-gold);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .ticket-holder {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .ticket-location {
+            font-size: 0.9rem;
+            color: var(--roma-gold);
+        }
+
+        .form-card {
+            background-color: var(--roma-card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            background-color: var(--roma-gold);
+            color: #000;
+            font-weight: bold;
+            padding: 0.9rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #b88a10;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--roma-bordeaux);
+            border: 2px solid var(--roma-gold);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 550px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            color: var(--roma-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-action {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+        }
+
+        .btn-edit { background-color: var(--roma-gold); color: #000; }
+        .btn-delete { background-color: #a00; color: #fff; }
+
+        .photo-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .photo-item {
+            position: relative;
+            width: 100%;
+        }
+
+        .photo-item img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            border: 1px solid var(--roma-gold);
+        }
+
+        .photo-delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #a00;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid #222;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="lang-selector">
+            <select id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+            </select>
+        </div>
+        <h1 id="t-title">MAI SOLI MAI</h1>
+        <p class="subtitle" id="t-subtitle">Archivio Istituzionale del Tifo a Distanza</p>
+    </header>
+
+    <div class="container">
+
+        <!-- MANIFESTO -->
+        <div class="manifesto-card">
+            <h2 id="t-manifesto-title">Il Manifesto <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span></h2>
+            <div class="manifesto-text" id="t-manifesto-content">
+                <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
+                <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
+                <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
+                <p>Per i miei 50 anni voglio costruire una casa per tutti noi. Un luogo virtuale ma tangibile dove raccogliere le storie di chi, da ogni parte d'Italia e del mondo, vive questa stessa fede a distanza. Unisciti all'Archivio, prendi il tuo posto nello Stadio Virtuale e raccontaci la tua storia.</p>
+            </div>
+        </div>
+
+        <!-- COMMUNITY HUB -->
+        <div class="community-card">
+            <h3 id="t-comm-title">Punto di Ritrovo & Community</h3>
+            <p id="t-comm-desc">Rimaniamo uniti senza passare dai social network. Unisciti al gruppo diretto o entra nella stanza vocale per le partite:</p>
+            <div class="btn-group">
+                <a href="https://chat.whatsapp.com/" target="_blank" class="btn-room btn-wa" id="t-btn-wa">💬 Gruppo WhatsApp Romanisti</a>
+                <a href="https://meet.google.com/" target="_blank" class="btn-room" id="t-btn-meet">💻 Stanza Google Meet</a>
+            </div>
+        </div>
+
+        <!-- STADIO VIRTUALE -->
+        <div class="section-header">
+            <h3 class="section-title" id="t-stadium-title">Lo Stadio Virtuale</h3>
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Cerca iscritti o città...">
+        </div>
+
+        <div id="stadiumSectors">
+            <!-- Settori caricati dinamicamente -->
+        </div>
+
+        <!-- MODULO DI REGISTRAZIONE -->
+        <div class="form-card">
+            <h3 class="section-title" id="t-form-title" style="border:none; margin-bottom:1rem;">Prendi il tuo Posto nello Stadio</h3>
+            <form id="tifoForm">
+                <div class="form-group">
+                    <label for="nome" id="t-lbl-nome">Nome e/o Soprannome *</label>
+                    <input type="text" id="nome" required placeholder="Es. Massimo / Er Goppetta">
+                </div>
+                <div class="form-group">
+                    <label for="citta" id="t-lbl-citta">Città e Nazione da cui tifi *</label>
+                    <input type="text" id="citta" required placeholder="Es. Torino (Italia) / Londra (UK)">
+                </div>
+                <div class="form-group">
+                    <label for="settore" id="t-lbl-settore">Scegli il tuo Settore nello Stadio Virtuale *</label>
+                    <select id="settore" required>
+                        <option value="Curva Sud Agostino Di Bartolomei">Curva Sud "Agostino Di Bartolomei"</option>
+                        <option value="Tribuna Francesco Totti">Tribuna "Francesco Totti"</option>
+                        <option value="Tribuna Falcão">Tribuna "Paulo Roberto Falcão"</option>
+                        <option value="Tribuna Franco Tancredi">Tribuna "Franco Tancredi"</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="storia" id="t-lbl-storia">La Scintilla e la tua Storia: qual è il momento che ti ha fatto innamorare della Roma e il tuo viaggio più bello? *</label>
+                    <textarea id="storia" required placeholder="Raccontaci la tua prima volta o la trasferta indimenticabile..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="difficili" id="t-lbl-difficili">Cosa rappresenta o ha rappresentato la Roma nei tuoi momenti più difficili?</label>
+                    <textarea id="difficili" placeholder="Un appiglio, una consolazione, un rifugio..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fotoFiles" id="t-lbl-foto">Carica le tue foto (puoi selezionarne più di una)</label>
+                    <input type="file" id="fotoFiles" accept="image/*" multiple>
+                </div>
+                <button type="submit" class="btn-submit" id="t-btn-submit">Invia la tua storia e ottieni il Posto</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- MODAL DETTAGLIO / MODIFICA TESSERA -->
+    <div class="modal" id="ticketModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>MAI SOLI MAI - Archivio Digitale del Tifo Romanista a Distanza</p>
+        <p style="margin-top:0.3rem;" id="t-footer-sub">Iniziativa creata in occasione del 50° Compleanno di Massimo Graglia</p>
+    </footer>
+
+    <script>
+        // Traduzioni multilingua
+        const translations = {
+            it: {
+                subtitle: "Archivio Istituzionale del Tifo a Distanza",
+                manifestoTitle: "Il Manifesto",
+                commTitle: "Punto di Ritrovo & Community",
+                commDesc: "Rimaniamo uniti senza passare dai social network. Unisciti al gruppo diretto o entra nella stanza vocale per le partite:",
+                btnWa: "💬 Gruppo WhatsApp Romanisti",
+                btnMeet: "💻 Stanza Google Meet",
+                stadiumTitle: "Lo Stadio Virtuale",
+                searchPlaceholder: "🔍 Cerca iscritti o città...",
+                formTitle: "Prendi il tuo Posto nello Stadio",
+                lblNome: "Nome e/o Soprannome *",
+                lblCitta: "Città e Nazione da cui tifi *",
+                lblSettore: "Scegli il tuo Settore nello Stadio Virtuale *",
+                lblStoria: "La Scintilla e la tua Storia: qual è il momento che ti ha fatto innamorare della Roma e il tuo viaggio più bello? *",
+                lblDifficili: "Cosa rappresenta o ha rappresentato la Roma nei tuoi momenti più difficili?",
+                lblFoto: "Carica le tue foto (puoi selezionarne più di una)",
+                btnSubmit: "Invia la tua storia e ottieni il Posto",
+                footerSub: "Iniziativa creata in occasione del 50° Compleanno di Massimo Graglia",
+                manifestoText: `
+                    <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
+                    <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
+                    <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
+                    <p>Per i miei 50 anni voglio costruire una casa per tutti noi. Un luogo virtuale ma tangibile dove raccogliere le storie di chi, da ogni parte d'Italia e del mondo, vive questa stessa fede a distanza. Unisciti all'Archivio, prendi il tuo posto nello Stadio Virtuale e raccontaci la tua storia.</p>
+                `
+            },
+            en: {
+                subtitle: "Institutional Archive of Remote Support",
+                manifestoTitle: "The Manifesto",
+                commTitle: "Meeting Point & Community",
+                commDesc: "Stay united without relying on social networks. Join our direct group or enter the voice room for matches:",
+                btnWa: "💬 Romanisti WhatsApp Group",
+                btnMeet: "💻 Google Meet Room",
+                stadiumTitle: "The Virtual Stadium",
+                searchPlaceholder: "🔍 Search members or city...",
+                formTitle: "Take Your Seat in the Stadium",
+                lblNome: "Name and/or Nickname *",
+                lblCitta: "City and Country you support from *",
+                lblSettore: "Choose your Sector in the Virtual Stadium *",
+                lblStoria: "The Spark and your Story: what made you fall in love with Roma and your best journey? *",
+                lblDifficili: "What does Roma represent in your most difficult moments?",
+                lblFoto: "Upload your photos (you can select multiple)",
+                btnSubmit: "Submit your story and get your Seat",
+                footerSub: "Initiative created for Massimo Graglia's 50th Birthday",
+                manifestoText: `
+                    <p>It all started on an evening in 1984. I was a child in Piedmont watching the European Cup final: Roma-Liverpool. It wasn't a victory that enchanted me, but the drama, the passion in the stands, the tragic and visceral beauty of those colors. From there, inspired by Franco Tancredi's saves, I became a goalkeeper and a Romanista.</p>
+                    <p>Supporting Roma from here, amidst the fog of Piedmont and daily battles, has never been an easy choice. But in 49 years of life, in happy days and especially in the darkest ones, this team has been an unwavering anchor. A consolation.</p>
+                    <p>I remember the night train taken alone from Turin to be at the Olimpico on June 17, 2001, and returning the same evening with a heart full of joy. Those who support Roma from afar experience a special solitude made of kilometers, night trains, and silent matches.</p>
+                    <p>For my 50th birthday, I want to build a home for all of us. A virtual yet tangible place to gather the stories of those who, from all over Italy and the world, live this same faith from a distance. Join the Archive, take your seat in the Virtual Stadium, and tell us your story.</p>
+                `
+            },
+            es: {
+                subtitle: "Archivo Institucional del Apoyo a Distancia",
+                manifestoTitle: "El Manifiesto",
+                commTitle: "Punto de Encuentro y Comunidad",
+                commDesc: "Permanezcamos unidos sin depender de las redes sociales. Únete al grupo directo o entra a la sala de voz para los partidos:",
+                btnWa: "💬 Grupo de WhatsApp Romanisti",
+                btnMeet: "💻 Sala de Google Meet",
+                stadiumTitle: "El Estadio Virtual",
+                searchPlaceholder: "🔍 Buscar miembros o ciudad...",
+                formTitle: "Toma tu Asiento en el Estadio",
+                lblNome: "Nombre y/o Apodo *",
+                lblCitta: "Ciudad y País desde donde apoyas *",
+                lblSettore: "Elige tu Sector en el Estadio Virtual *",
+                lblStoria: "La chispa y tu historia: ¿qué te hizo enamorarte de la Roma y tu mejor viaje? *",
+                lblDifficili: "¿Qué representa o ha representado la Roma en tus momentos más difíciles?",
+                lblFoto: "Sube tus fotos (puedes seleccionar varias)",
+                btnSubmit: "Envía tu historia y obtén tu Asiento",
+                footerSub: "Iniciativa creada en ocasión del 50 cumpleaños de Massimo Graglia",
+                manifestoText: `
+                    <p>Todo comenzó una noche de 1984. Era un niño en el Piamonte y veía la final de la Copa de Europa: Roma-Liverpool. No fue una victoria lo que me cautivó, sino el drama, la pasión en las gradas, la belleza trágica y visceral de esos colores. A partir de ahí, inspirado por Franco Tancredi, me convertí en portero y romanista.</p>
+                    <p>Apoyar a la Roma desde aquí, entre las nieblas del Piamonte, nunca ha sido fácil. Pero en 49 años de vida, en los días felices y sobre todo en los más oscuros, este equipo ha sido un ancla inquebrantable. Un consuelo.</p>
+                    <p>Recuerdo el tren nocturno tomado solo desde Turín para estar en el Olímpico el 17 de junio de 2001. Quien apoya a la Roma desde lejos vive una soledad especial, hecha de kilómetros y trenes nocturnos.</p>
+                    <p>Para mis 50 años quiero construir un hogar para todos nosotros. Un lugar virtual pero tangible para reunir las historias de quienes viven esta misma fe a distancia. Únete al Archivo, toma tu lugar en el Estadio Virtual y cuéntanos tu historia.</p>
+                `
+            },
+            fr: {
+                subtitle: "Archives Institutionnelles du Soutien à Distance",
+                manifestoTitle: "Le Manifeste",
+                commTitle: "Point de Rencontre & Communauté",
+                commDesc: "Restons unis sans dépendre des réseaux sociaux. Rejoignez le groupe direct ou entrez dans le salon vocal pour les matchs :",
+                btnWa: "💬 Groupe WhatsApp Romanisti",
+                btnMeet: "💻 Salon Google Meet",
+                stadiumTitle: "Le Stade Virtuel",
+                searchPlaceholder: "🔍 Rechercher des membres ou ville...",
+                formTitle: "Prenez votre Place dans le Stade",
+                lblNome: "Nom et/ou Surnom *",
+                lblCitta: "Ville et Pays d'où vous supportez *",
+                lblSettore: "Choisissez votre Secteur dans le Stade Virtuel *",
+                lblStoria: "L'étincelle et votre histoire : qu'est-ce qui vous a fait tomber amoureux de la Roma ? *",
+                lblDifficili: "Que représente ou a représenté la Roma dans vos moments les plus difficiles ?",
+                lblFoto: "Téléchargez vos photos (vous pouvez en sélectionner plusieurs)",
+                btnSubmit: "Envoyez votre histoire et obtenez votre Place",
+                footerSub: "Initiative créée à l'occasion du 50e anniversaire de Massimo Graglia",
+                manifestoText: `
+                    <p>Tout a commencé un soir de 1984. J'étais un enfant dans le Piémont et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique de ces couleurs. De là, inspiré par Franco Tancredi, je suis devenu gardien et romanista.</p>
+                    <p>Supporter la Roma d'ici, parmi les brumes du Piémont, n'a jamais été un choix facile. Mais en 49 ans de vie, dans les jours heureux et surtout les plus sombres, cette équipe a été un ancrage inébranlable. Une consolation.</p>
+                    <p>Je me souviens du train de nuit pris seul de Turin pour être à l'Olimpico le 17 juin 2001. Ceux qui supportent la Roma de loin vivent une solitude spéciale, faite de kilomètres et de trains de nuit.</p>
+                    <p>Pour mes 50 ans, je veux construire un foyer pour nous tous. Un lieu virtuel mais tangible pour rassembler les histoires de ceux qui vivent cette même foi à distance. Rejoignez l'Archive et prenez votre place dans le Stade Virtuel.</p>
+                `
+            }
+        };
+
+        function changeLanguage(lang) {
+            const t = translations[lang];
+            document.getElementById('t-subtitle').innerText = t.subtitle;
+            document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span>`;
+            document.getElementById('t-manifesto-content').innerHTML = t.manifestoText;
+            document.getElementById('t-comm-title').innerText = t.commTitle;
+            document.getElementById('t-comm-desc').innerText = t.commDesc;
+            document.getElementById('t-btn-wa').innerText = t.btnWa;
+            document.getElementById('t-btn-meet').innerText = t.btnMeet;
+            document.getElementById('t-stadium-title').innerText = t.stadiumTitle;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            document.getElementById('t-form-title').innerText = t.formTitle;
+            document.getElementById('t-lbl-nome').innerText = t.lblNome;
+            document.getElementById('t-lbl-citta').innerText = t.lblCitta;
+            document.getElementById('t-lbl-settore').innerText = t.lblSettore;
+            document.getElementById('t-lbl-storia').innerText = t.lblStoria;
+            document.getElementById('t-lbl-difficili').innerText = t.lblDifficili;
+            document.getElementById('t-lbl-foto').innerText = t.lblFoto;
+            document.getElementById('t-btn-submit').innerText = t.btnSubmit;
+            document.getElementById('t-footer-sub').innerText = t.footerSub;
+        }
+
+        let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
+            {
+                id: 1,
+                nome: "Massimo Graglia",
+                citta: "Torino (Italia)",
+                settore: "Curva Sud Agostino Di Bartolomei",
+                storia: "Tifo dal 1984, ispirato da Franco Tancredi durante la finale Roma-Liverpool. In viaggio per lo Scudetto il 17 giugno 2001 con il treno della notte.",
+                difficili: "In 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, la Roma è stata un appiglio incrollabile. Una consolazione.",
+                fotos: []
+            }
+        ];
+
+        const stadiumSectors = document.getElementById('stadiumSectors');
+        const tifoForm = document.getElementById('tifoForm');
+        const searchInput = document.getElementById('searchInput');
+        const ticketModal = document.getElementById('ticketModal');
+        const modalBody = document.getElementById('modalBody');
+        const closeModal = document.getElementById('closeModal');
+
+        const sectorsList = [
+            "Curva Sud Agostino Di Bartolomei",
+            "Tribuna Francesco Totti",
+            "Tribuna Paulo Roberto Falcão",
+            "Tribuna Franco Tancredi"
+        ];
+
+        function renderStadium(filter = '') {
+            stadiumSectors.innerHTML = '';
+
+            const filteredMembers = members.filter(m => 
+                m.nome.toLowerCase().includes(filter.toLowerCase()) || 
+                m.citta.toLowerCase().includes(filter.toLowerCase()) ||
+                (m.settore && m.settore.toLowerCase().includes(filter.toLowerCase()))
+            );
+
+            if(filteredMembers.length === 0) {
+                stadiumSectors.innerHTML = '<p style="color:#aaa; text-align:center; margin:2rem 0;">Nessun iscritto trovato per questa ricerca.</p>';
+                return;
+            }
+
+            sectorsList.forEach(secName => {
+                const secMembers = filteredMembers.filter(m => (m.settore || "Curva Sud Agostino Di Bartolomei") === secName);
+                if(secMembers.length > 0) {
+                    const secBlock = document.createElement('div');
+                    secBlock.className = 'sector-block';
+                    
+                    let gridHtml = `<div class="sector-title">🏟️ ${secName} (${secMembers.length})</div><div class="stadium-grid">`;
+                    secMembers.forEach(member => {
+                        const formattedId = String(member.id).padStart(3, '0');
+                        gridHtml += `
+                            <div class="ticket-card" onclick="openTicketDetail(${member.id})">
+                                <div class="ticket-header">
+                                    <span class="ticket-number">POSTO #${formattedId}</span>
+                                    <span style="color: var(--roma-gold); font-size:0.75rem;">${member.id === 1 ? 'FONDATORE' : 'TIFOSO'}</span>
+                                </div>
+                                <div class="ticket-holder">${escapeHtml(member.nome)}</div>
+                                <div class="ticket-location">📍 ${escapeHtml(member.citta)}</div>
+                            </div>
+                        `;
+                    });
+                    gridHtml += `</div>`;
+                    secBlock.innerHTML = gridHtml;
+                    stadiumSectors.appendChild(secBlock);
+                }
+            });
+        }
+
+        function openTicketDetail(id) {
+            const member = members.find(m => m.id === id);
+            if(!member) return;
+            const formattedId = String(member.id).padStart(3, '0');
+            const fotos = member.fotos || (member.foto ? [member.foto] : []);
+
+            let galleryHtml = '';
+            if(fotos.length > 0) {
+                galleryHtml = `
+                    <div style="margin-top:15px;">
+                        <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">Galleria Foto:</strong>
+                        <div class="photo-gallery">
+                            ${fotos.map(f => `<div class="photo-item"><img src="${f}"></div>`).join('')}
+                        </div>
+                    </div>`;
+            }
+
+            modalBody.innerHTML = `
+                <div style="font-size:0.85rem; color:var(--roma-gold); text-transform:uppercase; margin-bottom:5px;">Pass Ufficiale - ${escapeHtml(member.settore || 'Stadio Virtuale')}</div>
+                <h2 style="color:#fff; font-size:1.6rem; margin-bottom:5px;">POSTO #${formattedId}</h2>
+                <div style="font-size:1.2rem; font-weight:bold; color:var(--roma-gold); margin-bottom:5px;">${escapeHtml(member.nome)}</div>
+                <div style="font-size:0.95rem; color:#fff; margin-bottom:15px;">📍 ${escapeHtml(member.citta)}</div>
+                
+                <div style="margin-bottom:12px;">
+                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">La Scintilla e la Storia:</strong>
+                    <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.storia)}"</p>
+                </div>
+
+                ${member.difficili ? `
+                <div style="margin-bottom:12px;">
+                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">Nei momenti difficili:</strong>
+                    <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.difficili)}"</p>
+                </div>` : ''}
+
+                ${galleryHtml}
+
+                <div class="modal-actions">
+                    <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">Modifica</button>
+                    <button class="btn-action btn-delete" onclick="deleteMember(${member.id})">Elimina</button>
+                </div>
+            `;
+            ticketModal.style.display = 'flex';
+        }
+
+        window.openEditForm = function(id) {
+            const member = members.find(m => m.id === id);
+            if(!member) return;
+            const fotos = member.fotos || (member.foto ? [member.foto] : []);
+
+            let photosManagerHtml = '';
+            if(fotos.length > 0) {
+                photosManagerHtml = `
+                    <div class="form-group">
+                        <label>Foto esistenti (clicca X per rimuovere):</label>
+                        <div class="photo-gallery">
+                            ${fotos.map((f, idx) => `
+                                <div class="photo-item">
+                                    <img src="${f}">
+                                    <button class="photo-delete-btn" onclick="removePhotoFromMember(${member.id},${idx})">✕</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+            }
+
+            modalBody.innerHTML = `
+                <h2 style="color:var(--roma-gold); font-size:1.4rem; margin-bottom:15px; text-transform:uppercase;">Modifica Scheda #${String(member.id).padStart(3, '0')}</h2>
+                <div class="form-group">
+                    <label>Nome e/o Soprannome</label>
+                    <input type="text" id="editNome" value="${escapeHtml(member.nome)}">
+                </div>
+                <div class="form-group">
+                    <label>Città e Nazione</label>
+                    <input type="text" id="editCitta" value="${escapeHtml(member.citta)}">
+                </div>
+                <div class="form-group">
+                    <label>Settore nello Stadio</label>
+                    <select id="editSettore">
+                        ${sectorsList.map(s => `<option value="${s}" ${member.settore === s ? 'selected' : ''}>${s}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>La Scintilla e la Storia</label>
+                    <textarea id="editStoria">${escapeHtml(member.storia)}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Nei momenti difficili</label>
+                    <textarea id="editDifficili">${escapeHtml(member.difficili || '')}</textarea>
+                </div>
+                ${photosManagerHtml}
+                <div class="form-group">
+                    <label>Aggiungi altre foto:</label>
+                    <input type="file" id="editNewFotos" accept="image/*" multiple>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-action btn-edit" onclick="saveEdit(${member.id})">Salva Modifiche</button>
+                    <button class="btn-action" style="background:#555; color:#fff;" onclick="openTicketDetail(${member.id})">Annulla</button>
+                </div>
+            `;
+        };
+
+        window.removePhotoFromMember = function(memberId, photoIndex) {
+            const member = members.find(m => m.id === memberId);
+            if(!member) return;
+            if(!member.fotos) member.fotos = member.foto ? [member.foto] : [];
+            
+            member.fotos.splice(photoIndex, 1);
+            delete member.foto;
+            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+            openEditForm(memberId);
+        };
+
+        window.saveEdit = function(id) {
+            const member = members.find(m => m.id === id);
+            if(!member) return;
+
+            member.nome = document.getElementById('editNome').value;
+            member.citta = document.getElementById('editCitta').value;
+            member.settore = document.getElementById('editSettore').value;
+            member.storia = document.getElementById('editStoria').value;
+            member.difficili = document.getElementById('editDifficili').value;
+            
+            if(!member.fotos) member.fotos = member.foto ? [member.foto] : [];
+
+            const newFilesInput = document.getElementById('editNewFotos');
+            if(newFilesInput.files && newFilesInput.files.length > 0) {
+                let loaded = 0;
+                Array.from(newFilesInput.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        member.fotos.push(e.target.result);
+                        loaded++;
+                        if(loaded === newFilesInput.files.length) {
+                            delete member.foto;
+                            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                            renderStadium();
+                            openTicketDetail(id);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                renderStadium();
+                openTicketDetail(id);
+            }
+        };
+
+        window.deleteMember = function(id) {
+            if(id === 1) {
+                alert("Non puoi eliminare il fondatore della pagina!");
+                return;
+            }
+            if(confirm("Sei sicuro di voler eliminare questa tessera?")) {
+                members = members.filter(m => m.id !== id);
+                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                ticketModal.style.display = 'none';
+                renderStadium();
+            }
+        };
+
+        searchInput.addEventListener('input', (e) => renderStadium(e.target.value));
+
+        tifoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('fotoFiles');
+            
+            const saveNew = (photoArray = []) => {
+                const newMember = {
+                    id: members.length > 0 ? Math.max(...members.map(m => m.id)) + 1 : 1,
+                    nome: document.getElementById('nome').value,
+                    citta: document.getElementById('citta').value,
+                    settore: document.getElementById('settore').value,
+                    storia: document.getElementById('storia').value,
+                    difficili: document.getElementById('difficili').value,
+                    fotos: photoArray
+                };
+
+                members.push(newMember);
+                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                renderStadium();
+                tifoForm.reset();
+                alert('Tessera generata con successo!');
+            };
+
+            if (fileInput.files && fileInput.files.length > 0) {
+                let photos = [];
+                let loaded = 0;
+                Array.from(fileInput.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(uploadEvent) {
+                        photos.push(uploadEvent.target.result);
+                        loaded++;
+                        if(loaded === fileInput.files.length) {
+                            saveNew(photos);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                saveNew([]);
+            }
+        });
+
+        closeModal.addEventListener('click', () => ticketModal.style.display = 'none');
+        window.addEventListener('click', (e) => { if (e.target === ticketModal) ticketModal.style.display = 'none'; });
+
+        function escapeHtml(text) {
+            if(!text) return '';
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        renderStadium();
+    </script>
+</body>
+</html>
