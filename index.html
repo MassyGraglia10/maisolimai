@@ -508,11 +508,11 @@
                 <div class="form-group">
                     <label for="settore" id="t-lbl-settore">Scegli il tuo Settore nello Stadio Virtuale *</label>
                     <select id="settore" required>
-                        <option value="Curva Sud Agostino Di Bartolomei-Daniele De Rossi">Curva Sud Agostino Di Bartolomei-Daniele De Rossi"</option>
-                        <option value="Tribuna Giuseppe Giannini-Bruno Conti">Tribuna Giuseppe Giannini-Bruno Conti"</option>
-                        <option value="Tribuna Paulo Roberto Falcão-Giacomo Losi">Tribuna Paulo Roberto Falcão-Giacomo Losi"</option>
-                        <option value="Tribuna Franco Tancredi-Gabriel Oma Batistuta">Tribuna Franco Tancredi-Gabriel Oma Batistutai"</option>
-                        <option value="Curva Cafù-Candelà">Curva Cafù-Candelà"</option>
+                        <option value="Curva Sud Agostino Di Bartolomei - Daniele De Rossi">Curva Sud "Agostino Di Bartolomei - Daniele De Rossi"</option>
+                        <option value="Tribuna Giuseppe Giannini - Bruno Conti">Tribuna "Giuseppe Giannini - Bruno Conti"</option>
+                        <option value="Tribuna Paulo Roberto Falcão - Giacomo Losi">Tribuna "Paulo Roberto Falcão - Giacomo Losi"</option>
+                        <option value="Tribuna Franco Tancredi - Gabriel Omar Batistuta">Tribuna "Franco Tancredi - Gabriel Omar Batistuta"</option>
+                        <option value="Curva Cafù - Candelà">Curva "Cafù - Candelà"</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -549,6 +549,9 @@
     <script>
         let currentLang = 'it';
 
+        const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
+        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
+
         // Traduzioni multilingua
         const translations = {
             it: {
@@ -578,8 +581,8 @@
                 galleryHeader: "Galleria Foto:",
                 btnEdit: "Modifica",
                 btnDelete: "Elimina",
-                founderStoria: "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
-                founderDifficili: "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.",
+                founderStoria: defaultStoriaIT,
+                founderDifficili: defaultDifficiliIT,
                 manifestoText: `
                     <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                     <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
@@ -727,12 +730,25 @@
                 id: 1,
                 nome: "Massimo Graglia",
                 citta: "Torino (Italia)",
-                settore: "Tribuna Francesco Totti",
-                storia: "",
-                difficili: "",
+                settore: "Curva Sud Agostino Di Bartolomei - Daniele De Rossi",
+                storia: defaultStoriaIT,
+                difficili: defaultDifficiliIT,
                 fotos: []
             }
         ];
+
+        // Assicurati che la tessera 001 esista sempre
+        if (!members.find(m => m.id === 1)) {
+            members.unshift({
+                id: 1,
+                nome: "Massimo Graglia",
+                citta: "Torino (Italia)",
+                settore: "Curva Sud Agostino Di Bartolomei - Daniele De Rossi",
+                storia: defaultStoriaIT,
+                difficili: defaultDifficiliIT,
+                fotos: []
+            });
+        }
 
         const stadiumSectors = document.getElementById('stadiumSectors');
         const tifoForm = document.getElementById('tifoForm');
@@ -742,11 +758,11 @@
         const closeModal = document.getElementById('closeModal');
 
         const sectorsList = [
-            "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
-            "Tribuna Gisueppe Giannini-Bruno Conti",
-            "Tribuna Paulo Roberto Falcão-Giacomo Losi",
-            "Tribuna Franco Tancredi-Gabriel Oma Batistuta"
-            "Curva Cafù-Candelà"
+            "Curva Sud Agostino Di Bartolomei - Daniele De Rossi",
+            "Tribuna Giuseppe Giannini - Bruno Conti",
+            "Tribuna Paulo Roberto Falcão - Giacomo Losi",
+            "Tribuna Franco Tancredi - Gabriel Omar Batistuta",
+            "Curva Cafù - Candelà"
         ];
 
         function renderStadium(filter = '') {
@@ -765,7 +781,7 @@
             }
 
             sectorsList.forEach(secName => {
-                const secMembers = filteredMembers.filter(m => (m.settore || "Tribuna Francesco Totti") === secName);
+                const secMembers = filteredMembers.filter(m => (m.settore || "Curva Sud Agostino Di Bartolomei - Daniele De Rossi") === secName);
                 if(secMembers.length > 0) {
                     const secBlock = document.createElement('div');
                     secBlock.className = 'sector-block';
@@ -850,8 +866,8 @@
             const t = translations[currentLang];
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
 
-            let storyText = member.storia || (member.id === 1 ? t.founderStoria : '');
-            let diffText = member.difficili || (member.id === 1 ? t.founderDifficili : '');
+            let storyText = member.storia || defaultStoriaIT;
+            let diffText = member.difficili || defaultDifficiliIT;
 
             let photosManagerHtml = '';
             if(fotos.length > 0) {
@@ -964,3 +980,60 @@
                 renderStadium();
             }
         };
+
+        searchInput.addEventListener('input', (e) => renderStadium(e.target.value));
+
+        tifoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('fotoFiles');
+            
+            const saveNew = (photoArray = []) => {
+                const newMember = {
+                    id: members.length > 0 ? Math.max(...members.map(m => m.id)) + 1 : 1,
+                    nome: document.getElementById('nome').value,
+                    citta: document.getElementById('citta').value,
+                    settore: document.getElementById('settore').value,
+                    storia: document.getElementById('storia').value,
+                    difficili: document.getElementById('difficili').value,
+                    fotos: photoArray
+                };
+
+                members.push(newMember);
+                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                renderStadium();
+                tifoForm.reset();
+                alert('Tessera generata con successo!');
+            };
+
+            if (fileInput.files && fileInput.files.length > 0) {
+                let photos = [];
+                let loaded = 0;
+                Array.from(fileInput.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(uploadEvent) {
+                        photos.push(uploadEvent.target.result);
+                        loaded++;
+                        if(loaded === fileInput.files.length) {
+                            saveNew(photos);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                saveNew([]);
+            }
+        });
+
+        closeModal.addEventListener('click', () => ticketModal.style.display = 'none');
+        window.addEventListener('click', (e) => { if (e.target === ticketModal) ticketModal.style.display = 'none'; });
+
+        function escapeHtml(text) {
+            if(!text) return '';
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        renderStadium();
+    </script>
+</body>
+</html>
