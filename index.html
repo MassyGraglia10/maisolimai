@@ -508,11 +508,11 @@
                 <div class="form-group">
                     <label for="settore" id="t-lbl-settore">Scegli il tuo Settore nello Stadio Virtuale *</label>
                     <select id="settore" required>
-                        <option value="Curva Sud Agostino Di Bartolomei - Daniele De Rossi">Curva Sud "Agostino Di Bartolomei - Daniele De Rossi"</option>
-                        <option value="Tribuna Giuseppe Giannini - Bruno Conti">Tribuna "Giuseppe Giannini - Bruno Conti"</option>
-                        <option value="Tribuna Paulo Roberto Falcão - Giacomo Losi">Tribuna "Paulo Roberto Falcão - Giacomo Losi"</option>
-                        <option value="Tribuna Franco Tancredi - Gabriel Omar Batistuta">Tribuna "Franco Tancredi - Gabriel Omar Batistuta"</option>
-                        <option value="Curva Cafù - Candelà">Curva "Cafù - Candelà"</option>
+                        <option value="Curva Sud Agostino Di Bartolomei-Daniele De Rossi">Curva Sud Agostino Di Bartolomei-Daniele De Rossi</option>
+                        <option value="Tribuna Giuseppe Giannini-Bruno Conti">Tribuna Giuseppe Giannini-Bruno Conti</option>
+                        <option value="Tribuna Paulo Roberto Falcão-Giacomo Losi">Tribuna Paulo Roberto Falcão-Giacomo Losi</option>
+                        <option value="Tribuna Franco Tancredi-Gabriel Omar Batistuta">Tribuna Franco Tancredi-Gabriel Omar Batistuta</option>
+                        <option value="Curva Cafù-Candelà">Curva Cafù-Candelà</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -694,7 +694,7 @@
                 manifestoText: `
                     <p>Tout a commencé un soir de 1984. J'étais un enfant dans le Piémont et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique de ces couleurs. De là, inspiré par Franco Tancredi, je suis devenu gardien et romanista.</p>
                     <p>Supporter la Roma d'ici, parmi les brumes du Piémont, n'a jamais été un choix facile. Mais en 49 ans de vie, dans les jours heureux et surtout les plus sombres, cette équipe a été un ancrage inébranlable. Une consolation.</p>
-                    <p>Je me souviens du train de nuit pris seul de Turin pour être à l'Olimpico le 17 juin 2001. Ceux qui supportent la Roma de loin vivent une solitude spéciale, faite de kilomètres et de trains de nuit.</p>
+                    <p>Je me souviens du train de nuit pris seul de Turin pour être à l'Olimpico le 17 juin 2001. Ceux qui supportent la Roma de loin vivent una solitude spéciale, faite de kilomètres et de trains de nuit.</p>
                     <p>Pour mes 50 ans, je veux construire un foyer pour nous tous. Un lieu virtuel mais tangible pour rassembler les histoires de ceux qui vivent cette même foi à distance. Rejoignez l'Archive et prenez votre place dans le Stade Virtuel.</p>
                 `
             }
@@ -725,29 +725,24 @@
             renderStadium();
         }
 
-        let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
-            {
-                id: 1,
-                nome: "Massimo Graglia",
-                citta: "Torino (Italia)",
-                settore: "Curva Sud Agostino Di Bartolomei - Daniele De Rossi",
-                storia: defaultStoriaIT,
-                difficili: defaultDifficiliIT,
-                fotos: []
-            }
-        ];
+        let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
 
-        // Assicurati che la tessera 001 esista sempre
-        if (!members.find(m => m.id === 1)) {
-            members.unshift({
-                id: 1,
-                nome: "Massimo Graglia",
-                citta: "Torino (Italia)",
-                settore: "Curva Sud Agostino Di Bartolomei - Daniele De Rossi",
-                storia: defaultStoriaIT,
-                difficili: defaultDifficiliIT,
-                fotos: []
-            });
+        // Forziamo sempre la presenza della tessera #001 di Massimo Graglia
+        const founderTicket = {
+            id: 1,
+            nome: "Massimo Graglia",
+            citta: "Torino (Italia)",
+            settore: "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
+            storia: defaultStoriaIT,
+            difficili: defaultDifficiliIT,
+            fotos: []
+        };
+
+        const existingFounderIndex = members.findIndex(m => m.id === 1);
+        if (existingFounderIndex !== -1) {
+            members[existingFounderIndex] = founderTicket;
+        } else {
+            members.unshift(founderTicket);
         }
 
         const stadiumSectors = document.getElementById('stadiumSectors');
@@ -758,11 +753,11 @@
         const closeModal = document.getElementById('closeModal');
 
         const sectorsList = [
-            "Curva Sud Agostino Di Bartolomei - Daniele De Rossi",
-            "Tribuna Giuseppe Giannini - Bruno Conti",
-            "Tribuna Paulo Roberto Falcão - Giacomo Losi",
-            "Tribuna Franco Tancredi - Gabriel Omar Batistuta",
-            "Curva Cafù - Candelà"
+            "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
+            "Tribuna Giuseppe Giannini-Bruno Conti",
+            "Tribuna Paulo Roberto Falcão-Giacomo Losi",
+            "Tribuna Franco Tancredi-Gabriel Omar Batistuta",
+            "Curva Cafù-Candelà"
         ];
 
         function renderStadium(filter = '') {
@@ -781,7 +776,7 @@
             }
 
             sectorsList.forEach(secName => {
-                const secMembers = filteredMembers.filter(m => (m.settore || "Curva Sud Agostino Di Bartolomei - Daniele De Rossi") === secName);
+                const secMembers = filteredMembers.filter(m => (m.settore || "Curva Sud Agostino Di Bartolomei-Daniele De Rossi") === secName);
                 if(secMembers.length > 0) {
                     const secBlock = document.createElement('div');
                     secBlock.className = 'sector-block';
