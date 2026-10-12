@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAI SOLI MAI - La Roma non si discute, si ama</title>
+    <title>MAI SOLI MAI - Stadio Virtuale Francesco Totti</title>
+    <!-- Libreria per scaricare il biglietto come immagine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --roma-bordeaux: #6b0014;
@@ -21,6 +23,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -29,10 +32,39 @@
             line-height: 1.6;
         }
 
+        /* MENU DI NAVIGAZIONE FLUIDO */
+        nav.main-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(18, 18, 18, 0.95);
+            border-bottom: 2px solid var(--roma-gold);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0.8rem 1rem;
+            flex-wrap: wrap;
+            backdrop-filter: blur(5px);
+        }
+
+        nav.main-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        nav.main-nav a:hover {
+            color: var(--roma-gold);
+        }
+
         header {
             background: linear-gradient(135deg, var(--roma-dark-bordeaux) 0%, var(--roma-bordeaux) 100%);
             border-bottom: 3px solid var(--roma-gold);
-            padding: 2rem 1rem;
+            padding: 2.5rem 1rem;
             text-align: center;
             position: relative;
         }
@@ -85,7 +117,7 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
 
-        header p.subtitle {
+        header p.subtitle-main {
             font-size: 1.2rem;
             color: #ffffff;
             font-weight: 700;
@@ -93,6 +125,15 @@
             text-transform: uppercase;
             font-style: italic;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            margin-bottom: 0.3rem;
+        }
+
+        header p.subtitle-archive {
+            font-size: 0.95rem;
+            color: var(--roma-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
 
         .container {
@@ -129,6 +170,50 @@
             margin-bottom: 0;
             font-weight: 600;
             color: var(--roma-gold);
+        }
+
+        /* MAPPA INTERATTIVA SETTORI */
+        .interactive-map-card {
+            background: linear-gradient(145deg, #181818, #221217);
+            border: 1px solid var(--roma-gold);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .interactive-map-card h3 {
+            color: var(--roma-gold);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .map-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .map-btn {
+            background-color: rgba(107, 0, 20, 0.6);
+            color: #fff;
+            border: 1px solid var(--roma-gold);
+            padding: 0.6rem 1.1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .map-btn:hover, .map-btn.active {
+            background-color: var(--roma-gold);
+            color: #000;
+            transform: scale(1.05);
         }
 
         .community-card {
@@ -187,6 +272,28 @@
         .btn-room:hover, .btn-wa:hover {
             opacity: 0.9;
             transform: scale(1.05);
+        }
+
+        /* ANGOLO DELLO SCAMBIO / CURIOSITÀ */
+        .exchange-card {
+            background-color: var(--roma-card-bg);
+            border: 1px dashed var(--roma-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .exchange-card h3 {
+            color: var(--roma-gold);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .exchange-card p {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
         }
 
         .section-header {
@@ -338,6 +445,7 @@
             background-color: #b88a10;
         }
 
+        /* MODAL E PASSAPORTO DIGITALE */
         .modal {
             display: none;
             position: fixed;
@@ -354,7 +462,7 @@
             border: 2px solid var(--roma-gold);
             padding: 2rem;
             border-radius: 10px;
-            max-width: 550px;
+            max-width: 580px;
             width: 100%;
             text-align: left;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -372,15 +480,37 @@
             font-weight: bold;
         }
 
+        /* STILE GRAFICO DEL BIGLIETTO DA SCARICARE */
+        .printable-ticket {
+            background: linear-gradient(135deg, #4a000e 0%, #6b0014 100%);
+            border: 2px solid var(--roma-gold);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .ticket-badge-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed var(--roma-gold);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
         .modal-actions {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
             gap: 10px;
             justify-content: flex-end;
+            flex-wrap: wrap;
         }
 
         .btn-action {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 4px;
             font-size: 0.85rem;
             font-weight: bold;
@@ -389,6 +519,7 @@
             text-transform: uppercase;
         }
 
+        .btn-download { background-color: #25d366; color: #fff; }
         .btn-edit { background-color: var(--roma-gold); color: #000; }
         .btn-delete { background-color: #a00; color: #fff; }
 
@@ -440,6 +571,16 @@
 </head>
 <body>
 
+    <!-- MENU DI NAVIGAZIONE -->
+    <nav class="main-nav">
+        <a href="#manifesto">Il Manifesto</a>
+        <a href="#stadio">Stadio Virtuale</a>
+        <a href="#mappa">Mappa Settori</a>
+        <a href="#community">Community</a>
+        <a href="#scambio">Angolo dello Scambio</a>
+        <a href="#iscriviti">Prendi il Posto</a>
+    </nav>
+
     <header>
         <div class="lang-selector">
             <select id="langSelect" onchange="changeLanguage(this.value)">
@@ -454,7 +595,8 @@
             <img src="asr.webp" alt="Stemma ASR" class="header-logo">
             <div class="header-titles">
                 <h1 id="t-title">MAI SOLI MAI</h1>
-                <p class="subtitle" id="t-subtitle">La Roma non si discute, si ama</p>
+                <p class="subtitle-main" id="t-subtitle">La Roma non si discute, si ama</p>
+                <p class="subtitle-archive">Archivio del Tifo Romanista a Distanza</p>
             </div>
             <img src="lupetto.webp" alt="Lupetto di Gratton" class="header-logo">
         </div>
@@ -463,7 +605,7 @@
     <div class="container">
 
         <!-- MANIFESTO -->
-        <div class="manifesto-card">
+        <div id="manifesto" class="manifesto-card">
             <h2 id="t-manifesto-title">Il Manifesto <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span></h2>
             <div class="manifesto-text" id="t-manifesto-content">
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
@@ -473,8 +615,21 @@
             </div>
         </div>
 
+        <!-- MAPPA INTERATTIVA SETTORI -->
+        <div id="mappa" class="interactive-map-card">
+            <h3>🗺️ Mappa Interattiva dello Stadio - Filtra per Settore</h3>
+            <div class="map-buttons" id="mapButtonsContainer">
+                <button class="map-btn active" onclick="filterBySector('Tutti')">Tutti i Settori</button>
+                <button class="map-btn" onclick="filterBySector('Curva Sud Agostino Di Bartolomei-Daniele De Rossi')">Curva Sud</button>
+                <button class="map-btn" onclick="filterBySector('Tribuna Giuseppe Giannini-Bruno Conti')">Tribuna Giannini-Conti</button>
+                <button class="map-btn" onclick="filterBySector('Tribuna Paulo Roberto Falcão-Giacomo Losi')">Tribuna Falcão-Losi</button>
+                <button class="map-btn" onclick="filterBySector('Tribuna Franco Tancredi-Gabriel Omar Batistuta')">Tribuna Tancredi-Batistuta</button>
+                <button class="map-btn" onclick="filterBySector('Curva Cafù-Candelà')">Curva Cafù-Candelà</button>
+            </div>
+        </div>
+
         <!-- COMMUNITY HUB -->
-        <div class="community-card">
+        <div id="community" class="community-card">
             <h3 id="t-comm-title">Punto di Ritrovo & Community</h3>
             <p id="t-comm-desc">Rimaniamo uniti senza passare dai social network. Unisciti al gruppo diretto o entra nella stanza vocale per le partite:</p>
             <div class="btn-group">
@@ -483,8 +638,17 @@
             </div>
         </div>
 
+        <!-- ANGOLO DELLO SCAMBIO / CURIOSITÀ A DISTANZA -->
+        <div id="scambio" class="exchange-card">
+            <h3>🍻 L'Angolo dello Scambio & Curiosità a Distanza</h3>
+            <p>Sei in trasferta o vivi in una città lontana e cerchi un posto sicuro dove vedere la partita circondato da romanisti? Oppure vuoi segnalare un pub, un locale o un punto di riferimento giallorosso nella tua zona? Condividilo con la community!</p>
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 6px; border-left: 3px solid var(--roma-gold);">
+                <p style="margin:0; font-size:0.9rem; color:#f5f5f5;">💡 <strong>Come fare?</strong> Scrivilo nel gruppo WhatsApp ufficiale o segnalalo direttamente tramite le note della tua tessera per aiutare gli altri tifosi in giro per il mondo!</p>
+            </div>
+        </div>
+
         <!-- STADIO VIRTUALE FRANCESCO TOTTI -->
-        <div class="section-header">
+        <div id="stadio" class="section-header">
             <h3 class="section-title" id="t-stadium-title">Stadio Virtuale Francesco Totti</h3>
             <input type="text" id="searchInput" class="search-box" placeholder="🔍 Cerca iscritti o città...">
         </div>
@@ -494,7 +658,7 @@
         </div>
 
         <!-- MODULO DI REGISTRAZIONE -->
-        <div class="form-card">
+        <div id="iscriviti" class="form-card">
             <h3 class="section-title" id="t-form-title" style="border:none; margin-bottom:1rem;">Prendi il tuo Posto nello Stadio</h3>
             <form id="tifoForm">
                 <div class="form-group">
@@ -533,7 +697,7 @@
 
     </div>
 
-    <!-- MODAL DETTAGLIO / MODIFICA TESSERA -->
+    <!-- MODAL DETTAGLIO / PASSAPORTO DIGITALI -->
     <div class="modal" id="ticketModal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
@@ -548,11 +712,11 @@
 
     <script>
         let currentLang = 'it';
+        let activeSectorFilter = 'Tutti';
 
         const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
         const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
 
-        // Traduzioni multilingua
         const translations = {
             it: {
                 subtitle: "La Roma non si discute, si ama",
@@ -581,13 +745,14 @@
                 galleryHeader: "Galleria Foto:",
                 btnEdit: "Modifica",
                 btnDelete: "Elimina",
+                btnDownload: "📥 Scarica Passaporto / Biglietto",
                 founderStoria: defaultStoriaIT,
                 founderDifficili: defaultDifficiliIT,
                 manifestoText: `
                     <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                     <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                     <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                    <p>Per i miei 50 anni voglio costruire una casa per tutti noi. Un luogo virtuale ma tangibile dove raccogliere las storie di chi, da ogni parte d'Italia e del mondo, vive questa stessa fede a distanza. Unisciti all'Archivio, prendi il tuo posto nello Stadio Virtuale e raccontaci la tua storia.</p>
+                    <p>Per i miei 50 anni voglio costruire una casa per tutti noi. Un luogo virtuale ma tangibile dove raccogliere le storie di chi, da ogni parte d'Italia e del mondo, vive questa stessa fede a distanza. Unisciti all'Archivio, prendi il tuo posto nello Stadio Virtuale e raccontaci la tua storia.</p>
                 `
             },
             en: {
@@ -617,20 +782,16 @@
                 galleryHeader: "Photo Gallery:",
                 btnEdit: "Edit",
                 btnDelete: "Delete",
-                founderStoria: "It all started on an evening in 1984. I was a child in Piedmont watching the European Cup final: Roma-Liverpool. It wasn't a victory that enchanted me, but the drama, the passion in the stands, the tragic and visceral beauty of those colors. Supporting Roma from here, amidst the fog of Piedmont and daily battles, has never been an easy choice. I remember the night train taken alone from Turin to be at the Olimpico on June 17, 2001, and returning the same evening with a heart full of joy. Those who support Roma from afar experience a special solitude made of kilometers, night trains, and silent matches.",
-                founderDifficili: "From that day on, Roma has always been there, every single day. In moments of joy as in the darkest ones, it has never left me alone.",
-                manifestoText: `
-                    <p>It all started on an evening in 1984. I was a child in Piedmont watching the European Cup final: Roma-Liverpool. It wasn't a victory that enchanted me, but the drama, the passion in the stands, the tragic and visceral beauty of those colors. From there, inspired by Franco Tancredi's saves, I became a goalkeeper and a Romanista.</p>
-                    <p>Supporting Roma from here, amidst the fog of Piedmont and daily battles, has never been an easy choice. But in 49 years of life, in happy days and especially in the darkest ones, this team has been an unwavering anchor. A consolation.</p>
-                    <p>I remember the night train taken alone from Turin to be at the Olimpico on June 17, 2001, and returning the same evening with a heart full of joy. Those who support Roma from afar experience a special solitude made of kilometers, night trains, and silent matches.</p>
-                    <p>For my 50th birthday, I want to build a home for all of us. A virtual yet tangible place to gather the stories of those who, from all over Italy and the world, live this same faith from a distance. Join the Archive, take your seat in the Virtual Stadium, and tell us your story.</p>
-                `
+                btnDownload: "📥 Download Passport / Ticket",
+                founderStoria: "It all started on an evening in 1984. I was a child in Piedmont watching the European Cup final: Roma-Liverpool...",
+                founderDifficili: "From that day on, Roma has always been there, every single day.",
+                manifestoText: `<p>It all started on an evening in 1984...</p>`
             },
             es: {
                 subtitle: "La Roma no se discute, se ama",
                 manifestoTitle: "El Manifiesto",
                 commTitle: "Punto de Encuentro y Comunidad",
-                commDesc: "Permanezcamos unidos sin depender de las redes sociales. Únete al grupo directo o entra a la sala de voz para los partidos:",
+                commDesc: "Permanezcamos unidos sin depender de las redes sociales...",
                 btnWa: "💬 Grupo de WhatsApp Romanisti",
                 btnMeet: "💻 Sala de Google Meet",
                 stadiumTitle: "Estadio Virtual Francesco Totti",
@@ -639,11 +800,11 @@
                 lblNome: "Nombre y/o Apodo *",
                 lblCitta: "Ciudad y País desde donde apoyas *",
                 lblSettore: "Elige tu Sector en el Estadio Virtual *",
-                lblStoria: "La chispa y tu historia: ¿qué te hizo enamorarte de la Roma y tu mejor viaje? *",
-                lblDifficili: "¿Qué representa o ha representado la Roma en tus momentos más difíciles?",
-                lblFoto: "Sube tus fotos (puedes seleccionar varias)",
-                btnSubmit: "Envía tu historia y obtén tu Asiento",
-                footerSub: "Iniciativa creada en ocasión del 50 cumpleaños de Massimo Graglia",
+                lblStoria: "La chispa y tu historia...",
+                lblDifficili: "¿Qué representa o ha representado la Roma...",
+                lblFoto: "Sube tus fotos",
+                btnSubmit: "Envía tu historia",
+                footerSub: "Iniciativa creada en ocasión del 50 cumpleaños",
                 passTitle: "Pase Oficial",
                 postoLabel: "ASIENTO",
                 founderLabel: "FUNDADOR",
@@ -653,50 +814,42 @@
                 galleryHeader: "Galería de Fotos:",
                 btnEdit: "Editar",
                 btnDelete: "Eliminar",
-                founderStoria: "Todo comenzó una noche de 1984. Era un niño en el Piamonte y veía la final de la Copa de Europa: Roma-Liverpool. No fue una victoria lo que me cautivó, sino el drama, la pasión en las gradas, la belleza trágica y visceral de esos colores. Apoyar a la Roma desde aquí, entre las nieblas del Piamonte, nunca ha sido fácil. Recuerdo el tren nocturno tomado solo desde Turín para estar en el Olímpico el 17 de junio de 2001, y el regreso esa misma noche con el corazón lleno de alegría. Quien apoya a la Roma desde lejos vive una soledad especial, hecha de kilómetros, trenes nocturnos y partidos vistos en silencio.",
-                founderDifficili: "Desde aquel día la Roma siempre ha estado ahí, cada día. En los momentos de alegría como en los más oscuros, nunca me ha dejado solo.",
-                manifestoText: `
-                    <p>Todo comenzó una noche de 1984. Era un niño en el Piamonte y veía la final de la Copa de Europa: Roma-Liverpool. No fue una victoria lo que me cautivó, sino el drama, la pasión en las gradas, la belleza trágica y visceral de esos colores. A partir de ahí, inspirado por Franco Tancredi, me convertí en portero y romanista.</p>
-                    <p>Apoyar a la Roma desde aquí, entre las nieblas del Piamonte, nunca ha sido fácil. Pero en 49 años de vida, en los días felices y sobre todo en los más oscuros, este equipo ha sido un ancla inquebrantable. Un consuelo.</p>
-                    <p>Recuerdo el tren nocturno tomado solo desde Turín para estar en el Olímpico el 17 junio de 2001. Quien apoya a la Roma desde lejos vive una soledad especial, hecha de kilómetros y trenes nocturnos.</p>
-                    <p>Para mis 50 años quiero construir un hogar para todos nosotros. Un lugar virtual pero tangible para reunir las historias de quienes viven esta misma fe a distancia. Únete al Archivo, toma tu lugar en el Estadio Virtual y cuéntanos tu historia.</p>
-                `
+                btnDownload: "📥 Descargar Pasaporte",
+                founderStoria: "Todo comenzó una noche de 1984...",
+                founderDifficili: "Desde aquel día la Roma siempre ha estado ahí.",
+                manifestoText: `<p>Todo comenzó una noche de 1984...</p>`
             },
             fr: {
                 subtitle: "La Roma ne se discute pas, elle s'aime",
                 manifestoTitle: "Le Manifeste",
                 commTitle: "Point de Rencontre & Communauté",
-                commDesc: "Restons unis sans dépendre des réseaux sociaux. Rejoignez le groupe direct ou entrez dans le salon vocal pour les matchs :",
+                commDesc: "Restons unis...",
                 btnWa: "💬 Groupe WhatsApp Romanisti",
                 btnMeet: "💻 Salon Google Meet",
                 stadiumTitle: "Stade Virtuel Francesco Totti",
-                searchPlaceholder: "🔍 Rechercher des membres ou ville...",
-                formTitle: "Prenez votre Place dans le Stade",
-                lblNome: "Nom et/ou Surnom *",
-                lblCitta: "Ville et Pays d'où vous supportez *",
-                lblSettore: "Choisissez votre Secteur dans le Stade Virtuel *",
-                lblStoria: "L'étincelle et votre histoire : qu'est-ce qui vous a fait tomber amoureux de la Roma ? *",
-                lblDifficili: "Que représente ou a représenté la Roma dans vos moments les plus difficiles ?",
-                lblFoto: "Téléchargez vos photos (vous pouvez en sélectionner plusieurs)",
-                btnSubmit: "Envoyez votre histoire et obtenez votre Place",
-                footerSub: "Initiative créée à l'occasion du 50e anniversaire de Massimo Graglia",
+                searchPlaceholder: "🔍 Rechercher...",
+                formTitle: "Prenez votre Place",
+                lblNome: "Nom *",
+                lblCitta: "Ville *",
+                lblSettore: "Secteur *",
+                lblStoria: "Histoire *",
+                lblDifficili: "Moments difficili",
+                lblFoto: "Photos",
+                btnSubmit: "Envoyer",
+                footerSub: "Initiative créée à l'occasion du 50e anniversaire",
                 passTitle: "Pass Officiel",
                 postoLabel: "SIÈGE",
                 founderLabel: "FONDATEUR",
                 fanLabel: "SUPPORTER",
-                storyHeader: "L'Étincelle et l'Histoire :",
-                difficultHeader: "Dans les moments difficiles :",
-                galleryHeader: "Galerie Photos :",
+                storyHeader: "L'Étincelle :",
+                difficultHeader: "Moments difficiles :",
+                galleryHeader: "Galerie :",
                 btnEdit: "Modifier",
                 btnDelete: "Supprimer",
-                founderStoria: "Tout a commencé un soir de 1984. J'étais un enfant dans le Piémont et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique de ces couleurs. Supporter la Roma d'ici, parmi les brumes du Piémont, n'a jamais été un choix facile. Je me souviens du train de nuit pris seul de Turin pour être à l'Olimpico le 17 juin 2001, et le retour le soir même le cœur plein de joie. Ceux qui supportent la Roma de loin vivent une solitude spéciale, faite de kilomètres, de trains de nuit et de matchs regardés en silence.",
-                founderDifficili: "Depuis ce jour, la Roma a toujours été là, chaque jour. Dans les moments de joie comme dans les plus sombres, elle ne m'a jamais laissé seul.",
-                manifestoText: `
-                    <p>Tout a commencé un soir de 1984. J'étais un enfant dans le Piémont et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique de ces couleurs. De là, inspiré par Franco Tancredi, je suis devenu gardien et romanista.</p>
-                    <p>Supporter la Roma d'ici, parmi les brumes du Piémont, n'a jamais été un choix facile. Mais en 49 ans de vie, dans les jours heureux et surtout les plus sombres, cette équipe a été un ancrage inébranlable. Une consolation.</p>
-                    <p>Je me souviens du train de nuit pris seul de Turin pour être à l'Olimpico le 17 juin 2001. Ceux qui supportent la Roma de loin vivent une solitude spéciale, faite de kilomètres et de trains de nuit.</p>
-                    <p>Pour mes 50 ans, je veux construire un foyer pour nous tous. Un lieu virtuel mais tangible pour rassembler les histoires de ceux qui vivent cette même foi à distance. Rejoignez l'Archive et prenez votre place dans le Stade Virtuel.</p>
-                `
+                btnDownload: "📥 Télécharger le Pass",
+                founderStoria: "Tout a commencé un soir de 1984...",
+                founderDifficili: "Depuis ce jour...",
+                manifestoText: `<p>Tout a commencé un soir de 1984...</p>`
             }
         };
 
@@ -725,15 +878,6 @@
             renderStadium();
         }
 
-        const sectorsList = [
-            "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
-            "Tribuna Giuseppe Giannini-Bruno Conti",
-            "Tribuna Paulo Roberto Falcão-Giacomo Losi",
-            "Tribuna Franco Tancredi-Gabriel Omar Batistuta",
-            "Curva Cafù-Candelà"
-        ];
-
-        // Gestione pulita e forzata della memoria iscritti con controllo coerenza settore
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
 
         const founderTicket = {
@@ -761,23 +905,42 @@
         const modalBody = document.getElementById('modalBody');
         const closeModal = document.getElementById('closeModal');
 
+        const sectorsList = [
+            "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
+            "Tribuna Giuseppe Giannini-Bruno Conti",
+            "Tribuna Paulo Roberto Falcão-Giacomo Losi",
+            "Tribuna Franco Tancredi-Gabriel Omar Batistuta",
+            "Curva Cafù-Candelà"
+        ];
+
+        window.filterBySector = function(sectorName) {
+            activeSectorFilter = sectorName;
+            document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderStadium(searchInput.value);
+        };
+
         function renderStadium(filter = '') {
             stadiumSectors.innerHTML = '';
             const t = translations[currentLang];
 
-            const filteredMembers = members.filter(m => 
-                m.nome.toLowerCase().includes(filter.toLowerCase()) || 
-                m.citta.toLowerCase().includes(filter.toLowerCase()) ||
-                (m.settore && m.settore.toLowerCase().includes(filter.toLowerCase()))
-            );
+            const filteredMembers = members.filter(m => {
+                const matchesSearch = m.nome.toLowerCase().includes(filter.toLowerCase()) || 
+                                      m.citta.toLowerCase().includes(filter.toLowerCase()) ||
+                                      (m.settore && m.settore.toLowerCase().includes(filter.toLowerCase()));
+                const matchesSector = (activeSectorFilter === 'Tutti') || (m.settore === activeSectorFilter);
+                return matchesSearch && matchesSector;
+            });
 
             if(filteredMembers.length === 0) {
-                stadiumSectors.innerHTML = '<p style="color:#aaa; text-align:center; margin:2rem 0;">Nessun iscritto trovato per questa ricerca.</p>';
+                stadiumSectors.innerHTML = '<p style="color:#aaa; text-align:center; margin:2rem 0;">Nessun iscritto trovato per questa ricerca o settore.</p>';
                 return;
             }
 
-            sectorsList.forEach(secName => {
-                const secMembers = filteredMembers.filter(m => (m.settore || "Curva Sud Agostino Di Bartolomei-Daniele De Rossi") === secName);
+            const targetSectors = activeSectorFilter === 'Tutti' ? sectorsList : [activeSectorFilter];
+
+            targetSectors.forEach(secName => {
+                const secMembers = filteredMembers.filter(m => (m.settore || sectorsList[0]) === secName);
                 if(secMembers.length > 0) {
                     const secBlock = document.createElement('div');
                     secBlock.className = 'sector-block';
@@ -830,11 +993,19 @@
             }
 
             modalBody.innerHTML = `
-                <div style="font-size:0.85rem; color:var(--roma-gold); text-transform:uppercase; margin-bottom:5px;">${t.passTitle} - ${escapeHtml(member.settore || 'Stadio Virtuale')}</div>
-                <h2 style="color:#fff; font-size:1.6rem; margin-bottom:5px;">${t.postoLabel} #${formattedId}</h2>
-                <div style="font-size:1.2rem; font-weight:bold; color:var(--roma-gold); margin-bottom:5px;">${escapeHtml(member.nome)}</div>
-                <div style="font-size:0.95rem; color:#fff; margin-bottom:15px;">📍 ${escapeHtml(member.citta)}</div>
-                
+                <div id="ticketToDownload" class="printable-ticket">
+                    <div class="ticket-badge-top">
+                        <span style="font-size:0.8rem; color:var(--roma-gold); font-weight:bold; text-transform:uppercase;">${t.passTitle}</span>
+                        <span style="font-size:0.8rem; color:#fff;">STADIO VIRTUALE FRANCESCO TOTTI</span>
+                    </div>
+                    <h2 style="color:var(--roma-gold); font-size:1.5rem; margin-bottom:5px;">${t.postoLabel} #${formattedId}</h2>
+                    <div style="font-size:1.3rem; font-weight:bold; color:#fff; margin-bottom:3px;">${escapeHtml(member.nome)}</div>
+                    <div style="font-size:0.9rem; color:var(--roma-gold); margin-bottom:10px;">📍 ${escapeHtml(member.citta)}</div>
+                    <div style="font-size:0.8rem; background:rgba(0,0,0,0.3); padding:8px; border-radius:4px; border-left:2px solid var(--roma-gold);">
+                        <strong>Settore:</strong> ${escapeHtml(member.settore || sectorsList[0])}
+                    </div>
+                </div>
+
                 <div style="margin-bottom:12px;">
                     <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.storyHeader}</strong>
                     <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(storyText)}"</p>
@@ -849,12 +1020,23 @@
                 ${galleryHtml}
 
                 <div class="modal-actions">
+                    <button class="btn-action btn-download" onclick="downloadTicketImage()">${t.btnDownload}</button>
                     <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">${t.btnEdit}</button>
                     <button class="btn-action btn-delete" onclick="deleteMember(${member.id})">${t.btnDelete}</button>
                 </div>
             `;
             ticketModal.style.display = 'flex';
         }
+
+        window.downloadTicketImage = function() {
+            const ticketElement = document.getElementById('ticketToDownload');
+            html2canvas(ticketElement, { scale: 2, backgroundColor: null }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Passaporto-Tifoso-ASR.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        };
 
         window.openEditForm = function(id) {
             const member = members.find(m => m.id === id);
@@ -998,7 +1180,7 @@
                 localStorage.setItem('maiSoliMembers', JSON.stringify(members));
                 renderStadium();
                 tifoForm.reset();
-                alert('Tessera generata con successo!');
+                alert('Tessera generata con successo! Benvenuto nello Stadio Virtuale!');
             };
 
             if (fileInput.files && fileInput.files.length > 0) {
