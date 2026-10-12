@@ -16,6 +16,7 @@
             --text-light: #f5f5f5;
             --text-muted: #aaaaaa;
             --wa-green: #25d366;
+            --ig-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
         }
 
         * {
@@ -262,7 +263,7 @@
             color: #e0e0e0;
         }
 
-        /* STILE ELEGANTE PER IL MURO DEL TIFOSO (CITAZIONE) */
+        /* STILE PER IL MURO DEL TIFOSO */
         .motto-card {
             background: linear-gradient(135deg, rgba(74, 0, 14, 0.6) 0%, rgba(107, 0, 20, 0.4) 100%);
             border: 1px solid var(--roma-gold);
@@ -287,6 +288,40 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        /* BOX CALL TO ACTION SOCIAL NELLA MODALE */
+        .social-cta-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--roma-gold);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .social-cta-box p {
+            font-size: 0.85rem;
+            color: #f5f5f5;
+            margin-bottom: 8px;
+        }
+
+        .btn-instagram {
+            display: inline-block;
+            background: var(--ig-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s;
+        }
+
+        .btn-instagram:hover {
+            transform: scale(1.05);
         }
 
         .section-header {
@@ -644,7 +679,6 @@
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, nello Stadio Virtuale non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutti noi. Un luogo virtuale ma tangibile dove raccogliere le storie di chi, da ogni parte d'Italia e del mondo, vive questa stessa fede a distanza. Unisciti all'Archivio, prendi il tuo posto nello Stadio Virtuale e raccontaci la tua storia.</p>
             </div>
         </div>
@@ -666,6 +700,12 @@
             <div class="exchange-box-sub">
                 💡 <strong>Come fare?</strong> Scrivici e condividi le tue indicazioni direttamente nel nostro <strong>gruppo WhatsApp ufficiale</strong> per organizzare le trasferte insieme!
             </div>
+        </div>
+
+        <!-- IL MURO DEL TIFOSO (CITAZIONE SPECIALE) -->
+        <div class="motto-card">
+            <p>«Che tu viva a un chilometro dall'Olimpico o in capo al mondo, nello Stadio Virtuale non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.»</p>
+            <span>Dal cuore di Roma alla Patagonia: ogni tessera ha lo stesso peso emotivo</span>
         </div>
 
         <!-- STADIO VIRTUALE FRANCESCO TOTTI -->
@@ -780,6 +820,8 @@
                 btnEdit: "Modifica",
                 btnDelete: "Elimina",
                 btnDownload: "📥 Scarica Passaporto / Biglietto",
+                socialCtaText: "Condividi il tuo passaporto su Instagram taggando @officialasroma e usando l'hashtag #MaiSoliMai",
+                btnInstagram: "📸 Condividi su Instagram",
                 founderStoria: defaultStoriaIT,
                 founderDifficili: defaultDifficiliIT,
                 manifestoText: `
@@ -817,6 +859,8 @@
                 btnEdit: "Edit",
                 btnDelete: "Delete",
                 btnDownload: "📥 Download Passport",
+                socialCtaText: "Share your passport on Instagram tagging @officialasroma and using #MaiSoliMai",
+                btnInstagram: "📸 Share on Instagram",
                 founderStoria: defaultStoriaIT,
                 founderDifficili: defaultDifficiliIT,
                 manifestoText: `<p>Tutto è iniziato una sera del 1984...</p>`
@@ -849,6 +893,8 @@
                 btnEdit: "Editar",
                 btnDelete: "Eliminar",
                 btnDownload: "📥 Descargar Pasaporte",
+                socialCtaText: "Comparte tu pasaporte en Instagram etiquetando a @officialasroma y usando #MaiSoliMai",
+                btnInstagram: "📸 Compartir en Instagram",
                 founderStoria: defaultStoriaIT,
                 founderDifficili: defaultDifficiliIT,
                 manifestoText: `<p>Todo comenzó una noche de 1984...</p>`
@@ -881,6 +927,8 @@
                 btnEdit: "Modifier",
                 btnDelete: "Supprimer",
                 btnDownload: "📥 Télécharger le Pass",
+                socialCtaText: "Partagez votre passeport sur Instagram en taguant @officialasroma et avec #MaiSoliMai",
+                btnInstagram: "📸 Partager sur Instagram",
                 founderStoria: defaultStoriaIT,
                 founderDifficili: defaultDifficiliIT,
                 manifestoText: `<p>Tout a commencé un soir de 1984...</p>`
@@ -1045,7 +1093,13 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom:12px;">
+                <!-- Call to action Social integrata sotto la tessera -->
+                <div class="social-cta-box">
+                    <p>${t.socialCtaText}</p>
+                    <a href="https://www.instagram.com/" target="_blank" class="btn-instagram">${t.btnInstagram}</a>
+                </div>
+
+                <div style="margin-top:15px; margin-bottom:12px;">
                     <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.storyHeader}</strong>
                     <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(storyText)}"</p>
                 </div>
