@@ -456,7 +456,7 @@
             background-color: #b88a10;
         }
 
-        /* MODAL E PASSAPORTO DIGITALI */
+        /* MODAL E PASSAPORTO DIGITALE */
         .modal {
             display: none;
             position: fixed;
@@ -618,8 +618,8 @@
             <h2 id="t-manifesto-title">Il Manifesto <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span></h2>
             <div class="manifesto-text" id="t-manifesto-content">
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
-                <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una compagna di viaggio.</p>
-                <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni e partite guardate in silenzio e in solitudine.</p>
+                <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
+                <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutti noi. Un luogo virtuale ma tangibile dove raccogliere le storie di chi, da ogni parte d'Italia e del mondo, vive questa stessa fede a distanza. Unisciti all'Archivio, prendi il tuo posto nello Stadio Virtuale e raccontaci la tua storia.</p>
             </div>
         </div>
@@ -724,7 +724,7 @@
         let activeSectorFilter = 'Tutti';
 
         const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
-        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei moments di gioia come in quelli più bui, non mi ha mai lasciato solo.";
+        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
 
         const translations = {
             it: {
@@ -889,21 +889,25 @@
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
 
-        const founderTicket = {
-            id: 1,
-            nome: "Massimo Graglia",
-            citta: "Torino (Italia)",
-            settore: "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
-            storia: defaultStoriaIT,
-            difficili: defaultDifficiliIT,
-            fotos: []
-        };
-
+        // Inizializzazione sicura della tessera #001 che preserva le foto salvate
         const founderIndex = members.findIndex(m => m.id === 1);
         if (founderIndex !== -1) {
-            members[founderIndex] = founderTicket;
+            members[founderIndex].nome = "Massimo Graglia";
+            members[founderIndex].citta = "Torino (Italia)";
+            members[founderIndex].settore = "Curva Sud Agostino Di Bartolomei-Daniele De Rossi";
+            members[founderIndex].storia = members[founderIndex].storia || defaultStoriaIT;
+            members[founderIndex].difficili = members[founderIndex].difficili || defaultDifficiliIT;
+            members[founderIndex].fotos = members[founderIndex].fotos || [];
         } else {
-            members.unshift(founderTicket);
+            members.unshift({
+                id: 1,
+                nome: "Massimo Graglia",
+                citta: "Torino (Italia)",
+                settore: "Curva Sud Agostino Di Bartolomei-Daniele De Rossi",
+                storia: defaultStoriaIT,
+                difficili: defaultDifficiliIT,
+                fotos: []
+            });
         }
         localStorage.setItem('maiSoliMembers', JSON.stringify(members));
 
@@ -988,8 +992,8 @@
             let diffText = member.difficili;
 
             if(member.id === 1) {
-                storyText = t.founderStoria;
-                diffText = t.founderDifficili;
+                storyText = member.storia || t.founderStoria;
+                diffText = member.difficili || t.founderDifficili;
             }
 
             let galleryHtml = '';
