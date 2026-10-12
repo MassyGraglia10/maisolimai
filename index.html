@@ -172,50 +172,6 @@
             color: var(--roma-gold);
         }
 
-        /* MAPPA INTERATTIVA SETTORI */
-        .interactive-map-card {
-            background: linear-gradient(145deg, #181818, #221217);
-            border: 1px solid var(--roma-gold);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .interactive-map-card h3 {
-            color: var(--roma-gold);
-            text-transform: uppercase;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-
-        .map-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .map-btn {
-            background-color: rgba(107, 0, 20, 0.6);
-            color: #fff;
-            border: 1px solid var(--roma-gold);
-            padding: 0.6rem 1.1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-
-        .map-btn:hover, .map-btn.active {
-            background-color: var(--roma-gold);
-            color: #000;
-            transform: scale(1.05);
-        }
-
         .community-card {
             background: linear-gradient(135deg, #1e1e1e 0%, #2a1a1f 100%);
             border: 1px solid var(--roma-gold);
@@ -274,26 +230,37 @@
             transform: scale(1.05);
         }
 
-        /* ANGOLO DELLO SCAMBIO / CURIOSITÀ */
+        /* ANGOLO DELLO SCAMBIO / CURIOSITÀ A DISTANZA */
         .exchange-card {
             background-color: var(--roma-card-bg);
             border: 1px dashed var(--roma-gold);
             border-radius: 8px;
-            padding: 2rem;
+            padding: 1.8rem;
             margin-bottom: 2.5rem;
         }
 
         .exchange-card h3 {
             color: var(--roma-gold);
             text-transform: uppercase;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
         }
 
         .exchange-card p {
-            color: #ccc;
-            font-size: 0.95rem;
+            color: #d0d0d0;
+            font-size: 0.88rem;
+            line-height: 1.5;
             margin-bottom: 1.2rem;
+        }
+
+        .exchange-box-sub {
+            background: rgba(0,0,0,0.3);
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--roma-gold);
+            font-size: 0.82rem;
+            color: #e0e0e0;
         }
 
         .section-header {
@@ -393,6 +360,50 @@
             color: var(--roma-gold);
         }
 
+        /* MAPPA INTERATTIVA SETTORI IN FONDO CON FONT COMPATTO */
+        .interactive-map-card {
+            background: linear-gradient(145deg, #181818, #221217);
+            border: 1px solid rgba(212, 160, 23, 0.4);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-top: 3rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .interactive-map-card h3 {
+            color: var(--roma-gold);
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .map-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .map-btn {
+            background-color: rgba(107, 0, 20, 0.6);
+            color: #fff;
+            border: 1px solid var(--roma-gold);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .map-btn:hover, .map-btn.active {
+            background-color: var(--roma-gold);
+            color: #000;
+        }
+
         .form-card {
             background-color: var(--roma-card-bg);
             border-radius: 8px;
@@ -445,7 +456,7 @@
             background-color: #b88a10;
         }
 
-        /* MODAL E PASSAPORTO DIGITALE */
+        /* MODAL E PASSAPORTO DIGITALI */
         .modal {
             display: none;
             position: fixed;
@@ -480,7 +491,6 @@
             font-weight: bold;
         }
 
-        /* STILE GRAFICO DEL BIGLIETTO DA SCARICARE */
         .printable-ticket {
             background: linear-gradient(135deg, #4a000e 0%, #6b0014 100%);
             border: 2px solid var(--roma-gold);
@@ -574,10 +584,9 @@
     <!-- MENU DI NAVIGAZIONE -->
     <nav class="main-nav">
         <a href="#manifesto">Il Manifesto</a>
-        <a href="#stadio">Stadio Virtuale</a>
-        <a href="#mappa">Mappa Settori</a>
         <a href="#community">Community</a>
         <a href="#scambio">Angolo dello Scambio</a>
+        <a href="#stadio">Stadio Virtuale</a>
         <a href="#iscriviti">Prendi il Posto</a>
     </nav>
 
@@ -615,19 +624,6 @@
             </div>
         </div>
 
-        <!-- MAPPA INTERATTIVA SETTORI -->
-        <div id="mappa" class="interactive-map-card">
-            <h3>🗺️ Mappa Interattiva dello Stadio - Filtra per Settore</h3>
-            <div class="map-buttons" id="mapButtonsContainer">
-                <button class="map-btn active" onclick="filterBySector('Tutti')">Tutti i Settori</button>
-                <button class="map-btn" onclick="filterBySector('Curva Sud Agostino Di Bartolomei-Daniele De Rossi')">Curva Sud</button>
-                <button class="map-btn" onclick="filterBySector('Tribuna Giuseppe Giannini-Bruno Conti')">Tribuna Giannini-Conti</button>
-                <button class="map-btn" onclick="filterBySector('Tribuna Paulo Roberto Falcão-Giacomo Losi')">Tribuna Falcão-Losi</button>
-                <button class="map-btn" onclick="filterBySector('Tribuna Franco Tancredi-Gabriel Omar Batistuta')">Tribuna Tancredi-Batistuta</button>
-                <button class="map-btn" onclick="filterBySector('Curva Cafù-Candelà')">Curva Cafù-Candelà</button>
-            </div>
-        </div>
-
         <!-- COMMUNITY HUB -->
         <div id="community" class="community-card">
             <h3 id="t-comm-title">Punto di Ritrovo & Community</h3>
@@ -640,10 +636,10 @@
 
         <!-- ANGOLO DELLO SCAMBIO / CURIOSITÀ A DISTANZA -->
         <div id="scambio" class="exchange-card">
-            <h3>🍻 L'Angolo dello Scambio & Curiosità a Distanza</h3>
-            <p>Sei in trasferta o vivi in una città lontana e cerchi un posto sicuro dove vedere la partita circondato da romanisti? Oppure vuoi segnalare un pub, un locale o un punto di riferimento giallorosso nella tua zona? Condividilo con la community!</p>
-            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 6px; border-left: 3px solid var(--roma-gold);">
-                <p style="margin:0; font-size:0.9rem; color:#f5f5f5;">💡 <strong>Come fare?</strong> Scrivilo nel gruppo WhatsApp ufficiale o segnalalo direttamente tramite le note della tua tessera per aiutare gli altri tifosi in giro per il mondo!</p>
+            <h3>✈️ L'Angolo dello Scambio & Viaggi per le Trasferte</h3>
+            <p>Devi organizzare un viaggio per seguire la Roma? Stai cercando o vuoi dare consigli utili su <strong>hotel, voli, treni, navette o locali dove vedere le partite</strong> nelle trasferte italiane ed europee? Condividi le tue informazioni logistiche per facilitare il viaggio di ogni fratello romanista.</p>
+            <div class="exchange-box-sub">
+                💡 <strong>Come fare?</strong> Scrivici e condividi le tue indicazioni direttamente nel nostro <strong>gruppo WhatsApp ufficiale</strong> per organizzare le trasferte insieme!
             </div>
         </div>
 
@@ -655,6 +651,19 @@
 
         <div id="stadiumSectors">
             <!-- Settori caricati dinamicamente -->
+        </div>
+
+        <!-- MAPPA INTERATTIVA SETTORI IN FONDO -->
+        <div id="mappa" class="interactive-map-card">
+            <h3>🏟️ Filtra lo Stadio per Settore</h3>
+            <div class="map-buttons" id="mapButtonsContainer">
+                <button class="map-btn active" onclick="filterBySector('Tutti')">Tutti i Settori</button>
+                <button class="map-btn" onclick="filterBySector('Curva Sud Agostino Di Bartolomei-Daniele De Rossi')">Curva Sud</button>
+                <button class="map-btn" onclick="filterBySector('Tribuna Giuseppe Giannini-Bruno Conti')">Tribuna Giannini-Conti</button>
+                <button class="map-btn" onclick="filterBySector('Tribuna Paulo Roberto Falcão-Giacomo Losi')">Tribuna Falcão-Losi</button>
+                <button class="map-btn" onclick="filterBySector('Tribuna Franco Tancredi-Gabriel Omar Batistuta')">Tribuna Tancredi-Batistuta</button>
+                <button class="map-btn" onclick="filterBySector('Curva Cafù-Candelà')">Curva Cafù-Candelà</button>
+            </div>
         </div>
 
         <!-- MODULO DI REGISTRAZIONE -->
@@ -697,7 +706,7 @@
 
     </div>
 
-    <!-- MODAL DETTAGLIO / PASSAPORTO DIGITALI -->
+    <!-- MODAL DETTAGLIO / PASSAPORTO DIGITALE -->
     <div class="modal" id="ticketModal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
@@ -715,7 +724,7 @@
         let activeSectorFilter = 'Tutti';
 
         const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
-        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
+        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei moments di gioia come in quelli più bui, non mi ha mai lasciato solo.";
 
         const translations = {
             it: {
@@ -759,64 +768,64 @@
                 subtitle: "Roma is not to be debated, it is to be loved",
                 manifestoTitle: "The Manifesto",
                 commTitle: "Meeting Point & Community",
-                commDesc: "Stay united without relying on social networks. Join our direct group or enter the voice room for matches:",
+                commDesc: "Stay united without relying on social networks...",
                 btnWa: "💬 Romanisti WhatsApp Group",
                 btnMeet: "💻 Google Meet Room",
                 stadiumTitle: "Francesco Totti Virtual Stadium",
                 searchPlaceholder: "🔍 Search members or city...",
                 formTitle: "Take Your Seat in the Stadium",
-                lblNome: "Name and/or Nickname *",
-                lblCitta: "City and Country you support from *",
-                lblSettore: "Choose your Sector in the Virtual Stadium *",
-                lblStoria: "The Spark and your Story: what made you fall in love with Roma and your best journey? *",
-                lblDifficili: "What does Roma represent in your most difficult moments?",
-                lblFoto: "Upload your photos (you can select multiple)",
-                btnSubmit: "Submit your story and get your Seat",
-                footerSub: "Initiative created for Massimo Graglia's 50th Birthday",
+                lblNome: "Name *",
+                lblCitta: "City *",
+                lblSettore: "Sector *",
+                lblStoria: "Story *",
+                lblDifficili: "Difficult moments",
+                lblFoto: "Photos",
+                btnSubmit: "Submit",
+                footerSub: "50th Birthday Initiative",
                 passTitle: "Official Pass",
                 postoLabel: "SEAT",
                 founderLabel: "FOUNDER",
                 fanLabel: "SUPPORTER",
-                storyHeader: "The Spark and the Story:",
+                storyHeader: "The Spark:",
                 difficultHeader: "In difficult moments:",
                 galleryHeader: "Photo Gallery:",
                 btnEdit: "Edit",
                 btnDelete: "Delete",
-                btnDownload: "📥 Download Passport / Ticket",
-                founderStoria: "It all started on an evening in 1984. I was a child in Piedmont watching the European Cup final: Roma-Liverpool...",
-                founderDifficili: "From that day on, Roma has always been there, every single day.",
-                manifestoText: `<p>It all started on an evening in 1984...</p>`
+                btnDownload: "📥 Download Passport",
+                founderStoria: defaultStoriaIT,
+                founderDifficili: defaultDifficiliIT,
+                manifestoText: `<p>Tutto è iniziato una sera del 1984...</p>`
             },
             es: {
                 subtitle: "La Roma no se discute, se ama",
                 manifestoTitle: "El Manifiesto",
                 commTitle: "Punto de Encuentro y Comunidad",
-                commDesc: "Permanezcamos unidos sin depender de las redes sociales...",
+                commDesc: "Permanezcamos unidos...",
                 btnWa: "💬 Grupo de WhatsApp Romanisti",
                 btnMeet: "💻 Sala de Google Meet",
                 stadiumTitle: "Estadio Virtual Francesco Totti",
-                searchPlaceholder: "🔍 Buscar miembros o ciudad...",
-                formTitle: "Toma tu Asiento en el Estadio",
-                lblNome: "Nombre y/o Apodo *",
-                lblCitta: "Ciudad y País desde donde apoyas *",
-                lblSettore: "Elige tu Sector en el Estadio Virtual *",
-                lblStoria: "La chispa y tu historia...",
-                lblDifficili: "¿Qué representa o ha representado la Roma...",
-                lblFoto: "Sube tus fotos",
-                btnSubmit: "Envía tu historia",
-                footerSub: "Iniciativa creada en ocasión del 50 cumpleaños",
+                searchPlaceholder: "🔍 Buscar...",
+                formTitle: "Toma tu Asiento",
+                lblNome: "Nombre *",
+                lblCitta: "Ciudad *",
+                lblSettore: "Sector *",
+                lblStoria: "Historia *",
+                lblDifficili: "Momentos difíciles",
+                lblFoto: "Fotos",
+                btnSubmit: "Enviar",
+                footerSub: "Iniciativa 50 cumpleaños",
                 passTitle: "Pase Oficial",
                 postoLabel: "ASIENTO",
                 founderLabel: "FUNDADOR",
                 fanLabel: "AFICIONADO",
-                storyHeader: "La Chispa y la Historia:",
-                difficultHeader: "En los momentos difíciles:",
+                storyHeader: "La Chispa:",
+                difficultHeader: "Momentos difíciles:",
                 galleryHeader: "Galería de Fotos:",
                 btnEdit: "Editar",
                 btnDelete: "Eliminar",
                 btnDownload: "📥 Descargar Pasaporte",
-                founderStoria: "Todo comenzó una noche de 1984...",
-                founderDifficili: "Desde aquel día la Roma siempre ha estado ahí.",
+                founderStoria: defaultStoriaIT,
+                founderDifficili: defaultDifficiliIT,
                 manifestoText: `<p>Todo comenzó una noche de 1984...</p>`
             },
             fr: {
@@ -833,10 +842,10 @@
                 lblCitta: "Ville *",
                 lblSettore: "Secteur *",
                 lblStoria: "Histoire *",
-                lblDifficili: "Moments difficili",
+                lblDifficili: "Moments difficiles",
                 lblFoto: "Photos",
                 btnSubmit: "Envoyer",
-                footerSub: "Initiative créée à l'occasion du 50e anniversaire",
+                footerSub: "50e anniversaire Initiative",
                 passTitle: "Pass Officiel",
                 postoLabel: "SIÈGE",
                 founderLabel: "FONDATEUR",
@@ -847,8 +856,8 @@
                 btnEdit: "Modifier",
                 btnDelete: "Supprimer",
                 btnDownload: "📥 Télécharger le Pass",
-                founderStoria: "Tout a commencé un soir de 1984...",
-                founderDifficili: "Depuis ce jour...",
+                founderStoria: defaultStoriaIT,
+                founderDifficili: defaultDifficiliIT,
                 manifestoText: `<p>Tout a commencé un soir de 1984...</p>`
             }
         };
@@ -916,7 +925,9 @@
         window.filterBySector = function(sectorName) {
             activeSectorFilter = sectorName;
             document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event && event.target) {
+                event.target.classList.add('active');
+            }
             renderStadium(searchInput.value);
         };
 
