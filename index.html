@@ -31,6 +31,7 @@
         window.firebaseDb = db;
         window.colMembers = collection(db, "members");
         window.colTips = collection(db, "tips");
+        window.colSocial = collection(db, "socialProjects");
         window.addDocCloud = addDoc;
         window.getDocsCloud = getDocs;
         window.deleteDocCloud = deleteDoc;
@@ -531,6 +532,76 @@
             font-size: 0.8rem;
         }
 
+        /* SEZIONE SOCIALE / DONA UN SORRISO */
+        .social-card {
+            background: linear-gradient(145deg, #1f1218, #2a101b);
+            border: 2px solid var(--roma-gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 6px 20px rgba(212, 160, 23, 0.2);
+        }
+
+        .social-card h3 {
+            color: var(--roma-gold);
+            text-transform: uppercase;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-card p {
+            font-size: 0.95rem;
+            color: #ddd;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .social-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-project-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(212, 160, 23, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            position: relative;
+        }
+
+        .social-project-item strong {
+            color: var(--roma-gold);
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .social-project-item p {
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .social-form-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed var(--roma-gold);
+            padding: 1.2rem;
+            border-radius: 8px;
+        }
+
+        .social-form-box h4 {
+            color: var(--roma-gold);
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
         .social-cta-box {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--roma-gold);
@@ -722,6 +793,7 @@
         <a href="#archivio">Archivio & Prendi Tessera</a>
         <a href="#mappa-mondo">Mappa Globale</a>
         <a href="#consigli">Info & Alloggi</a>
+        <a href="#solidarieta">Dona un Sorriso</a>
     </nav>
 
     <header>
@@ -753,7 +825,7 @@
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.</p>
+                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
             </div>
         </div>
@@ -775,7 +847,7 @@
                         <textarea id="storia" required placeholder="Raccontaci qual è il momento che ti ha fatto innamorare della Roma e qual è il tuo ricordo o viaggio più bello da tifoso a distanza"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="difficili" id="t-lbl-difficili">Nei moments difficili</label>
+                        <label for="difficili" id="t-lbl-difficili">Nei momenti difficili</label>
                         <textarea id="difficili" placeholder="Cosa rappresenta o ha rappresentato la Roma nei tuoi momenti più difficili"></textarea>
                     </div>
                     <div class="form-group">
@@ -837,6 +909,26 @@
             <div class="tips-list" id="tipsContainer"></div>
         </div>
 
+        <!-- SEZIONE DONA UN SORRISO / PROGETTI SOLIDALI -->
+        <div id="solidarieta" class="social-card">
+            <h3>❤️ Dona un Sorriso / Progetti Solidali</h3>
+            <p>I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali sul territorio, in linea con lo spirito di solidarietà di Roma Cares.</p>
+            
+            <div class="social-projects-grid" id="socialProjectsContainer">
+                <!-- Progetti caricati dinamicamente -->
+            </div>
+
+            <div class="social-form-box">
+                <h4>🤝 Segnala o Proponi un'Iniziativa Solidale</h4>
+                <div class="tip-input-group">
+                    <input type="text" id="socialTitolo" placeholder="Titolo iniziativa (es. Raccolta beni / Adozione)">
+                    <input type="text" id="socialCitta" placeholder="Città / Riferimento (es. Torino / Roma)">
+                    <input type="text" id="socialDescrizione" placeholder="Descrizione o link alla causa...">
+                    <button class="btn-add-tip" onclick="saveSocialProject()">Aggiungi Causa</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="modal" id="ticketModal">
@@ -858,6 +950,10 @@
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
         let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [];
+        let socialProjects = JSON.parse(localStorage.getItem('maiSoliSocial')) || [
+            { id: 1, titolo: "Supporto ai Senza Dimora", citta: "Roma", descrizione: "Iniziativa spontanea dei tifosi per la distribuzione di coperte e pasti caldi nei pressi dello Stadio Olimpico e Termini." },
+            { id: 2, titolo: "Vicini ai Piccoli Tifosi", citta: "Torino & Nazionale", descrizione: "Raccolta e donazione di sciarpe, maglie e libri di sport ai reparti pediatrici locali nel nome dei valori romanisti." }
+        ];
 
         const archiveGridContainer = document.getElementById('archiveGridContainer');
         const tifoForm = document.getElementById('tifoForm');
@@ -924,6 +1020,60 @@
             });
             updateMapMarkers();
         }
+
+        function renderSocialProjects() {
+            const container = document.getElementById('socialProjectsContainer');
+            container.innerHTML = '';
+            if(socialProjects.length === 0) {
+                container.innerHTML = '<p style="color:#aaa; font-size:0.85rem;">Nessun progetto solidale attivo al momento.</p>';
+                return;
+            }
+            socialProjects.forEach((p, index) => {
+                const item = document.createElement('div');
+                item.className = 'social-project-item';
+                item.innerHTML = `
+                    <strong>❤️ ${escapeHtml(p.titolo)} <span style="font-size:0.75rem; color:var(--roma-gold);">📍 ${escapeHtml(p.citta)}</span></strong>
+                    <p>${escapeHtml(p.descrizione)}</p>
+                    <button class="btn-tip-action" style="color:#a00; font-size:0.75rem;" onclick="deleteSocialProject(${index})">🗑️ Rimuovi</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        window.saveSocialProject = async function() {
+            const titolo = document.getElementById('socialTitolo').value.trim();
+            const citta = document.getElementById('socialCitta').value.trim();
+            const descrizione = document.getElementById('socialDescrizione').value.trim();
+
+            if(!titolo || !citta || !descrizione) {
+                alert('Compila tutti i campi della causa solidale!');
+                return;
+            }
+
+            const newProj = { id: Date.now(), titolo, citta, descrizione };
+            socialProjects.unshift(newProj);
+            localStorage.setItem('maiSoliSocial', JSON.stringify(socialProjects));
+            renderSocialProjects();
+
+            if (window.addDocCloud && window.colSocial) {
+                try {
+                    await window.addDocCloud(window.colSocial, newProj);
+                } catch(e) { console.log("Cloud social sync warning:", e); }
+            }
+
+            document.getElementById('socialTitolo').value = '';
+            document.getElementById('socialCitta').value = '';
+            document.getElementById('socialDescrizione').value = '';
+            alert('Iniziativa solidale pubblicata con successo!');
+        };
+
+        window.deleteSocialProject = async function(index) {
+            if(confirm("Vuoi rimuovere questo progetto solidale?")) {
+                socialProjects.splice(index, 1);
+                localStorage.setItem('maiSoliSocial', JSON.stringify(socialProjects));
+                renderSocialProjects();
+            }
+        };
 
         function openTicketDetail(id) {
             const member = members.find(m => m.id === id);
@@ -1082,7 +1232,6 @@
             
             if(!member.fotos) member.fotos = member.foto ? [member.foto] : [];
 
-            // Ricomprimi anche le vecchie foto per farle vedere su cellulare
             let compressedOldPhotos = [];
             for (let oldPic of member.fotos) {
                 if (oldPic.startsWith('data:image')) {
@@ -1191,6 +1340,19 @@
                     localStorage.setItem('maiSoliMembers', JSON.stringify(members));
                     renderArchive();
                 }
+
+                if (window.colSocial) {
+                    const socialSnap = await window.getDocsCloud(window.colSocial);
+                    let cloudSocial = [];
+                    socialSnap.forEach((docSnap) => {
+                        cloudSocial.push(docSnap.data());
+                    });
+                    if(cloudSocial.length > 0) {
+                        socialProjects = cloudSocial;
+                        localStorage.setItem('maiSoliSocial', JSON.stringify(socialProjects));
+                        renderSocialProjects();
+                    }
+                }
             } catch(e) { console.log("Firebase sync fallback ready.", e); }
         };
 
@@ -1205,6 +1367,7 @@
         window.onload = function() {
             initMap();
             renderArchive();
+            renderSocialProjects();
             if (window.syncWithCloud) {
                 window.syncWithCloud();
             }
