@@ -655,12 +655,12 @@
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>«Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.»</p>
+                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
             </div>
         </div>
 
-        <!-- MAPPA MONDIALE INTERATTIVA -->
+        <!-- MAPPA MONDIALE INTERATTIVA LIBERA -->
         <div id="mappa-mondo" class="world-map-card">
             <h3>🌍 La Rete Globale del Tifo Romanista</h3>
             <p>Esplora la mappa interattiva: ogni segnalino rappresenta un tifoso a distanza. Clicca sul punto per leggere chi c'è dietro!</p>
@@ -756,11 +756,9 @@
         let map, markersGroup;
 
         const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
-        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei moments di gioia come in quelli più bui, non mi ha mai lasciato solo.";
+        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
 
-        // Consigli di base iniziali
         let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [
-            { citta: "Roma / Flaminio", categoria: "🛏️ Alloggio", testo: "Ottimi i B&B nei quartieri Flaminio e Prati per raggiungere l'Olimpico a piedi o con il tram 2." },
             { citta: "Roma / Termini", categoria: "🚆 Trasporti", testo: "Dalla stazione Termini prendi la Metro A fino a Ottaviano o Flaminio per velocizzare lo spostamento." }
         ];
 
@@ -853,14 +851,12 @@
         const modalBody = document.getElementById('modalBody');
         const closeModal = document.getElementById('closeModal');
 
-        // Inizializza la Mappa Globale Leaflet
+        // INIZIALIZZA LA MAPPA CON OPENSTREETMAP LIBERA (NO API KEY)
         function initMap() {
-            map = L.map('map').setView([42.5000, 12.5000], 4); // Centrata sull'Europa/Italia
+            map = L.map('map').setView([42.5000, 12.5000], 4);
             
-            // Tile Layer in modalità scura per abbinarsi al tema Roma
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap &copy; CARTO',
-                subdomains: 'abcd',
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
                 maxZoom: 19
             }).addTo(map);
 
@@ -873,7 +869,6 @@
             markersGroup.clearLayers();
 
             members.forEach(m => {
-                // Se non ha coordinate, assegna coordinate fittizie intorno all'Europa o usa la geolocalizzazione approssimativa
                 let lat = m.lat || (40 + (Math.random() * 10 - 5));
                 let lng = m.lng || (12 + (Math.random() * 15 - 7.5));
 
@@ -881,7 +876,7 @@
                     color: '#d4a017',
                     fillColor: '#6b0014',
                     fillOpacity: 0.9,
-                    radius: 8
+                    radius: 9
                 });
 
                 marker.bindPopup(`
@@ -1160,7 +1155,7 @@
                     storia: document.getElementById('storia').value,
                     difficili: document.getElementById('difficili').value,
                     fotos: photoArray,
-                    lat: 40 + (Math.random() * 10 - 5), // Assegna posizione dinamica sulla mappa
+                    lat: 40 + (Math.random() * 10 - 5),
                     lng: 12 + (Math.random() * 15 - 7.5)
                 };
 
