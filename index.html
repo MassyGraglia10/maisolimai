@@ -6,6 +6,10 @@
     <title>MAI SOLI MAI - Archivio del Tifo a Distanza</title>
     <!-- Libreria per scaricare il biglietto come immagine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Libreria Mappe Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
         :root {
             --roma-bordeaux: #6b0014;
@@ -173,31 +177,124 @@
             color: var(--roma-gold);
         }
 
-        .community-card {
-            background: linear-gradient(135deg, #1e1e1e 0%, #2a1a1f 100%);
+        /* SEZIONE MAPPA GLOBALE INTERATTIVA */
+        .world-map-card {
+            background: linear-gradient(145deg, #181818, #221217);
             border: 1px solid var(--roma-gold);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 6px 20px rgba(212, 160, 23, 0.15);
+        }
+
+        .world-map-card h3 {
+            color: var(--roma-gold);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .world-map-card p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 1.2rem;
+        }
+
+        #map {
+            height: 380px;
+            width: 100%;
             border-radius: 8px;
+            border: 1px solid var(--roma-gold);
+            z-index: 1;
+        }
+
+        /* BACHECA CONSIGLI INTERATTIVA */
+        .exchange-card {
+            background-color: var(--roma-card-bg);
+            border: 1px solid rgba(212, 160, 23, 0.4);
+            border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2.5rem;
-            text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .community-card h3 {
+        .exchange-card h3 {
             color: var(--roma-gold);
-            font-size: 1.3rem;
             text-transform: uppercase;
-            margin-bottom: 0.6rem;
-            letter-spacing: 1px;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
         }
 
-        .community-card p {
-            color: #ddd;
-            font-size: 0.95rem;
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin-bottom: 1.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .tip-item {
+            background: rgba(0,0,0,0.4);
+            border-left: 4px solid var(--roma-gold);
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .tip-item strong {
+            color: var(--roma-gold);
+        }
+
+        .tip-form-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed var(--roma-gold);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+        }
+
+        .tip-form-box h4 {
+            color: var(--roma-gold);
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .tip-input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tip-input-group input, .tip-input-group select {
+            padding: 0.6rem;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 0.85rem;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-add-tip {
+            background-color: var(--roma-gold);
+            color: #000;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
         .btn-group {
@@ -229,105 +326,6 @@
         .btn-room:hover, .btn-wa:hover {
             opacity: 0.9;
             transform: scale(1.05);
-        }
-
-        /* MAPPA MONDIALE SIMULATA DEI TIFOSI */
-        .world-map-card {
-            background: linear-gradient(145deg, #181818, #221217);
-            border: 1px solid var(--roma-gold);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2.5rem;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-
-        .world-map-card h3 {
-            color: var(--roma-gold);
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            margin-bottom: 0.6rem;
-            letter-spacing: 1px;
-        }
-
-        .world-map-card p {
-            font-size: 0.9rem;
-            color: #ccc;
-            margin-bottom: 1.5rem;
-        }
-
-        .radar-box {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px dashed rgba(212, 160, 23, 0.4);
-            border-radius: 6px;
-            padding: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .radar-pin {
-            background: rgba(107, 0, 20, 0.8);
-            border: 1px solid var(--roma-gold);
-            color: #fff;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .radar-pin span {
-            color: var(--roma-gold);
-            font-weight: bold;
-        }
-
-        /* BACHECA CONSIGLI UTILI & ALLOGGI */
-        .exchange-card {
-            background-color: var(--roma-card-bg);
-            border: 1px solid rgba(212, 160, 23, 0.4);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .exchange-card h3 {
-            color: var(--roma-gold);
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-            letter-spacing: 0.5px;
-        }
-
-        .exchange-card p {
-            color: #d0d0d0;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1.2rem;
-        }
-
-        .tips-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 1.2rem;
-        }
-
-        .tip-item {
-            background: rgba(0,0,0,0.3);
-            border-left: 3px solid var(--roma-gold);
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            color: #ddd;
-        }
-
-        .tip-item strong {
-            color: var(--roma-gold);
         }
 
         .social-cta-box {
@@ -657,31 +655,45 @@
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>«Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.»</p>
+                <p>«Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.»</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
             </div>
         </div>
 
-        <!-- MAPPA MONDIALE INTERATTIVA DEI PUNTINI -->
+        <!-- MAPPA MONDIALE INTERATTIVA -->
         <div id="mappa-mondo" class="world-map-card">
-            <h3>🌍 La Rete Globale del Tifo: I Puntini nel Mondo</h3>
-            <p>Ogni tesserato accende un punto sulla mappa. Dalle province italiane alle capitali estere: ecco dove batte il cuore romanista a distanza.</p>
-            <div class="radar-box" id="radarPinsContainer">
-                <!-- Puntini dinamici generati in base agli iscritti -->
-            </div>
+            <h3>🌍 La Rete Globale del Tifo Romanista</h3>
+            <p>Esplora la mappa interattiva: ogni segnalino rappresenta un tifoso a distanza. Clicca sul punto per leggere chi c'è dietro!</p>
+            <div id="map"></div>
         </div>
 
-        <!-- BACHECA CONSIGLI UTILI & ALLOGGI (SOSTITUISCE IL CAOS DI WHATSAPP) -->
+        <!-- BACHECA CONSIGLI UTILI & ALLOGGI COLLABORATIVA -->
         <div id="consigli" class="exchange-card">
-            <h3>🏨 Bacheca Viaggi, Alloggi & Info Utili per le Trasferte</h3>
-            <p>Un punto di riferimento ordinato e pulito per chi scende a Roma o viaggia in trasferta: hotel consigliati dai tifosi, zone comode per i collegamenti con lo stadio e locali di riferimento.</p>
-            <div class="tips-list">
-                <div class="tip-item">🛏️ <strong>Zona Stadio Olimpico / Farnesina:</strong> Ottimi i bed & breakfast nei quartieri Flaminio e Prati per raggiungere l'Olimpico a piedi o con il tram 2.</div>
-                <div class="tip-item">🚂 <strong>Arrivi a Termini?</strong> La metro A (fermata Ottaviano o Flaminio) collega rapidamente la stazione con la zona nord della città.</div>
-                <div class="tip-item">💡 <strong>Hai un consiglio logistico o un alloggio da consigliare?</strong> Scrivici nel nostro gruppo di supporto o unisciti alla community!</div>
+            <h3>🏨 Mappa & Consigli Collaborativi di Viaggio</h3>
+            <p>Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio o pub per vedere la Roma nel mondo.</p>
+            
+            <!-- FORM PER AGGIUNGERE UN CONSIGLIO -->
+            <div class="tip-form-box">
+                <h4>➕ Aggiungi un consiglio utile (Alloggio / Cibo / Trasporti):</h4>
+                <div class="tip-input-group">
+                    <input type="text" id="tipCitta" placeholder="Città / Stadio (es. Roma Flaminio, Londra)">
+                    <select id="tipCategoria">
+                        <option value="🛏️ Alloggio">🛏️ Alloggio</option>
+                        <option value="🚆 Trasporti">🚆 Trasporti</option>
+                        <option value="🍕 Cibo/Pub">🍕 Cibo / Pub</option>
+                        <option value="💡 Info Stadio">💡 Info Stadio</option>
+                    </select>
+                    <input type="text" id="tipTesto" placeholder="Descrizione o nome del posto...">
+                    <button class="btn-add-tip" onclick="addNewTip()">Pubblica</button>
+                </div>
             </div>
-            <div class="btn-group" style="margin-top: 1rem;">
-                <a href="https://chat.whatsapp.com/" target="_blank" class="btn-room btn-wa">💬 Gruppo WhatsApp (Info Rapide)</a>
+
+            <div class="tips-list" id="tipsContainer">
+                <!-- Consigli caricati dinamicamente -->
+            </div>
+
+            <div class="btn-group">
+                <a href="https://chat.whatsapp.com/" target="_blank" class="btn-room btn-wa">💬 Gruppo WhatsApp (Info Live)</a>
                 <a href="https://meet.google.com/" target="_blank" class="btn-room">💻 Stanza Vocale Partite</a>
             </div>
         </div>
@@ -741,9 +753,16 @@
 
     <script>
         let currentLang = 'it';
+        let map, markersGroup;
 
         const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
-        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
+        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei moments di gioia come in quelli più bui, non mi ha mai lasciato solo.";
+
+        // Consigli di base iniziali
+        let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [
+            { citta: "Roma / Flaminio", categoria: "🛏️ Alloggio", testo: "Ottimi i B&B nei quartieri Flaminio e Prati per raggiungere l'Olimpico a piedi o con il tram 2." },
+            { citta: "Roma / Termini", categoria: "🚆 Trasporti", testo: "Dalla stazione Termini prendi la Metro A fino a Ottaviano o Flaminio per velocizzare lo spostamento." }
+        ];
 
         const translations = {
             it: {
@@ -779,99 +798,12 @@
                     <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
                     <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
                 `
-            },
-            en: {
-                subtitle: "Roma is not to be debated, it is to be loved",
-                manifestoTitle: "The Manifesto",
-                archiveTitle: "Archive of Remote Supporters",
-                searchPlaceholder: "🔍 Search name or city...",
-                formTitle: "Share Your Story and Get Your Pass",
-                lblNome: "Name *",
-                lblCitta: "City *",
-                lblStoria: "Story *",
-                lblDifficili: "Difficult moments",
-                lblFoto: "Photos",
-                btnSubmit: "Submit",
-                footerSub: "50th Birthday Initiative",
-                passTitle: "Official Pass",
-                postoLabel: "PASS",
-                founderLabel: "FOUNDER",
-                fanLabel: "SUPPORTER",
-                storyHeader: "The Spark:",
-                difficultHeader: "In difficult moments:",
-                galleryHeader: "Photo Gallery:",
-                btnEdit: "Edit",
-                btnDelete: "Delete",
-                btnDownload: "📥 Download Passport",
-                socialCtaText: "Share your passport on Instagram tagging @officialasroma and using #MaiSoliMai",
-                btnInstagram: "📸 Share on Instagram",
-                founderStoria: defaultStoriaIT,
-                founderDifficili: defaultDifficiliIT,
-                manifestoText: `<p>Tutto è iniziato una sera del 1984...</p>`
-            },
-            es: {
-                subtitle: "La Roma no se discute, se ama",
-                manifestoTitle: "El Manifiesto",
-                archiveTitle: "Archivo de Aficionados a Distancia",
-                searchPlaceholder: "🔍 Buscar...",
-                formTitle: "Comparte tu Historia",
-                lblNome: "Nombre *",
-                lblCitta: "Ciudad *",
-                lblStoria: "Historia *",
-                lblDifficili: "Momentos difíciles",
-                lblFoto: "Fotos",
-                btnSubmit: "Enviar",
-                footerSub: "Iniciativa 50 cumpleaños",
-                passTitle: "Pase Oficial",
-                postoLabel: "PASE",
-                founderLabel: "FUNDADOR",
-                fanLabel: "AFICIONADO",
-                storyHeader: "La Chispa:",
-                difficultHeader: "Momentos difíciles:",
-                galleryHeader: "Galería de Fotos:",
-                btnEdit: "Editar",
-                btnDelete: "Eliminar",
-                btnDownload: "📥 Descargar Pasaporte",
-                socialCtaText: "Comparte tu pasaporte en Instagram etiquetando a @officialasroma y usando #MaiSoliMai",
-                btnInstagram: "📸 Compartir en Instagram",
-                founderStoria: defaultStoriaIT,
-                founderDifficili: defaultDifficiliIT,
-                manifestoText: `<p>Todo comenzó una noche de 1984...</p>`
-            },
-            fr: {
-                subtitle: "La Roma ne se discute pas, elle s'aime",
-                manifestoTitle: "Le Manifeste",
-                archiveTitle: "Archives des Supporters à Distance",
-                searchPlaceholder: "🔍 Rechercher...",
-                formTitle: "Partagez votre Histoire",
-                lblNome: "Nom *",
-                lblCitta: "Ville *",
-                lblStoria: "Histoire *",
-                lblDifficili: "Moments difficiles",
-                lblFoto: "Photos",
-                btnSubmit: "Envoyer",
-                footerSub: "50e anniversaire Initiative",
-                passTitle: "Pass Officiel",
-                postoLabel: "PASSE",
-                founderLabel: "FONDATEUR",
-                fanLabel: "SUPPORTER",
-                storyHeader: "L'Étincelle :",
-                difficultHeader: "Moments difficiles :",
-                galleryHeader: "Galerie :",
-                btnEdit: "Modifier",
-                btnDelete: "Supprimer",
-                btnDownload: "📥 Télécharger le Pass",
-                socialCtaText: "Partagez votre passeport sur Instagram en taguant @officialasroma et avec #MaiSoliMai",
-                btnInstagram: "📸 Partager sur Instagram",
-                founderStoria: defaultStoriaIT,
-                founderDifficili: defaultDifficiliIT,
-                manifestoText: `<p>Tout a commencé un soir de 1984...</p>`
             }
         };
 
         function changeLanguage(lang) {
             currentLang = lang;
-            const t = translations[lang];
+            const t = translations[lang] || translations['it'];
             document.getElementById('t-subtitle').innerText = t.subtitle;
             document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span>`;
             document.getElementById('t-manifesto-content').innerHTML = t.manifestoText;
@@ -898,6 +830,8 @@
             members[founderIndex].storia = members[founderIndex].storia || defaultStoriaIT;
             members[founderIndex].difficili = members[founderIndex].difficili || defaultDifficiliIT;
             members[founderIndex].fotos = members[founderIndex].fotos || [];
+            members[founderIndex].lat = 45.0703;
+            members[founderIndex].lng = 7.6869;
         } else {
             members.unshift({
                 id: 1,
@@ -905,36 +839,100 @@
                 citta: "Torino (Italia)",
                 storia: defaultStoriaIT,
                 difficili: defaultDifficiliIT,
-                fotos: []
+                fotos: [],
+                lat: 45.0703,
+                lng: 7.6869
             });
         }
         localStorage.setItem('maiSoliMembers', JSON.stringify(members));
 
         const archiveGridContainer = document.getElementById('archiveGridContainer');
-        const radarPinsContainer = document.getElementById('radarPinsContainer');
         const tifoForm = document.getElementById('tifoForm');
         const searchInput = document.getElementById('searchInput');
         const ticketModal = document.getElementById('ticketModal');
         const modalBody = document.getElementById('modalBody');
         const closeModal = document.getElementById('closeModal');
 
+        // Inizializza la Mappa Globale Leaflet
+        function initMap() {
+            map = L.map('map').setView([42.5000, 12.5000], 4); // Centrata sull'Europa/Italia
+            
+            // Tile Layer in modalità scura per abbinarsi al tema Roma
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            markersGroup = L.layerGroup().addTo(map);
+            updateMapMarkers();
+        }
+
+        function updateMapMarkers() {
+            if(!markersGroup) return;
+            markersGroup.clearLayers();
+
+            members.forEach(m => {
+                // Se non ha coordinate, assegna coordinate fittizie intorno all'Europa o usa la geolocalizzazione approssimativa
+                let lat = m.lat || (40 + (Math.random() * 10 - 5));
+                let lng = m.lng || (12 + (Math.random() * 15 - 7.5));
+
+                const marker = L.circleMarker([lat, lng], {
+                    color: '#d4a017',
+                    fillColor: '#6b0014',
+                    fillOpacity: 0.9,
+                    radius: 8
+                });
+
+                marker.bindPopup(`
+                    <div style="color:#000; text-align:center;">
+                        <strong>${escapeHtml(m.nome)}</strong><br>
+                        📍 ${escapeHtml(m.citta)}<br>
+                        <button style="margin-top:5px; background:#6b0014; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="openTicketDetail(${m.id})">Leggi Storia</button>
+                    </div>
+                `);
+
+                markersGroup.addLayer(marker);
+            });
+        }
+
+        function renderTips() {
+            const container = document.getElementById('tipsContainer');
+            container.innerHTML = '';
+            tipsList.forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'tip-item';
+                item.innerHTML = `<strong>${escapeHtml(t.categoria)} - ${escapeHtml(t.citta)}:</strong> ${escapeHtml(t.testo)}`;
+                container.appendChild(item);
+            });
+        }
+
+        window.addNewTip = function() {
+            const citta = document.getElementById('tipCitta').value;
+            const cat = document.getElementById('tipCategoria').value;
+            const testo = document.getElementById('tipTesto').value;
+
+            if(!citta || !testo) {
+                alert('Compila sia la città/zona che il consiglio!');
+                return;
+            }
+
+            tipsList.unshift({ citta: citta, categoria: cat, testo: testo });
+            localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
+            renderTips();
+
+            document.getElementById('tipCitta').value = '';
+            document.getElementById('tipTesto').value = '';
+        };
+
         function renderArchive(filter = '') {
             archiveGridContainer.innerHTML = '';
-            radarPinsContainer.innerHTML = '';
-            const t = translations[currentLang];
+            const t = translations[currentLang] || translations['it'];
 
             const filteredMembers = members.filter(m => {
                 return m.nome.toLowerCase().includes(filter.toLowerCase()) || 
                        m.citta.toLowerCase().includes(filter.toLowerCase()) ||
                        (m.storia && m.storia.toLowerCase().includes(filter.toLowerCase()));
-            });
-
-            // Popola i puntini radar globali
-            members.forEach(m => {
-                const pin = document.createElement('div');
-                pin.className = 'radar-pin';
-                pin.innerHTML = `📍 <span>${escapeHtml(m.nome)}</span> &bull; ${escapeHtml(m.citta)}`;
-                radarPinsContainer.appendChild(pin);
             });
 
             if(filteredMembers.length === 0) {
@@ -957,12 +955,14 @@
                 `;
                 archiveGridContainer.appendChild(card);
             });
+
+            updateMapMarkers();
         }
 
         function openTicketDetail(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
-            const t = translations[currentLang];
+            const t = translations[currentLang] || translations['it'];
             const formattedId = String(member.id).padStart(3, '0');
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
 
@@ -1159,14 +1159,16 @@
                     citta: document.getElementById('citta').value,
                     storia: document.getElementById('storia').value,
                     difficili: document.getElementById('difficili').value,
-                    fotos: photoArray
+                    fotos: photoArray,
+                    lat: 40 + (Math.random() * 10 - 5), // Assegna posizione dinamica sulla mappa
+                    lng: 12 + (Math.random() * 15 - 7.5)
                 };
 
                 members.push(newMember);
                 localStorage.setItem('maiSoliMembers', JSON.stringify(members));
                 renderArchive();
                 tifoForm.reset();
-                alert('Tessera generata con successo! Benvenuto nell\'Archivio Umano!');
+                alert('Tessera generata con successo! Sei ora sulla mappa globale!');
             };
 
             if (fileInput.files && fileInput.files.length > 0) {
@@ -1197,7 +1199,11 @@
             return text.replace(/[&<>"']/g, m => map[m]);
         }
 
-        renderArchive();
+        window.onload = function() {
+            initMap();
+            renderTips();
+            renderArchive();
+        };
     </script>
 </body>
 </html>
