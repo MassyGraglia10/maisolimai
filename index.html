@@ -212,7 +212,7 @@
             z-index: 1;
         }
 
-        /* BACHECA CONSIGLI INTERATTIVA */
+        /* BACHECA CONSIGLI INTERATTIVA CON CATOLOGO */
         .exchange-card {
             background-color: var(--roma-card-bg);
             border: 1px solid rgba(212, 160, 23, 0.4);
@@ -230,12 +230,36 @@
             letter-spacing: 0.5px;
         }
 
+        .tip-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+
+        .tip-filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--roma-gold);
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tip-filter-btn.active, .tip-filter-btn:hover {
+            background: var(--roma-gold);
+            color: #000;
+            font-weight: bold;
+        }
+
         .tips-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
             margin-bottom: 1.5rem;
-            max-height: 250px;
+            max-height: 320px;
             overflow-y: auto;
             padding-right: 5px;
         }
@@ -247,9 +271,39 @@
             border-radius: 6px;
             font-size: 0.9rem;
             color: #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
         }
 
-        .tip-item strong {
+        .tip-content {
+            flex: 1;
+        }
+
+        .tip-content strong {
+            color: var(--roma-gold);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .tip-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-tip-action {
+            background: none;
+            border: none;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 2px 5px;
+            border-radius: 3px;
+            transition: color 0.2s;
+        }
+
+        .btn-tip-action:hover {
             color: var(--roma-gold);
         }
 
@@ -655,7 +709,7 @@
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.</p>
+                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
             </div>
         </div>
@@ -669,23 +723,33 @@
 
         <!-- BACHECA CONSIGLI UTILI & ALLOGGI COLLABORATIVA -->
         <div id="consigli" class="exchange-card">
-            <h3>🏨 Mappa & Consigli Collaborativi di Viaggio</h3>
+            <h3>🏨 Guida & Consigli Collaborativi di Viaggio</h3>
             <p>Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio o pub per vedere la Roma nel mondo.</p>
             
             <!-- FORM PER AGGIUNGERE UN CONSIGLIO -->
             <div class="tip-form-box">
-                <h4>➕ Aggiungi un consiglio utile (Alloggio / Cibo / Trasporti):</h4>
+                <h4 id="tipFormTitle">➕ Aggiungi un consiglio utile:</h4>
                 <div class="tip-input-group">
-                    <input type="text" id="tipCitta" placeholder="Città / Stadio (es. Roma Flaminio, Londra)">
+                    <input type="text" id="tipCitta" placeholder="Città / Zona (es. Roma Flaminio, Londra)">
                     <select id="tipCategoria">
                         <option value="🛏️ Alloggio">🛏️ Alloggio</option>
                         <option value="🚆 Trasporti">🚆 Trasporti</option>
                         <option value="🍕 Cibo/Pub">🍕 Cibo / Pub</option>
                         <option value="💡 Info Stadio">💡 Info Stadio</option>
                     </select>
-                    <input type="text" id="tipTesto" placeholder="Descrizione o nome del posto...">
-                    <button class="btn-add-tip" onclick="addNewTip()">Pubblica</button>
+                    <input type="text" id="tipTesto" placeholder="Descrizione, indirizzo o consiglio...">
+                    <button class="btn-add-tip" id="btnSaveTip" onclick="saveTip()">Pubblica</button>
+                    <button class="btn-add-tip" id="btnCancelTip" style="display:none; background:#555; color:#fff;" onclick="cancelTipEdit()">Annulla</button>
                 </div>
+            </div>
+
+            <!-- FILTRI CATEGORIE -->
+            <div class="tip-filters">
+                <button class="tip-filter-btn active" onclick="filterTips('Tutti', this)">Tutti</button>
+                <button class="tip-filter-btn" onclick="filterTips('🛏️ Alloggio', this)">🛏️ Alloggi</button>
+                <button class="tip-filter-btn" onclick="filterTips('🚆 Trasporti', this)">🚆 Trasporti</button>
+                <button class="tip-filter-btn" onclick="filterTips('🍕 Cibo/Pub', this)">🍕 Cibo / Pub</button>
+                <button class="tip-filter-btn" onclick="filterTips('💡 Info Stadio', this)">💡 Info Stadio</button>
             </div>
 
             <div class="tips-list" id="tipsContainer">
@@ -754,11 +818,14 @@
     <script>
         let currentLang = 'it';
         let map, markersGroup;
+        let activeTipFilter = 'Tutti';
+        let editingTipIndex = null;
 
         const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
         const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
 
         let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [
+            { citta: "Roma-Stadio Olimpico", categoria: "🛏️ Alloggio", testo: "Hotel Villa Glori, Via Bernardo Celentano 11, 00196 Roma RM" },
             { citta: "Roma / Termini", categoria: "🚆 Trasporti", testo: "Dalla stazione Termini prendi la Metro A fino a Ottaviano o Flaminio per velocizzare lo spostamento." }
         ];
 
@@ -851,7 +918,6 @@
         const modalBody = document.getElementById('modalBody');
         const closeModal = document.getElementById('closeModal');
 
-        // INIZIALIZZA LA MAPPA CON OPENSTREETMAP LIBERA (NO API KEY)
         function initMap() {
             map = L.map('map').setView([42.5000, 12.5000], 4);
             
@@ -891,33 +957,101 @@
             });
         }
 
+        /* GESTIONE CONSIGLI E ALLOGGI CON MODIFICA ED ELIMINA */
         function renderTips() {
             const container = document.getElementById('tipsContainer');
             container.innerHTML = '';
-            tipsList.forEach(t => {
+
+            const filtered = tipsList.filter(t => activeTipFilter === 'Tutti' || t.categoria === activeTipFilter);
+
+            if(filtered.length === 0) {
+                container.innerHTML = '<p style="color:#aaa; font-size:0.85rem;">Nessun consiglio trovato per questa categoria.</p>';
+                return;
+            }
+
+            filtered.forEach((t, index) => {
+                const originalIndex = tipsList.indexOf(t);
                 const item = document.createElement('div');
                 item.className = 'tip-item';
-                item.innerHTML = `<strong>${escapeHtml(t.categoria)} - ${escapeHtml(t.citta)}:</strong> ${escapeHtml(t.testo)}`;
+                item.innerHTML = `
+                    <div class="tip-content">
+                        <strong>${escapeHtml(t.categoria)} - ${escapeHtml(t.citta)}</strong>
+                        <span>${escapeHtml(t.testo)}</span>
+                    </div>
+                    <div class="tip-actions">
+                        <button class="btn-tip-action" title="Modifica" onclick="editTip(${originalIndex})">✏️</button>
+                        <button class="btn-tip-action" title="Elimina" onclick="deleteTip(${originalIndex})">🗑️</button>
+                    </div>
+                `;
                 container.appendChild(item);
             });
         }
 
-        window.addNewTip = function() {
-            const citta = document.getElementById('tipCitta').value;
+        window.filterTips = function(category, btnElement) {
+            activeTipFilter = category;
+            document.querySelectorAll('.tip-filter-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+            renderTips();
+        };
+
+        window.saveTip = function() {
+            const citta = document.getElementById('tipCitta').value.trim();
             const cat = document.getElementById('tipCategoria').value;
-            const testo = document.getElementById('tipTesto').value;
+            const testo = document.getElementById('tipTesto').value.trim();
 
             if(!citta || !testo) {
-                alert('Compila sia la città/zona che il consiglio!');
+                alert('Compila sia la città/zona che la descrizione!');
                 return;
             }
 
-            tipsList.unshift({ citta: citta, categoria: cat, testo: testo });
+            if (editingTipIndex !== null) {
+                tipsList[editingTipIndex] = { citta: citta, categoria: cat, testo: testo };
+                editingTipIndex = null;
+                document.getElementById('tipFormTitle').innerText = '➕ Aggiungi un consiglio utile:';
+                document.getElementById('btnSaveTip').innerText = 'Pubblica';
+                document.getElementById('btnCancelTip').style.display = 'none';
+            } else {
+                tipsList.unshift({ citta: citta, categoria: cat, testo: testo });
+            }
+
             localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
             renderTips();
 
             document.getElementById('tipCitta').value = '';
             document.getElementById('tipTesto').value = '';
+        };
+
+        window.editTip = function(index) {
+            const tip = tipsList[index];
+            if(!tip) return;
+
+            editingTipIndex = index;
+            document.getElementById('tipCitta').value = tip.citta;
+            document.getElementById('tipCategoria').value = tip.categoria;
+            document.getElementById('tipTesto').value = tip.testo;
+
+            document.getElementById('tipFormTitle').innerText = '✏️ Modifica consiglio:';
+            document.getElementById('btnSaveTip').innerText = 'Salva Modifica';
+            document.getElementById('btnCancelTip').style.display = 'inline-block';
+            
+            document.getElementById('consigli').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.cancelTipEdit = function() {
+            editingTipIndex = null;
+            document.getElementById('tipCitta').value = '';
+            document.getElementById('tipTesto').value = '';
+            document.getElementById('tipFormTitle').innerText = '➕ Aggiungi un consiglio utile:';
+            document.getElementById('btnSaveTip').innerText = 'Pubblica';
+            document.getElementById('btnCancelTip').style.display = 'none';
+        };
+
+        window.deleteTip = function(index) {
+            if(confirm("Vuoi eliminare questo consiglio dalla bacheca?")) {
+                tipsList.splice(index, 1);
+                localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
+                renderTips();
+            }
         };
 
         function renderArchive(filter = '') {
