@@ -531,6 +531,40 @@
             font-size: 0.8rem;
         }
 
+        .social-cta-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--roma-gold);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .social-cta-box p {
+            font-size: 0.85rem;
+            color: #f5f5f5;
+            margin-bottom: 8px;
+        }
+
+        .btn-instagram {
+            display: inline-block;
+            background: var(--ig-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s;
+        }
+
+        .btn-instagram:hover {
+            transform: scale(1.05);
+        }
+
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -656,6 +690,21 @@
             border: 1px solid var(--roma-gold);
         }
 
+        .photo-delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #a00;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
         footer {
             text-align: center;
             padding: 2rem 1rem;
@@ -704,7 +753,7 @@
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.</p>
+                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
             </div>
         </div>
@@ -726,7 +775,7 @@
                         <textarea id="storia" required placeholder="Raccontaci qual è il momento che ti ha fatto innamorare della Roma e qual è il tuo ricordo o viaggio più bello da tifoso a distanza"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="difficili" id="t-lbl-difficili">Nei momenti difficili</label>
+                        <label for="difficili" id="t-lbl-difficili">Nei moments difficili</label>
                         <textarea id="difficili" placeholder="Cosa rappresenta o ha rappresentato la Roma nei tuoi momenti più difficili"></textarea>
                     </div>
                     <div class="form-group">
@@ -880,7 +929,7 @@
             const member = members.find(m => m.id === id);
             if(!member) return;
             const formattedId = String(member.id).padStart(3, '0');
-            const fotos = member.fotos || [];
+            const fotos = member.fotos || (member.foto ? [member.foto] : []);
 
             let galleryHtml = fotos.length > 0 ? `
                 <div style="margin-top:15px;">
@@ -898,47 +947,199 @@
                     <div style="font-size:1.3rem; font-weight:bold; color:#fff; margin-bottom:3px;">${escapeHtml(member.nome)}</div>
                     <div style="font-size:0.9rem; color:var(--roma-gold);">📍 ${escapeHtml(member.citta)}</div>
                 </div>
+
+                <div class="social-cta-box">
+                    <p>Condividi il tuo passaporto su Instagram taggando @officialasroma e usando l'hashtag #MaiSoliMai</p>
+                    <a href="https://www.instagram.com/" target="_blank" class="btn-instagram">📸 Condividi su Instagram</a>
+                </div>
+
                 <div style="margin-top:15px;">
                     <strong style="color:var(--roma-gold); font-size:0.85rem;">LA SCINTILLA E LA STORIA:</strong>
                     <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.storia)}"</p>
                 </div>
                 ${member.difficili ? `<div style="margin-top:10px;"><strong style="color:var(--roma-gold); font-size:0.85rem;">NEI MOMENTI DIFFICILI:</strong><p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.difficili)}"</p></div>` : ''}
                 ${galleryHtml}
+
+                <div class="modal-actions">
+                    <button class="btn-action btn-download" onclick="downloadTicketImage()">📥 Scarica Passaporto / Biglietto</button>
+                    <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">Modifica</button>
+                    ${member.id !== 1 ? `<button class="btn-action btn-delete" onclick="deleteMember(${member.id})">Elimina</button>` : ''}
+                </div>
             `;
             ticketModal.style.display = 'flex';
         }
 
-        // Funzione per comprimere l'immagine e renderla perfettamente visibile ovunque
+        window.downloadTicketImage = function() {
+            const ticketElement = document.getElementById('ticketToDownload');
+            html2canvas(ticketElement, { scale: 2, backgroundColor: null }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Passaporto-Tifoso-ASR.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        };
+
+        function compressDataUrl(dataUrl, maxWidth = 800, quality = 0.7) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = function() {
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', quality));
+                };
+                img.src = dataUrl;
+            });
+        }
+
         function compressImage(file, maxWidth = 800, quality = 0.7) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        let width = img.width;
-                        let height = img.height;
-                        if (width > maxWidth) {
-                            height = Math.round((height * maxWidth) / width);
-                            width = maxWidth;
-                        }
-                        const canvas = document.createElement('canvas');
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        resolve(canvas.toDataURL('image/jpeg', quality));
-                    };
-                    img.src = event.target.result;
+                    compressDataUrl(event.target.result, maxWidth, quality).then(resolve);
                 };
                 reader.readAsDataURL(file);
             });
         }
 
+        window.openEditForm = function(id) {
+            const member = members.find(m => m.id === id);
+            if(!member) return;
+            const fotos = member.fotos || (member.foto ? [member.foto] : []);
+
+            let photosManagerHtml = '';
+            if(fotos.length > 0) {
+                photosManagerHtml = `
+                    <div class="form-group">
+                        <label>Foto esistenti (clicca X per rimuovere):</label>
+                        <div class="photo-gallery">
+                            ${fotos.map((f, idx) => `
+                                <div class="photo-item">
+                                    <img src="${f}">
+                                    <button class="photo-delete-btn" onclick="removePhotoFromMember(${member.id},${idx})">✕</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+            }
+
+            modalBody.innerHTML = `
+                <h2 style="color:var(--roma-gold); font-size:1.4rem; margin-bottom:15px; text-transform:uppercase;">Modifica Tessera #${String(member.id).padStart(3, '0')}</h2>
+                <div class="form-group">
+                    <label>Nome e/o Soprannome</label>
+                    <input type="text" id="editNome" value="${escapeHtml(member.nome)}">
+                </div>
+                <div class="form-group">
+                    <label>Città e Nazione</label>
+                    <input type="text" id="editCitta" value="${escapeHtml(member.citta)}">
+                </div>
+                <div class="form-group">
+                    <label>La Scintilla e la Storia</label>
+                    <textarea id="editStoria">${escapeHtml(member.storia)}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Nei momenti difficili</label>
+                    <textarea id="editDifficili">${escapeHtml(member.difficili)}</textarea>
+                </div>
+                ${photosManagerHtml}
+                <div class="form-group">
+                    <label>Aggiungi altre foto:</label>
+                    <input type="file" id="editNewFotos" accept="image/*" multiple>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-action btn-edit" onclick="saveEdit(${member.id})">Salva Modifiche</button>
+                    <button class="btn-action" style="background:#555; color:#fff;" onclick="openTicketDetail(${member.id})">Annulla</button>
+                </div>
+            `;
+        };
+
+        window.removePhotoFromMember = function(memberId, photoIndex) {
+            const member = members.find(m => m.id === memberId);
+            if(!member) return;
+            if(!member.fotos) member.fotos = member.foto ? [member.foto] : [];
+            member.fotos.splice(photoIndex, 1);
+            delete member.foto;
+            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+            openEditForm(memberId);
+        };
+
+        window.saveEdit = async function(id) {
+            const member = members.find(m => m.id === id);
+            if(!member) return;
+
+            member.nome = document.getElementById('editNome').value;
+            member.citta = document.getElementById('editCitta').value;
+            member.storia = document.getElementById('editStoria').value;
+            member.difficili = document.getElementById('editDifficili').value;
+            
+            if(!member.fotos) member.fotos = member.foto ? [member.foto] : [];
+
+            // Ricomprimi anche le vecchie foto per farle vedere su cellulare
+            let compressedOldPhotos = [];
+            for (let oldPic of member.fotos) {
+                if (oldPic.startsWith('data:image')) {
+                    const comp = await compressDataUrl(oldPic);
+                    compressedOldPhotos.push(comp);
+                } else {
+                    compressedOldPhotos.push(oldPic);
+                }
+            }
+            member.fotos = compressedOldPhotos;
+
+            const newFilesInput = document.getElementById('editNewFotos');
+            if(newFilesInput.files && newFilesInput.files.length > 0) {
+                for (let file of newFilesInput.files) {
+                    const comp = await compressImage(file);
+                    member.fotos.push(comp);
+                }
+            }
+
+            delete member.foto;
+            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+
+            if (window.addDocCloud && window.colMembers) {
+                try {
+                    await window.addDocCloud(window.colMembers, member);
+                } catch(err) { console.log("Cloud sync error:", err); }
+            }
+
+            renderArchive();
+            openTicketDetail(id);
+        };
+
+        window.deleteMember = async function(id) {
+            if(id === 1) {
+                alert("Non puoi eliminare il fondatore della pagina!");
+                return;
+            }
+            if(confirm("Sei sicuro di voler eliminare questa tessera?")) {
+                const deleted = members.find(m => m.id === id);
+                members = members.filter(m => m.id !== id);
+                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                ticketModal.style.display = 'none';
+                renderArchive();
+
+                if (deleted && deleted.firebaseId && window.deleteDocCloud) {
+                    try {
+                        await window.deleteDocCloud(window.docCloud(window.firebaseDb, "members", deleted.firebaseId));
+                    } catch(e) { console.log("Cloud delete warning:", e); }
+                }
+            }
+        };
+
         tifoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const fileInput = document.getElementById('fotoFiles');
             const submitBtn = document.getElementById('t-btn-submit');
-            submitBtn.innerText = "Elaborazione foto...";
+            submitBtn.innerText = "Elaborazione e salvataggio...";
             submitBtn.disabled = true;
 
             let photoUrls = [];
