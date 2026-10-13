@@ -68,7 +68,6 @@
             line-height: 1.6;
         }
 
-        /* MENU DI NAVIGAZIONE FLUIDO */
         nav.main-nav {
             position: sticky;
             top: 0;
@@ -532,71 +531,6 @@
             font-size: 0.8rem;
         }
 
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn-room {
-            display: inline-block;
-            background-color: var(--roma-gold);
-            color: #000;
-            font-weight: bold;
-            padding: 0.85rem 1.8rem;
-            border-radius: 50px;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-        }
-
-        .btn-wa {
-            background-color: var(--wa-green);
-            color: #fff;
-        }
-
-        .btn-room:hover, .btn-wa:hover {
-            opacity: 0.9;
-            transform: scale(1.05);
-        }
-
-        .social-cta-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--roma-gold);
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .social-cta-box p {
-            font-size: 0.85rem;
-            color: #f5f5f5;
-            margin-bottom: 8px;
-        }
-
-        .btn-instagram {
-            display: inline-block;
-            background: var(--ig-gradient);
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: transform 0.2s;
-        }
-
-        .btn-instagram:hover {
-            transform: scale(1.05);
-        }
-
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -722,21 +656,6 @@
             border: 1px solid var(--roma-gold);
         }
 
-        .photo-delete-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #a00;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
         footer {
             text-align: center;
             padding: 2rem 1rem;
@@ -749,7 +668,6 @@
 </head>
 <body>
 
-    <!-- MENU DI NAVIGAZIONE -->
     <nav class="main-nav">
         <a href="#manifesto">Il Manifesto</a>
         <a href="#archivio">Archivio & Prendi Tessera</a>
@@ -780,22 +698,18 @@
 
     <div class="container">
 
-        <!-- MANIFESTO -->
         <div id="manifesto" class="manifesto-card">
             <h2 id="t-manifesto-title">Il Manifesto <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span></h2>
             <div class="manifesto-text" id="t-manifesto-content">
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.</p>
+                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
             </div>
         </div>
 
-        <!-- SEZIONE AFFIANCATA: CONDIVIDI LA TUA STORIA (SX) + ARCHIVIO (DX) -->
         <div class="top-split-section" id="archivio">
-            
-            <!-- LATO SINISTRO: FORM COMPATTO DI REGISTRAZIONE -->
             <div id="iscriviti" class="form-card">
                 <h3 class="section-title" id="t-form-title" style="border:none; margin-bottom:0.8rem;">Prendi la tua Tessera</h3>
                 <form id="tifoForm">
@@ -823,34 +737,27 @@
                 </form>
             </div>
 
-            <!-- LATO DESTRO: ARCHIVIO TIFOSI -->
             <div class="archive-side">
                 <div class="section-header">
                     <h3 class="section-title" id="t-archive-title">Archivio Tifosi</h3>
                     <input type="text" id="searchInput" class="search-box" placeholder="🔍 Cerca nome/città...">
                 </div>
                 <div class="archive-scroll-container">
-                    <div id="archiveGridContainer" class="archive-grid">
-                        <!-- Tessere caricate dinamicamente -->
-                    </div>
+                    <div id="archiveGridContainer" class="archive-grid"></div>
                 </div>
             </div>
-
         </div>
 
-        <!-- MAPPA MONDIALE INTERATTIVA LIBERA -->
         <div id="mappa-mondo" class="world-map-card">
             <h3>🌍 La Rete Globale del Tifo Romanista</h3>
             <p>Esplora la mappa interattiva: ogni segnalino rappresenta un tifoso a distanza. Clicca sul punto per leggere chi c'è dietro!</p>
             <div id="map"></div>
         </div>
 
-        <!-- BACHECA CONSIGLI UTILI & ALLOGGI COLLABORATIVA -->
         <div id="consigli" class="exchange-card">
             <h3>🏨 Guida & Consigli Collaborativi</h3>
             <p>Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
             
-            <!-- FORM PER AGGIUNGERE UN CONSIGLIO -->
             <div class="tip-form-box">
                 <h4 id="tipFormTitle">➕ Aggiungi un consiglio utile:</h4>
                 <div class="tip-input-group">
@@ -867,7 +774,6 @@
                 </div>
             </div>
 
-            <!-- FILTRI CATEGORIE E RICERCA CITTA/STADIO -->
             <div class="tip-toolbar">
                 <div class="tip-filters">
                     <button class="tip-filter-btn active" onclick="filterTips('Tutti', this)">Tutti</button>
@@ -879,19 +785,11 @@
                 <input type="text" id="searchTipInput" class="search-tip-box" oninput="renderTips()" placeholder="🔍 Cerca città o stadio...">
             </div>
 
-            <div class="tips-list" id="tipsContainer">
-                <!-- Consigli caricati dinamicamente -->
-            </div>
-
-            <div class="btn-group">
-                <a href="https://chat.whatsapp.com/" target="_blank" class="btn-room btn-wa">💬 Gruppo WhatsApp (Info Live)</a>
-                <a href="https://meet.google.com/" target="_blank" class="btn-room">💻 Stanza Vocale Partite</a>
-            </div>
+            <div class="tips-list" id="tipsContainer"></div>
         </div>
 
     </div>
 
-    <!-- MODAL DETTAGLIO / PASSAPORTO DIGITALE -->
     <div class="modal" id="ticketModal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
@@ -908,97 +806,9 @@
         let currentLang = 'it';
         let map, markersGroup;
         let activeTipFilter = 'Tutti';
-        let editingTipIndex = null;
-
-        const defaultStoriaIT = "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.";
-        const defaultDifficiliIT = "Da quel giorno la Roma c’è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo.";
-
-        let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [
-            { citta: "Roma-Stadio Olimpico", categoria: "🛏️ Alloggio", testo: "Hotel Villa Glori, Via Bernardo Celentano 11, 00196 Roma RM" },
-            { citta: "Roma / Termini", categoria: "🚆 Trasporti", testo: "Dalla stazione Termini prendi la Metro A fino a Ottaviano o Flaminio per velocizzare lo spostamento." }
-        ];
-
-        const translations = {
-            it: {
-                subtitle: "La Roma non si discute, si ama",
-                manifestoTitle: "Il Manifesto",
-                archiveTitle: "Archivio Tifosi",
-                searchPlaceholder: "🔍 Cerca nome/città...",
-                formTitle: "Prendi la tua Tessera",
-                lblNome: "Nome Cognome/ Soprannome *",
-                lblCitta: "Città e Nazione *",
-                lblStoria: "La Scintilla e la tua Storia qual è il momento che ti ha fatto innamorare della Roma e qual è il tuo ricordo o viaggio più bello da tifoso a distanza? ",
-                lblDifficili: "Cosa rappresenta o ha rappresentato la Roma nei tuoi momenti più difficili?  ",
-                lblFoto: "Foto (opzionale)",
-                btnSubmit: "Invia e ottieni la Tessera",
-                footerSub: "Iniziativa creata in occasione del 50° Compleanno di Massimo Graglia",
-                passTitle: "Pass Ufficiale",
-                postoLabel: "TESSERA",
-                founderLabel: "FONDATORE",
-                fanLabel: "TIFOSO",
-                storyHeader: "La Scintilla e la Storia:",
-                difficultHeader: "Nei momenti difficili:",
-                galleryHeader: "Galleria Foto:",
-                btnEdit: "Modifica",
-                btnDelete: "Elimina",
-                btnDownload: "📥 Scarica Passaporto / Biglietto",
-                socialCtaText: "Condividi il tuo passaporto su Instagram taggando @officialasroma e usando l'hashtag #MaiSoliMai",
-                btnInstagram: "📸 Condividi su Instagram",
-                founderStoria: defaultStoriaIT,
-                founderDifficili: defaultDifficiliIT,
-                manifestoText: `
-                    <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
-                    <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
-                    <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                    <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
-                `
-            }
-        };
-
-        function changeLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang] || translations['it'];
-            document.getElementById('t-subtitle').innerText = t.subtitle;
-            document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span>`;
-            document.getElementById('t-manifesto-content').innerHTML = t.manifestoText;
-            document.getElementById('t-archive-title').innerText = t.archiveTitle;
-            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-            document.getElementById('t-form-title').innerText = t.formTitle;
-            document.getElementById('t-lbl-nome').innerText = t.lblNome;
-            document.getElementById('t-lbl-citta').innerText = t.lblCitta;
-            document.getElementById('t-lbl-storia').innerText = t.lblStoria;
-            document.getElementById('t-lbl-difficili').innerText = t.lblDifficili;
-            document.getElementById('t-lbl-foto').innerText = t.lblFoto;
-            document.getElementById('t-btn-submit').innerText = t.btnSubmit;
-            document.getElementById('t-footer-sub').innerText = t.footerSub;
-
-            renderArchive();
-        }
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
-
-        const founderIndex = members.findIndex(m => m.id === 1);
-        if (founderIndex !== -1) {
-            members[founderIndex].nome = "Massimo Graglia";
-            members[founderIndex].citta = "Torino (Italia)";
-            members[founderIndex].storia = members[founderIndex].storia || defaultStoriaIT;
-            members[founderIndex].difficili = members[founderIndex].difficili || defaultDifficiliIT;
-            members[founderIndex].fotos = members[founderIndex].fotos || [];
-            members[founderIndex].lat = 45.0703;
-            members[founderIndex].lng = 7.6869;
-        } else {
-            members.unshift({
-                id: 1,
-                nome: "Massimo Graglia",
-                citta: "Torino (Italia)",
-                storia: defaultStoriaIT,
-                difficili: defaultDifficiliIT,
-                fotos: [],
-                lat: 45.0703,
-                lng: 7.6869
-            });
-        }
-        localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+        let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [];
 
         const archiveGridContainer = document.getElementById('archiveGridContainer');
         const tifoForm = document.getElementById('tifoForm');
@@ -1010,12 +820,10 @@
         function initMap() {
             if (map) return;
             map = L.map('map').setView([42.5000, 12.5000], 4);
-            
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors',
                 maxZoom: 19
             }).addTo(map);
-
             markersGroup = L.layerGroup().addTo(map);
             updateMapMarkers();
         }
@@ -1023,18 +831,12 @@
         function updateMapMarkers() {
             if(!markersGroup) return;
             markersGroup.clearLayers();
-
             members.forEach(m => {
                 let lat = m.lat || (40 + (Math.random() * 10 - 5));
                 let lng = m.lng || (12 + (Math.random() * 15 - 7.5));
-
                 const marker = L.circleMarker([lat, lng], {
-                    color: '#d4a017',
-                    fillColor: '#6b0014',
-                    fillOpacity: 0.9,
-                    radius: 9
+                    color: '#d4a017', fillColor: '#6b0014', fillOpacity: 0.9, radius: 9
                 });
-
                 marker.bindPopup(`
                     <div style="color:#000; text-align:center;">
                         <strong>${escapeHtml(m.nome)}</strong><br>
@@ -1042,141 +844,20 @@
                         <button style="margin-top:5px; background:#6b0014; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="openTicketDetail(${m.id})">Leggi Storia</button>
                     </div>
                 `);
-
                 markersGroup.addLayer(marker);
             });
         }
 
-        function renderTips() {
-            const container = document.getElementById('tipsContainer');
-            const searchVal = (document.getElementById('searchTipInput')?.value || '').toLowerCase();
-            container.innerHTML = '';
-
-            const filtered = tipsList.filter(t => {
-                const matchCategory = (activeTipFilter === 'Tutti' || t.categoria === activeTipFilter);
-                const matchSearch = t.citta.toLowerCase().includes(searchVal) || t.testo.toLowerCase().includes(searchVal);
-                return matchCategory && matchSearch;
-            });
-
-            if(filtered.length === 0) {
-                container.innerHTML = '<p style="color:#aaa; font-size:0.85rem; grid-column: 1/-1;">Nessun consiglio trovato con questi filtri.</p>';
-                return;
-            }
-
-            filtered.forEach((t) => {
-                const originalIndex = tipsList.indexOf(t);
-                const item = document.createElement('div');
-                item.className = 'tip-item';
-                item.innerHTML = `
-                    <div class="tip-content">
-                        <strong>${escapeHtml(t.categoria)} - ${escapeHtml(t.citta)}</strong>
-                        <span>${escapeHtml(t.testo)}</span>
-                    </div>
-                    <div class="tip-actions">
-                        <button class="btn-tip-action" title="Modifica" onclick="editTip(${originalIndex})">✏️</button>
-                        <button class="btn-tip-action" title="Elimina" onclick="deleteTip(${originalIndex})">🗑️</button>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        window.filterTips = function(category, btnElement) {
-            activeTipFilter = category;
-            document.querySelectorAll('.tip-filter-btn').forEach(b => b.classList.remove('active'));
-            btnElement.classList.add('active');
-            renderTips();
-        };
-
-        window.saveTip = async function() {
-            const citta = document.getElementById('tipCitta').value.trim();
-            const cat = document.getElementById('tipCategoria').value;
-            const testo = document.getElementById('tipTesto').value.trim();
-
-            if(!citta || !testo) {
-                alert('Compila sia la città/zona che la descrizione!');
-                return;
-            }
-
-            const newTip = { citta: citta, categoria: cat, testo: testo };
-
-            if (editingTipIndex !== null) {
-                tipsList[editingTipIndex] = newTip;
-                editingTipIndex = null;
-                document.getElementById('tipFormTitle').innerText = '➕ Aggiungi un consiglio utile:';
-                document.getElementById('btnSaveTip').innerText = 'Pubblica';
-                document.getElementById('btnCancelTip').style.display = 'none';
-            } else {
-                tipsList.unshift(newTip);
-            }
-
-            localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
-            renderTips();
-
-            if (window.addDocCloud && window.colTips) {
-                try {
-                    await window.addDocCloud(window.colTips, newTip);
-                } catch(e) { console.log("Cloud sync tip warning:", e); }
-            }
-
-            document.getElementById('tipCitta').value = '';
-            document.getElementById('tipTesto').value = '';
-        };
-
-        window.editTip = function(index) {
-            const tip = tipsList[index];
-            if(!tip) return;
-
-            editingTipIndex = index;
-            document.getElementById('tipCitta').value = tip.citta;
-            document.getElementById('tipCategoria').value = tip.categoria;
-            document.getElementById('tipTesto').value = tip.testo;
-
-            document.getElementById('tipFormTitle').innerText = '✏️ Modifica consiglio:';
-            document.getElementById('btnSaveTip').innerText = 'Salva Modifica';
-            document.getElementById('btnCancelTip').style.display = 'inline-block';
-            
-            document.getElementById('consigli').scrollIntoView({ behavior: 'smooth' });
-        };
-
-        window.cancelTipEdit = function() {
-            editingTipIndex = null;
-            document.getElementById('tipCitta').value = '';
-            document.getElementById('tipTesto').value = '';
-            document.getElementById('tipFormTitle').innerText = '➕ Aggiungi un consiglio utile:';
-            document.getElementById('btnSaveTip').innerText = 'Pubblica';
-            document.getElementById('btnCancelTip').style.display = 'none';
-        };
-
-        window.deleteTip = async function(index) {
-            if(confirm("Vuoi eliminare questo consiglio dalla bacheca?")) {
-                const deleted = tipsList.splice(index, 1)[0];
-                localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
-                renderTips();
-
-                if (deleted && deleted.firebaseId && window.deleteDocCloud) {
-                    try {
-                        await window.deleteDocCloud(window.docCloud(window.firebaseDb, "tips", deleted.firebaseId));
-                    } catch(e) { console.log("Cloud delete warning:", e); }
-                }
-            }
-        };
-
         function renderArchive(filter = '') {
             archiveGridContainer.innerHTML = '';
-            const t = translations[currentLang] || translations['it'];
-
             const filteredMembers = members.filter(m => {
                 return m.nome.toLowerCase().includes(filter.toLowerCase()) || 
-                       m.citta.toLowerCase().includes(filter.toLowerCase()) ||
-                       (m.storia && m.storia.toLowerCase().includes(filter.toLowerCase()));
+                       m.citta.toLowerCase().includes(filter.toLowerCase());
             });
-
             if(filteredMembers.length === 0) {
                 archiveGridContainer.innerHTML = '<p style="color:#aaa; text-align:center; grid-column: 1/-1; margin:1rem 0;">Nessun tifoso trovato.</p>';
                 return;
             }
-
             filteredMembers.forEach(member => {
                 const formattedId = String(member.id).padStart(3, '0');
                 const card = document.createElement('div');
@@ -1184,283 +865,117 @@
                 card.onclick = () => openTicketDetail(member.id);
                 card.innerHTML = `
                     <div class="ticket-header">
-                        <span class="ticket-number">${t.postoLabel} #${formattedId}</span>
-                        <span style="color: var(--roma-gold); font-size:0.7rem;">${member.id === 1 ? t.founderLabel : t.fanLabel}</span>
+                        <span class="ticket-number">TESSERA #${formattedId}</span>
+                        <span style="color: var(--roma-gold); font-size:0.7rem;">${member.id === 1 ? 'FONDATORE' : 'TIFOSO'}</span>
                     </div>
                     <div class="ticket-holder">${escapeHtml(member.nome)}</div>
                     <div class="ticket-location">📍 ${escapeHtml(member.citta)}</div>
                 `;
                 archiveGridContainer.appendChild(card);
             });
-
             updateMapMarkers();
         }
 
         function openTicketDetail(id) {
-            const member = members.find(m => m.id === id || m.firebaseId === id);
+            const member = members.find(m => m.id === id);
             if(!member) return;
-            const t = translations[currentLang] || translations['it'];
-            const formattedId = String(member.id || 1).padStart(3, '0');
-            const fotos = member.fotos || (member.foto ? [member.foto] : []);
+            const formattedId = String(member.id).padStart(3, '0');
+            const fotos = member.fotos || [];
 
-            let storyText = member.storia;
-            let diffText = member.difficili;
-
-            if(member.id === 1) {
-                storyText = member.storia || t.founderStoria;
-                diffText = member.difficili || t.founderDifficili;
-            }
-
-            let galleryHtml = '';
-            if(fotos.length > 0) {
-                galleryHtml = `
-                    <div style="margin-top:15px;">
-                        <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.galleryHeader}</strong>
-                        <div class="photo-gallery">
-                            ${fotos.map(f => `<div class="photo-item"><img src="${f}"></div>`).join('')}
-                        </div>
-                    </div>`;
-            }
+            let galleryHtml = fotos.length > 0 ? `
+                <div style="margin-top:15px;">
+                    <strong style="color:var(--roma-gold); font-size:0.85rem;">GALLERIA FOTO:</strong>
+                    <div class="photo-gallery">${fotos.map(f => `<div class="photo-item"><img src="${f}"></div>`).join('')}</div>
+                </div>` : '';
 
             modalBody.innerHTML = `
                 <div id="ticketToDownload" class="printable-ticket">
                     <div class="ticket-badge-top">
-                        <span style="font-size:0.8rem; color:var(--roma-gold); font-weight:bold; text-transform:uppercase;">${t.passTitle}</span>
-                        <span style="font-size:0.8rem; color:#fff;">MAI SOLI MAI - TIFOSI A DISTANZA</span>
+                        <span style="font-size:0.8rem; color:var(--roma-gold); font-weight:bold;">PASS UFFICIALE</span>
+                        <span style="font-size:0.8rem; color:#fff;">MAI SOLI MAI</span>
                     </div>
-                    <h2 style="color:var(--roma-gold); font-size:1.5rem; margin-bottom:5px;">${t.postoLabel} #${formattedId}</h2>
+                    <h2 style="color:var(--roma-gold); font-size:1.5rem; margin-bottom:5px;">TESSERA #${formattedId}</h2>
                     <div style="font-size:1.3rem; font-weight:bold; color:#fff; margin-bottom:3px;">${escapeHtml(member.nome)}</div>
                     <div style="font-size:0.9rem; color:var(--roma-gold);">📍 ${escapeHtml(member.citta)}</div>
                 </div>
-
-                <div class="social-cta-box">
-                    <p>${t.socialCtaText}</p>
-                    <a href="https://www.instagram.com/" target="_blank" class="btn-instagram">${t.btnInstagram}</a>
+                <div style="margin-top:15px;">
+                    <strong style="color:var(--roma-gold); font-size:0.85rem;">LA SCINTILLA E LA STORIA:</strong>
+                    <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.storia)}"</p>
                 </div>
-
-                <div style="margin-top:15px; margin-bottom:12px;">
-                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.storyHeader}</strong>
-                    <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(storyText)}"</p>
-                </div>
-
-                ${diffText ? `
-                <div style="margin-bottom:12px;">
-                    <strong style="color:var(--roma-gold); font-size:0.85rem; text-transform:uppercase;">${t.difficultHeader}</strong>
-                    <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(diffText)}"</p>
-                </div>` : ''}
-
+                ${member.difficili ? `<div style="margin-top:10px;"><strong style="color:var(--roma-gold); font-size:0.85rem;">NEI MOMENTI DIFFICILI:</strong><p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.difficili)}"</p></div>` : ''}
                 ${galleryHtml}
-
-                <div class="modal-actions">
-                    <button class="btn-action btn-download" onclick="downloadTicketImage()">${t.btnDownload}</button>
-                    <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">${t.btnEdit}</button>
-                    ${member.id !== 1 ? `<button class="btn-action btn-delete" onclick="deleteMember(${member.id})">${t.btnDelete}</button>` : ''}
-                </div>
             `;
             ticketModal.style.display = 'flex';
         }
 
-        window.downloadTicketImage = function() {
-            const ticketElement = document.getElementById('ticketToDownload');
-            html2canvas(ticketElement, { scale: 2, backgroundColor: null }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Passaporto-Tifoso-ASR.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        };
-
-        window.openEditForm = function(id) {
-            const member = members.find(m => m.id === id);
-            if(!member) return;
-            const fotos = member.fotos || (member.foto ? [member.foto] : []);
-
-            let storyText = member.storia || defaultStoriaIT;
-            let diffText = member.difficili || defaultDifficiliIT;
-
-            let photosManagerHtml = '';
-            if(fotos.length > 0) {
-                photosManagerHtml = `
-                    <div class="form-group">
-                        <label>Foto esistenti (clicca X per rimuovere):</label>
-                        <div class="photo-gallery">
-                            ${fotos.map((f, idx) => `
-                                <div class="photo-item">
-                                    <img src="${f}">
-                                    <button class="photo-delete-btn" onclick="removePhotoFromMember(${member.id},${idx})">✕</button>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>`;
-            }
-
-            modalBody.innerHTML = `
-                <h2 style="color:var(--roma-gold); font-size:1.4rem; margin-bottom:15px; text-transform:uppercase;">Modifica Tessera #${String(member.id).padStart(3, '0')}</h2>
-                <div class="form-group">
-                    <label>Nome e/o Soprannome</label>
-                    <input type="text" id="editNome" value="${escapeHtml(member.nome)}">
-                </div>
-                <div class="form-group">
-                    <label>Città e Nazione</label>
-                    <input type="text" id="editCitta" value="${escapeHtml(member.citta)}">
-                </div>
-                <div class="form-group">
-                    <label>La Scintilla e la Storia</label>
-                    <textarea id="editStoria">${escapeHtml(storyText)}</textarea>
-                </div>
-                <div class="form-group">
-                    <label>Nei momenti difficili</label>
-                    <textarea id="editDifficili">${escapeHtml(diffText)}</textarea>
-                </div>
-                ${photosManagerHtml}
-                <div class="form-group">
-                    <label>Aggiungi altre foto:</label>
-                    <input type="file" id="editNewFotos" accept="image/*" multiple>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn-action btn-edit" onclick="saveEdit(${member.id})">Salva Modifiche</button>
-                    <button class="btn-action" style="background:#555; color:#fff;" onclick="openTicketDetail(${member.id})">Annulla</button>
-                </div>
-            `;
-        };
-
-        window.removePhotoFromMember = function(memberId, photoIndex) {
-            const member = members.find(m => m.id === memberId);
-            if(!member) return;
-            if(!member.fotos) member.fotos = member.foto ? [member.foto] : [];
-            
-            member.fotos.splice(photoIndex, 1);
-            delete member.foto;
-            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
-            openEditForm(memberId);
-        };
-
-        window.saveEdit = function(id) {
-            const member = members.find(m => m.id === id);
-            if(!member) return;
-
-            member.nome = document.getElementById('editNome').value;
-            member.citta = document.getElementById('editCitta').value;
-            member.storia = document.getElementById('editStoria').value;
-            member.difficili = document.getElementById('editDifficili').value;
-            
-            if(!member.fotos) member.fotos = member.foto ? [member.foto] : [];
-
-            const newFilesInput = document.getElementById('editNewFotos');
-            if(newFilesInput.files && newFilesInput.files.length > 0) {
-                let loaded = 0;
-                Array.from(newFilesInput.files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        member.fotos.push(e.target.result);
-                        loaded++;
-                        if(loaded === newFilesInput.files.length) {
-                            delete member.foto;
-                            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
-                            renderArchive();
-                            openTicketDetail(id);
+        // Funzione per comprimere l'immagine e renderla perfettamente visibile ovunque
+        function compressImage(file, maxWidth = 800, quality = 0.7) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
                         }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
                     };
-                    reader.readAsDataURL(file);
-                });
-            } else {
-                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
-                renderArchive();
-                openTicketDetail(id);
-            }
-        };
-
-        window.deleteMember = async function(id) {
-            if(id === 1) {
-                alert("Non puoi eliminare il fondatore della pagina!");
-                return;
-            }
-            if(confirm("Sei sicuro di voler eliminare questa tessera?")) {
-                const deleted = members.find(m => m.id === id);
-                members = members.filter(m => m.id !== id);
-                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
-                ticketModal.style.display = 'none';
-                renderArchive();
-
-                if (deleted && deleted.firebaseId && window.deleteDocCloud) {
-                    try {
-                        await window.deleteDocCloud(window.docCloud(window.firebaseDb, "members", deleted.firebaseId));
-                    } catch(e) { console.log("Cloud delete warning:", e); }
-                }
-            }
-        };
-
-        // Funzione per ottenere latitudine e longitudine dalla città
-        async function geocodeCity(cittaName) {
-            try {
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cittaName)}`);
-                const data = await response.json();
-                if (data && data.length > 0) {
-                    return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
-                }
-            } catch(e) { console.log("Geocoding failed:", e); }
-            return {
-                lat: 40 + (Math.random() * 10 - 5),
-                lng: 12 + (Math.random() * 15 - 7.5)
-            };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
         }
-
-        searchInput.addEventListener('input', (e) => renderArchive(e.target.value));
 
         tifoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const fileInput = document.getElementById('fotoFiles');
-            const cittaVal = document.getElementById('citta').value;
-            
-            const coords = await geocodeCity(cittaVal);
+            const submitBtn = document.getElementById('t-btn-submit');
+            submitBtn.innerText = "Elaborazione foto...";
+            submitBtn.disabled = true;
 
-            const saveNew = async (photoArray = []) => {
-                const newMember = {
-                    id: members.length > 0 ? Math.max(...members.map(m => m.id || 1)) + 1 : 1,
-                    nome: document.getElementById('nome').value,
-                    citta: cittaVal,
-                    storia: document.getElementById('storia').value,
-                    difficili: document.getElementById('difficili').value,
-                    fotos: photoArray,
-                    lat: coords.lat,
-                    lng: coords.lng
-                };
-
-                members.push(newMember);
-                localStorage.setItem('maiSoliMembers', JSON.stringify(members));
-                renderArchive();
-                tifoForm.reset();
-
-                if (window.addDocCloud && window.colMembers) {
-                    try {
-                        const docRef = await window.addDocCloud(window.colMembers, newMember);
-                        newMember.firebaseId = docRef.id;
-                    } catch(err) { console.log("Cloud sync error:", err); }
+            let photoUrls = [];
+            if (fileInput.files && fileInput.files.length > 0) {
+                for (let file of fileInput.files) {
+                    const compressedDataUrl = await compressImage(file);
+                    photoUrls.push(compressedDataUrl);
                 }
+            }
 
-                alert('Tessera generata con successo! Benvenuto nell\'Archivio!');
+            const newMember = {
+                id: members.length > 0 ? Math.max(...members.map(m => m.id || 1)) + 1 : 1,
+                nome: document.getElementById('nome').value,
+                citta: document.getElementById('citta').value,
+                storia: document.getElementById('storia').value,
+                difficili: document.getElementById('difficili').value,
+                fotos: photoUrls,
+                lat: 40 + (Math.random() * 10 - 5),
+                lng: 12 + (Math.random() * 15 - 7.5)
             };
 
-            if (fileInput.files && fileInput.files.length > 0) {
-                let photos = [];
-                let loaded = 0;
-                Array.from(fileInput.files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(uploadEvent) {
-                        photos.push(uploadEvent.target.result);
-                        loaded++;
-                        if(loaded === fileInput.files.length) {
-                            saveNew(photos);
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                });
-            } else {
-                saveNew([]);
+            members.push(newMember);
+            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+
+            if (window.addDocCloud && window.colMembers) {
+                try {
+                    await window.addDocCloud(window.colMembers, newMember);
+                } catch(err) { console.log("Cloud sync error:", err); }
             }
+
+            renderArchive();
+            tifoForm.reset();
+            submitBtn.innerText = "Invia e ottieni la Tessera";
+            submitBtn.disabled = false;
+            alert('Tessera creata con successo e foto sincronizzate su Cloud!');
         });
 
-        // Sincronizzazione con il database Cloud Firebase
         window.syncWithCloud = async function() {
             if (!window.getDocsCloud || !window.colMembers) return;
             try {
@@ -1475,25 +990,10 @@
                     localStorage.setItem('maiSoliMembers', JSON.stringify(members));
                     renderArchive();
                 }
-
-                const tipsSnapshot = await window.getDocsCloud(window.colTips);
-                let cloudTips = [];
-                tipsSnapshot.forEach((docSnap) => {
-                    cloudTips.push({ firebaseId: docSnap.id, ...docSnap.data() });
-                });
-
-                if (cloudTips.length > 0) {
-                    tipsList = cloudTips;
-                    localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
-                    renderTips();
-                }
-            } catch(e) {
-                console.log("Firebase sync fallback ready.", e);
-            }
+            } catch(e) { console.log("Firebase sync fallback ready.", e); }
         };
 
         closeModal.addEventListener('click', () => ticketModal.style.display = 'none');
-        window.addEventListener('click', (e) => { if (e.target === ticketModal) ticketModal.style.display = 'none'; });
 
         function escapeHtml(text) {
             if(!text) return '';
@@ -1503,7 +1003,6 @@
 
         window.onload = function() {
             initMap();
-            renderTips();
             renderArchive();
             if (window.syncWithCloud) {
                 window.syncWithCloud();
