@@ -613,6 +613,7 @@
             border: 1px dashed var(--roma-gold);
             padding: 1rem;
             border-radius: 8px;
+            margin-top: 1.2rem;
             margin-bottom: 1.2rem;
         }
 
@@ -1019,35 +1020,19 @@
             </div>
         </div>
 
+        <!-- SEZIONE GUIDA & CONSIGLI RIORDINATA -->
         <div id="consigli" class="exchange-card">
             <h3 id="t-tips-title">🏨 Guida & Consigli Collaborativi</h3>
             <p id="t-tips-desc">Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
-
-            <!-- FORM AGGIUNGI CONSIGLIO (SPOSTATO IN ALTO) -->
-            <div class="tip-form-box" style="margin-top: 1rem;">
-                <h4 id="tipFormTitle">➕ Aggiungi un consiglio utile:</h4>
-                <div class="tip-input-group">
-                    <input type="text" id="tipCitta" placeholder="Città / Zona (es. Roma Flaminio, Londra)">
-                    <select id="tipCategoria">
-                        <option value="🛏️ Alloggio" id="opt-cat-alloggio">🛏️ Alloggio</option>
-                        <option value="🚆 Trasporti" id="opt-cat-trasporti">🚆 Trasporti</option>
-                        <option value="🍕 Cibo/Pub" id="opt-cat-cibo">🍕 Cibo / Pub</option>
-                        <option value="💡 Info Stadio" id="opt-cat-stadio">💡 Info Stadio</option>
-                    </select>
-                    <input type="text" id="tipTesto" placeholder="Descrizione, indirizzo o consiglio...">
-                    <button class="btn-add-tip" id="btnSaveTip" onclick="saveTip()">Pubblica</button>
-                    <button class="btn-add-tip" id="btnCancelTip" style="display:none; background:#555; color:#fff;" onclick="cancelTipEdit()">Annulla</button>
-                </div>
-            </div>
-
-            <!-- BOTTONI STRUMENTI VIAGGIO -->
-            <div class="travel-tools-bar">
+            
+            <!-- 1. BOTTONI STRUMENTI VIAGGIO IN CIMA -->
+            <div class="travel-tools-bar" style="margin-top: 1rem;">
                 <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool" id="t-tool-train">🚆 Cerca Treno (Trainline)</a>
                 <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool" id="t-tool-flight">✈️ Cerca Voli (Skyscanner)</a>
                 <a href="https://maps.google.com" target="_blank" class="btn-travel-tool" id="t-tool-maps">🗺️ Apri Google Maps</a>
             </div>
 
-            <!-- SCHEDA NAVIGATORE STADI, TRASFERTE & B&B -->
+            <!-- 2. NAVIGATORE STADI, TRASFERTE & B&B -->
             <div style="background: rgba(107, 0, 20, 0.3); border: 1px solid var(--roma-gold); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
                 <h4 style="color: var(--roma-gold); font-size: 1.05rem; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
                     🏟️ Navigatore Percorsi Stadi, Trasferte & B&B
@@ -1078,6 +1063,7 @@
                 </div>
             </div>
 
+            <!-- 3. LISTA CONSIGLI FILTRABILI & RICERCA -->
             <div class="tip-toolbar">
                 <div class="tip-filters">
                     <button class="tip-filter-btn active" id="flt-all" onclick="filterTips('Tutti', this)">Tutti</button>
@@ -1090,6 +1076,23 @@
             </div>
 
             <div class="tips-list" id="tipsContainer"></div>
+
+            <!-- 4. FORM AGGIUNGI CONSIGLIO IN FONDO -->
+            <div class="tip-form-box">
+                <h4 id="tipFormTitle">➕ Aggiungi un consiglio utile:</h4>
+                <div class="tip-input-group">
+                    <input type="text" id="tipCitta" placeholder="Città / Zona (es. Roma Flaminio, Londra)">
+                    <select id="tipCategoria">
+                        <option value="🛏️ Alloggio" id="opt-cat-alloggio">🛏️ Alloggio</option>
+                        <option value="🚆 Trasporti" id="opt-cat-trasporti">🚆 Trasporti</option>
+                        <option value="🍕 Cibo/Pub" id="opt-cat-cibo">🍕 Cibo / Pub</option>
+                        <option value="💡 Info Stadio" id="opt-cat-stadio">💡 Info Stadio</option>
+                    </select>
+                    <input type="text" id="tipTesto" placeholder="Descrizione, indirizzo o consiglio...">
+                    <button class="btn-add-tip" id="btnSaveTip" onclick="saveTip()">Pubblica</button>
+                    <button class="btn-add-tip" id="btnCancelTip" style="display:none; background:#555; color:#fff;" onclick="cancelTipEdit()">Annulla</button>
+                </div>
+            </div>
         </div>
 
         <div id="solidarieta" class="social-card">
