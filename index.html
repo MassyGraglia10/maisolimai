@@ -949,9 +949,7 @@
 
         <div id="manifesto" class="manifesto-card">
             <h2 id="t-manifesto-title">Il Manifesto <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span></h2>
-            <div class="manifesto-text" id="t-manifesto-content">
-                <!-- Il manifesto dinamico si caricherà qui in base alla lingua -->
-            </div>
+            <div class="manifesto-text" id="t-manifesto-content"></div>
         </div>
 
         <div class="top-split-section" id="archivio">
@@ -987,7 +985,6 @@
             </div>
 
             <div class="archive-side">
-                <!-- WIDGET COMPLEANNI COMPATTO -->
                 <div class="birthdays-card-compact" id="birthdayWidgetContainer" style="display:none;">
                     <h4 id="t-birthday-title">🎂 Compleanni di Questo Mese</h4>
                     <div class="birthdays-grid-compact" id="birthdayList"></div>
@@ -1009,7 +1006,6 @@
             <div id="map"></div>
         </div>
 
-        <!-- SEZIONE BAR ROMA -->
         <div id="bar-roma" class="bar-roma-card">
             <div class="bar-roma-info">
                 <h4>☕ Bar Roma – Community & Voice</h4>
@@ -1028,9 +1024,9 @@
             <p id="t-tips-desc">Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
             
             <div class="travel-tools-bar">
-                <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool">🚆 Cerca Treno (Trainline)</a>
-                <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool">✈️ Cerca Voli (Skyscanner)</a>
-                <a href="https://maps.google.com" target="_blank" class="btn-travel-tool">🗺️ Apri Google Maps</a>
+                <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool" id="t-tool-train">🚆 Cerca Treno (Trainline)</a>
+                <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool" id="t-tool-flight">✈️ Cerca Voli (Skyscanner)</a>
+                <a href="https://maps.google.com" target="_blank" class="btn-travel-tool" id="t-tool-maps">🗺️ Apri Google Maps</a>
             </div>
 
             <div class="tip-form-box">
@@ -1038,10 +1034,10 @@
                 <div class="tip-input-group">
                     <input type="text" id="tipCitta" placeholder="Città / Zona (es. Roma Flaminio, Londra)">
                     <select id="tipCategoria">
-                        <option value="🛏️ Alloggio">🛏️ Alloggio</option>
-                        <option value="🚆 Trasporti">🚆 Trasporti</option>
-                        <option value="🍕 Cibo/Pub">🍕 Cibo / Pub</option>
-                        <option value="💡 Info Stadio">💡 Info Stadio</option>
+                        <option value="🛏️ Alloggio" id="opt-cat-alloggio">🛏️ Alloggio</option>
+                        <option value="🚆 Trasporti" id="opt-cat-trasporti">🚆 Trasporti</option>
+                        <option value="🍕 Cibo/Pub" id="opt-cat-cibo">🍕 Cibo / Pub</option>
+                        <option value="💡 Info Stadio" id="opt-cat-stadio">💡 Info Stadio</option>
                     </select>
                     <input type="text" id="tipTesto" placeholder="Descrizione, indirizzo o consiglio...">
                     <button class="btn-add-tip" id="btnSaveTip" onclick="saveTip()">Pubblica</button>
@@ -1051,11 +1047,11 @@
 
             <div class="tip-toolbar">
                 <div class="tip-filters">
-                    <button class="tip-filter-btn active" onclick="filterTips('Tutti', this)">Tutti</button>
-                    <button class="tip-filter-btn" onclick="filterTips('🛏️ Alloggio', this)">🛏️ Alloggi</button>
-                    <button class="tip-filter-btn" onclick="filterTips('🚆 Trasporti', this)">🚆 Trasporti</button>
-                    <button class="tip-filter-btn" onclick="filterTips('🍕 Cibo/Pub', this)">🍕 Cibo / Pub</button>
-                    <button class="tip-filter-btn" onclick="filterTips('💡 Info Stadio', this)">💡 Info Stadio</button>
+                    <button class="tip-filter-btn active" id="flt-all" onclick="filterTips('Tutti', this)">Tutti</button>
+                    <button class="tip-filter-btn" id="flt-acc" onclick="filterTips('🛏️ Alloggio', this)">🛏️ Alloggi</button>
+                    <button class="tip-filter-btn" id="flt-trsp" onclick="filterTips('🚆 Trasporti', this)">🚆 Trasporti</button>
+                    <button class="tip-filter-btn" id="flt-food" onclick="filterTips('🍕 Cibo/Pub', this)">🍕 Cibo / Pub</button>
+                    <button class="tip-filter-btn" id="flt-std" onclick="filterTips('💡 Info Stadio', this)">💡 Info Stadio</button>
                 </div>
                 <input type="text" id="searchTipInput" class="search-tip-box" oninput="renderTips()" placeholder="🔍 Cerca città o stadio...">
             </div>
@@ -1075,7 +1071,7 @@
                     <input type="text" id="socialTitolo" placeholder="Titolo iniziativa (es. Raccolta beni / Adozione)">
                     <input type="text" id="socialCitta" placeholder="Città / Riferimento (es. Torino / Roma)">
                     <input type="text" id="socialDescrizione" placeholder="Descrizione o link alla causa...">
-                    <button class="btn-add-tip" onclick="saveSocialProject()">Aggiungi Causa</button>
+                    <button class="btn-add-tip" id="t-btn-add-social" onclick="saveSocialProject()">Aggiungi Causa</button>
                 </div>
             </div>
         </div>
@@ -1100,7 +1096,7 @@
         let activeTipFilter = 'Tutti';
         let editingTipId = null;
 
-        // DIZIONARIO COMPLETO (Interfaccia + Manifesto)
+        // DIZIONARIO TRADUZIONI MULTILINGUA
         const translations = {
             it: {
                 subtitle: "La Roma non si discute, si ama",
@@ -1126,9 +1122,30 @@
                 barDesc: "Il punto di ritrovo virtuale per i tifosi a distanza: chat, live vocali e aggiornamenti.",
                 tipsTitle: "🏨 Guida & Consigli Collaborativi",
                 tipsDesc: "Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.",
+                toolTrain: "🚆 Cerca Treno (Trainline)",
+                toolFlight: "✈️ Cerca Voli (Skyscanner)",
+                toolMaps: "🗺️ Apri Google Maps",
+                tipFormTitle: "➕ Aggiungi un consiglio utile:",
+                phTipCitta: "Città / Zona (es. Roma Flaminio, Londra)",
+                phTipTesto: "Descrizione, indirizzo o consiglio...",
+                btnPublishTip: "Pubblica",
+                optAlloggio: "🛏️ Alloggio",
+                optTrasporti: "🚆 Trasporti",
+                optCibo: "🍕 Cibo / Pub",
+                optStadio: "💡 Info Stadio",
+                fltAll: "Tutti",
+                fltAcc: "🛏️ Alloggi",
+                fltTrsp: "🚆 Trasporti",
+                fltFood: "🍕 Cibo / Pub",
+                fltStd: "💡 Info Stadio",
+                phSearchTip: "🔍 Cerca città o stadio...",
                 socialTitle: "❤️ Dona un Sorriso / Progetti Solidali",
                 socialDesc: "I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali.",
                 socialAddTitle: "🤝 Segnala o Proponi un'Iniziativa Solidale",
+                phSocialTitolo: "Titolo iniziativa (es. Raccolta beni / Adozione)",
+                phSocialCitta: "Città / Riferimento (es. Torino / Roma)",
+                phSocialDesc: "Descrizione o link alla causa...",
+                btnAddSocial: "Aggiungi Causa",
                 manifestoTitle: "Il Manifesto - Tessera #001",
                 manifestoText: [
                     "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.",
@@ -1136,7 +1153,20 @@
                     "Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
                     "Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.",
                     "Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia."
-                ]
+                ],
+                // Traduzioni Modal Biglietto
+                modalPassTitle: "PASS UFFICIALE",
+                modalCardHeader: "TESSERA #",
+                modalFounder: "FONDATORE",
+                modalSupporter: "TIFOSO",
+                modalInstaCta: "Condividi la tua storia su Instagram taggando <strong>@officialasroma</strong>!",
+                modalInstaBtn: "📸 Condividi su Instagram Story",
+                modalSparkTitle: "LA SCINTILLA E LA STORIA:",
+                modalHardTitle: "NEI MOMENTI DIFFICILI:",
+                modalGalleryTitle: "GALLERIA FOTO:",
+                modalBtnDownload: "📥 Scarica Passaporto / Biglietto",
+                modalBtnEdit: "Modifica",
+                modalBtnDelete: "Elimina Tessera"
             },
             en: {
                 subtitle: "Roma is not discussed, it is loved",
@@ -1162,9 +1192,30 @@
                 barDesc: "Virtual meeting place for fans from afar: chat, live voice calls and updates.",
                 tipsTitle: "🏨 Collaborative Travel Tips & Info",
                 tipsDesc: "Practical guide built by fans for fans: strategic hotels, transport, stadium info, and viewing spots worldwide.",
+                toolTrain: "🚆 Search Train (Trainline)",
+                toolFlight: "✈️ Search Flights (Skyscanner)",
+                toolMaps: "🗺️ Open Google Maps",
+                tipFormTitle: "➕ Add a useful tip:",
+                phTipCitta: "City / Area (e.g. Rome, London)",
+                phTipTesto: "Description, address, or tip...",
+                btnPublishTip: "Publish",
+                optAlloggio: "🛏️ Accommodation",
+                optTrasporti: "🚆 Transport",
+                optCibo: "🍕 Food / Pub",
+                optStadio: "💡 Stadium Info",
+                fltAll: "All",
+                fltAcc: "🛏️ Accommodation",
+                fltTrsp: "🚆 Transport",
+                fltFood: "🍕 Food / Pub",
+                fltStd: "💡 Stadium Info",
+                phSearchTip: "🔍 Search city or stadium...",
                 socialTitle: "❤️ Give a Smile / Solidarity Projects",
                 socialDesc: "AS Roma supporters know no distance when giving a helping hand. This section connects our community with charitable causes.",
                 socialAddTitle: "🤝 Propose or Report a Solidarity Cause",
+                phSocialTitolo: "Initiative title (e.g. Food drive / Donation)",
+                phSocialCitta: "City / Reference (e.g. Turin / Rome)",
+                phSocialDesc: "Description or link to the cause...",
+                btnAddSocial: "Add Cause",
                 manifestoTitle: "The Manifesto - Ticket #001",
                 manifestoText: [
                     "It all started one evening in 1984. I was a child in the Asti area of Piedmont, watching the European Cup final: Roma-Liverpool. It wasn't a victory that enchanted me, but the drama, the passion in the stands, the tragic and visceral beauty of those colors. From then on, inspired by Franco Tancredi's saves, I became a goalkeeper and a Roma fan.",
@@ -1172,7 +1223,19 @@
                     "I remember the night train taken alone from Turin to be at the Olimpico on June 17, 2001, and returning the same evening with my heart full of joy. Those who support Roma from afar experience a special kind of solitude, made of kilometers, night trains, and matches watched in silence.",
                     "Whether you live one kilometer from the Olimpico or across the world, here there are no geographies: only the unanimous heartbeat of an invisible yet unbreakable faith.",
                     "For my 50th birthday, I want to build a home for everyone who lives this same faith from a distance, often in solitude. A place where every story holds the same emotional weight. Join the Archive and tell us your story."
-                ]
+                ],
+                modalPassTitle: "OFFICIAL PASS",
+                modalCardHeader: "MEMBERSHIP #",
+                modalFounder: "FOUNDER",
+                modalSupporter: "SUPPORTER",
+                modalInstaCta: "Share your story on Instagram tagging <strong>@officialasroma</strong>!",
+                modalInstaBtn: "📸 Share on Instagram Story",
+                modalSparkTitle: "THE SPARK & STORY:",
+                modalHardTitle: "IN DIFFICULT MOMENTS:",
+                modalGalleryTitle: "PHOTO GALLERY:",
+                modalBtnDownload: "📥 Download Passport / Ticket",
+                modalBtnEdit: "Edit",
+                modalBtnDelete: "Delete Ticket"
             },
             es: {
                 subtitle: "A la Roma no se le discute, se le ama",
@@ -1198,9 +1261,30 @@
                 barDesc: "El punto de encuentro virtual para aficionados lejanos: chat, eventos de voz y novedades.",
                 tipsTitle: "🏨 Guía Colaborativa y Consejos",
                 tipsDesc: "Guía práctica creada por aficionados: alojamientos estratégicos, transporte e información sobre el estadio.",
+                toolTrain: "🚆 Buscar Tren (Trainline)",
+                toolFlight: "✈️ Buscar Vuelos (Skyscanner)",
+                toolMaps: "🗺️ Abrir Google Maps",
+                tipFormTitle: "➕ Añade un consejo útil:",
+                phTipCitta: "Ciudad / Zona (ej. Roma, Londres)",
+                phTipTesto: "Descripción, dirección o consejo...",
+                btnPublishTip: "Publicar",
+                optAlloggio: "🛏️ Alojamiento",
+                optTrasporti: "🚆 Transporte",
+                optCibo: "🍕 Comida / Pub",
+                optStadio: "💡 Info Estadio",
+                fltAll: "Todos",
+                fltAcc: "🛏️ Alojamientos",
+                fltTrsp: "🚆 Transporte",
+                fltFood: "🍕 Comida / Pub",
+                fltStd: "💡 Info Estadio",
+                phSearchTip: "🔍 Buscar ciudad o estadio...",
                 socialTitle: "❤️ Regala una Sonrisa / Proyectos Solidarios",
                 socialDesc: "Los aficionados romanistas no conocen distancias para tender una mano. Esta sección unirá nuestra comunidad a causas benéficas.",
                 socialAddTitle: "🤝 Propón una Causa Solidaria",
+                phSocialTitolo: "Título de la iniciativa (ej. Donación)",
+                phSocialCitta: "Ciudad / Referencia (ej. Turín / Roma)",
+                phSocialDesc: "Descripción o enlace...",
+                btnAddSocial: "Añadir Causa",
                 manifestoTitle: "El Manifiesto - Carné #001",
                 manifestoText: [
                     "Todo comenzó una noche de 1984. Era un niño en la zona de Asti, en Piamonte, viendo la final de la Copa de Europa: Roma-Liverpool. No fue una victoria lo que me cautivó, sino el drama, la pasión en las gradas, la belleza trágica y visceral de esos colores. A partir de ahí, inspirado por las paradas de Franco Tancredi, me convertí en portero y romanista.",
@@ -1208,7 +1292,19 @@
                     "Recuerdo el tren nocturno tomado solo desde Turín para estar en el Olímpico el 17 de junio de 2001, y regresar la misma noche con el corazón lleno de alegría. Quien apoya a la Roma desde la distancia vive una soledad especial, hecha de kilómetros, trenes nocturnos y partidos vistos en silencio.",
                     "Vivas a un kilómetro del Olímpico o en el fin del mundo, aquí no hay geografías: solo existe el latido unánime de una fe invisible pero inquebrantable.",
                     "Para mi 50 cumpleaños quiero construir un hogar para todas las personas que viven esta misma fe a distancia, a menudo en la soledad. Un lugar donde cada historia tenga el mismo peso emocional. Únete al Archivo y cuéntanos tu historia."
-                ]
+                ],
+                modalPassTitle: "PASE OFICIAL",
+                modalCardHeader: "CARNÉ #",
+                modalFounder: "FUNDADOR",
+                modalSupporter: "AFICIONADO",
+                modalInstaCta: "¡Comparte tu historia en Instagram etiquetando a <strong>@officialasroma</strong>!",
+                modalInstaBtn: "📸 Compartir en Instagram Story",
+                modalSparkTitle: "LA CHISPA Y LA HISTORIA:",
+                modalHardTitle: "EN LOS MOMENTOS DIFÍCILES:",
+                modalGalleryTitle: "GALERÍA DE FOTOS:",
+                modalBtnDownload: "📥 Descargar Pasaporte / Carné",
+                modalBtnEdit: "Editar",
+                modalBtnDelete: "Eliminar Carné"
             },
             fr: {
                 subtitle: "La Roma ne se discute pas, elle s'aime",
@@ -1234,9 +1330,30 @@
                 barDesc: "Espace virtuel pour supporter éloignés: chat, appels en direct et actus.",
                 tipsTitle: "🏨 Guide Collaboratif & Conseils",
                 tipsDesc: "Guide pratique créé par des fans: hébergements, transports et infos sur le stade.",
+                toolTrain: "🚆 Rechercher Train (Trainline)",
+                toolFlight: "✈️ Rechercher Vols (Skyscanner)",
+                toolMaps: "🗺️ Ouvrir Google Maps",
+                tipFormTitle: "➕ Ajouter un conseil utile:",
+                phTipCitta: "Ville / Zone (ex. Rome, Londres)",
+                phTipTesto: "Description, adresse, ou conseil...",
+                btnPublishTip: "Publier",
+                optAlloggio: "🛏️ Hébergement",
+                optTrasporti: "🚆 Transports",
+                optCibo: "🍕 Nourriture / Pub",
+                optStadio: "💡 Infos Stade",
+                fltAll: "Tous",
+                fltAcc: "🛏️ Hébergements",
+                fltTrsp: "🚆 Transports",
+                fltFood: "🍕 Nourriture / Pub",
+                fltStd: "💡 Infos Stade",
+                phSearchTip: "🔍 Chercher ville ou stade...",
                 socialTitle: "❤️ Offre un Sourire / Projets Solidaires",
                 socialDesc: "La passion dei supporter della Roma dépasse toutes les distances. Cette section réunit notre communauté autour de projets caritatifs.",
                 socialAddTitle: "🤝 Proposer une Cause Solidaire",
+                phSocialTitolo: "Titre de l'initiative",
+                phSocialCitta: "Ville / Référence",
+                phSocialDesc: "Description ou lien...",
+                btnAddSocial: "Ajouter Cause",
                 manifestoTitle: "Le Manifeste - Carte #001",
                 manifestoText: [
                     "Tout a commencé un soir de 1984. J'étais un enfant dans la région d'Asti, au Piémont, et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique et viscérale de ces couleurs. Dès lors, inspiré par les arrêts de Franco Tancredi, je suis devenu gardien et romanista.",
@@ -1244,7 +1361,19 @@
                     "Je me souviens du train de nuit pris seul depuis Turin pour être à l'Olimpico le 17 juin 2001, et du retour le soir même le cœur comblé de joie. Ceux qui soutiennent la Roma de loin vivent une solitude particulière, faite de kilomètres, de trains de nuit et de matchs regardés en silence.",
                     "Que vous viviez à un kilomètre de l'Olimpico ou au bout du monde, ici il n'y a pas de géographies : il n'y a que le battement unanime d'une foi invisible mais inébranlable.",
                     "Pour mes 50 ans, je veux construire une maison pour toutes les personnes qui vivent cette même foi à distance, souvent dans la solitude. Un lieu où chaque histoire a le même poids émotionnel. Rejoignez l'Archive et racontez-nous votre histoire."
-                ]
+                ],
+                modalPassTitle: "PASS OFFICIEL",
+                modalCardHeader: "CARTE #",
+                modalFounder: "FONDATEUR",
+                modalSupporter: "SUPPORTER",
+                modalInstaCta: "Partagez votre histoire sur Instagram en taguant <strong>@officialasroma</strong>!",
+                modalInstaBtn: "📸 Partager en Story Instagram",
+                modalSparkTitle: "L'ÉTINCELLE ET L'HISTOIRE:",
+                modalHardTitle: "DANS LES MOMENTS DIFFICILES:",
+                modalGalleryTitle: "GALERIE PHOTOS:",
+                modalBtnDownload: "📥 Télécharger Passeport / Carte",
+                modalBtnEdit: "Modifier",
+                modalBtnDelete: "Supprimer la Carte"
             }
         };
 
@@ -1275,14 +1404,45 @@
             document.getElementById('t-bar-desc').innerText = t.barDesc;
             document.getElementById('t-tips-title').innerText = t.tipsTitle;
             document.getElementById('t-tips-desc').innerText = t.tipsDesc;
+
+            // Travel tools
+            document.getElementById('t-tool-train').innerText = t.toolTrain;
+            document.getElementById('t-tool-flight').innerText = t.toolFlight;
+            document.getElementById('t-tool-maps').innerText = t.toolMaps;
+
+            // Form Consigli
+            document.getElementById('tipFormTitle').innerText = t.tipFormTitle;
+            document.getElementById('tipCitta').placeholder = t.phTipCitta;
+            document.getElementById('tipTesto').placeholder = t.phTipTesto;
+            if(!editingTipId) document.getElementById('btnSaveTip').innerText = t.btnPublishTip;
+            document.getElementById('opt-cat-alloggio').innerText = t.optAlloggio;
+            document.getElementById('opt-cat-trasporti').innerText = t.optTrasporti;
+            document.getElementById('opt-cat-cibo').innerText = t.optCibo;
+            document.getElementById('opt-cat-stadio').innerText = t.optStadio;
+
+            // Filtri Consigli
+            document.getElementById('flt-all').innerText = t.fltAll;
+            document.getElementById('flt-acc').innerText = t.fltAcc;
+            document.getElementById('flt-trsp').innerText = t.fltTrsp;
+            document.getElementById('flt-food').innerText = t.fltFood;
+            document.getElementById('flt-std').innerText = t.fltStd;
+            document.getElementById('searchTipInput').placeholder = t.phSearchTip;
+
+            // Solidarietà
             document.getElementById('t-social-title').innerText = t.socialTitle;
             document.getElementById('t-social-desc').innerText = t.socialDesc;
             document.getElementById('t-social-add-title').innerText = t.socialAddTitle;
+            document.getElementById('socialTitolo').placeholder = t.phSocialTitolo;
+            document.getElementById('socialCitta').placeholder = t.phSocialCitta;
+            document.getElementById('socialDescrizione').placeholder = t.phSocialDesc;
+            document.getElementById('t-btn-add-social').innerText = t.btnAddSocial;
 
-            // Traduzione dinamica del Manifesto
-            document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle.split('-')[0]} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- ${t.manifestoTitle.split('-')[1] || 'Tessera #001'}</span>`;
+            // Manifesto
+            document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle.split('-')[0]} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- ${t.manifestoTitle.split('-')[1] || ''}</span>`;
             const manifestoContainer = document.getElementById('t-manifesto-content');
             manifestoContainer.innerHTML = t.manifestoText.map(par => `<p>${par}</p>`).join('');
+
+            renderArchive();
         };
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
@@ -1352,6 +1512,7 @@
 
         function renderArchive(filter = '') {
             archiveGridContainer.innerHTML = '';
+            const t = translations[currentLang] || translations.it;
             const filteredMembers = members.filter(m => {
                 return m.nome.toLowerCase().includes(filter.toLowerCase()) || 
                        m.citta.toLowerCase().includes(filter.toLowerCase());
@@ -1367,8 +1528,8 @@
                 card.onclick = () => openTicketDetail(member.id);
                 card.innerHTML = `
                     <div class="ticket-header">
-                        <span class="ticket-number">TESSERA #${formattedId}</span>
-                        <span style="color: var(--roma-gold); font-size:0.7rem;">${member.id === 1 ? 'FONDATORE' : 'TIFOSO'}</span>
+                        <span class="ticket-number">${t.modalCardHeader}${formattedId}</span>
+                        <span style="color: var(--roma-gold); font-size:0.7rem;">${member.id === 1 ? t.modalFounder : t.modalSupporter}</span>
                     </div>
                     <div class="ticket-holder">${escapeHtml(member.nome)}</div>
                     <div class="ticket-location">📍 ${escapeHtml(member.citta)}</div>
@@ -1591,48 +1752,50 @@
             }
         };
 
+        // APERTURA DETTAGLIO BIGLIETTO CON TRADUZIONI APPLICATE
         function openTicketDetail(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
+            const t = translations[currentLang] || translations.it;
             const formattedId = String(member.id).padStart(3, '0');
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
             const compDisplay = member.compleanno || member.dataNascita || '';
 
             let galleryHtml = fotos.length > 0 ? `
                 <div style="margin-top:15px;">
-                    <strong style="color:var(--roma-gold); font-size:0.85rem;">GALLERIA FOTO:</strong>
+                    <strong style="color:var(--roma-gold); font-size:0.85rem;">${t.modalGalleryTitle}</strong>
                     <div class="photo-gallery">${fotos.map(f => `<div class="photo-item"><img src="${f}"></div>`).join('')}</div>
                 </div>` : '';
 
             modalBody.innerHTML = `
                 <div id="ticketToDownload" class="printable-ticket">
                     <div class="ticket-badge-top">
-                        <span style="font-size:0.8rem; color:var(--roma-gold); font-weight:bold;">PASS UFFICIALE</span>
+                        <span style="font-size:0.8rem; color:var(--roma-gold); font-weight:bold;">${t.modalPassTitle}</span>
                         <span style="font-size:0.8rem; color:#fff;">MAI SOLI MAI</span>
                     </div>
-                    <h2 style="color:var(--roma-gold); font-size:1.5rem; margin-bottom:5px;">TESSERA #${formattedId}</h2>
+                    <h2 style="color:var(--roma-gold); font-size:1.5rem; margin-bottom:5px;">${t.modalCardHeader}${formattedId}</h2>
                     <div style="font-size:1.3rem; font-weight:bold; color:#fff; margin-bottom:3px;">${escapeHtml(member.nome)}</div>
                     <div style="font-size:0.9rem; color:var(--roma-gold);">📍 ${escapeHtml(member.citta)} ${compDisplay ? ' | 🎂 ' + escapeHtml(compDisplay) : ''}</div>
                 </div>
 
                 <div class="social-cta-box">
-                    <p>Condividi la tua storia su Instagram taggando <strong>@officialasroma</strong>!</p>
+                    <p>${t.modalInstaCta}</p>
                     <div class="social-buttons-row">
-                        <a href="https://www.instagram.com/" target="_blank" class="btn-instagram-story">📸 Condividi su Instagram Story</a>
+                        <a href="https://www.instagram.com/" target="_blank" class="btn-instagram-story">${t.modalInstaBtn}</a>
                     </div>
                 </div>
 
                 <div style="margin-top:15px;">
-                    <strong style="color:var(--roma-gold); font-size:0.85rem;">LA SCINTILLA E LA STORIA:</strong>
+                    <strong style="color:var(--roma-gold); font-size:0.85rem;">${t.modalSparkTitle}</strong>
                     <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.storia)}"</p>
                 </div>
-                ${member.difficili ? `<div style="margin-top:10px;"><strong style="color:var(--roma-gold); font-size:0.85rem;">NEI MOMENTI DIFFICILI:</strong><p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.difficili)}"</p></div>` : ''}
+                ${member.difficili ? `<div style="margin-top:10px;"><strong style="color:var(--roma-gold); font-size:0.85rem;">${t.modalHardTitle}</strong><p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.difficili)}"</p></div>` : ''}
                 ${galleryHtml}
 
                 <div class="modal-actions">
-                    <button class="btn-action btn-download" onclick="downloadTicketImage()">📥 Scarica Passaporto / Biglietto</button>
-                    <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">Modifica</button>
-                    <button class="btn-action btn-delete" onclick="deleteMember(${member.id})">Elimina Tessera</button>
+                    <button class="btn-action btn-download" onclick="downloadTicketImage()">${t.modalBtnDownload}</button>
+                    <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">${t.modalBtnEdit}</button>
+                    <button class="btn-action btn-delete" onclick="deleteMember(${member.id})">${t.modalBtnDelete}</button>
                 </div>
             `;
             ticketModal.style.display = 'flex';
@@ -1918,7 +2081,7 @@
 
         window.onload = function() {
             initMap();
-            changeLanguage('it'); // Inizializza lingua di default
+            changeLanguage('it');
             renderArchive();
             renderTips();
             renderSocialProjects();
