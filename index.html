@@ -950,11 +950,7 @@
         <div id="manifesto" class="manifesto-card">
             <h2 id="t-manifesto-title">Il Manifesto <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span></h2>
             <div class="manifesto-text" id="t-manifesto-content">
-                <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
-                <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
-                <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.</p>
-                <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
+                <!-- Il manifesto dinamico si caricherà qui in base alla lingua -->
             </div>
         </div>
 
@@ -1031,7 +1027,6 @@
             <h3 id="t-tips-title">🏨 Guida & Consigli Collaborativi</h3>
             <p id="t-tips-desc">Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
             
-            <!-- LINK UTILI VIAGGI -->
             <div class="travel-tools-bar">
                 <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool">🚆 Cerca Treno (Trainline)</a>
                 <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool">✈️ Cerca Voli (Skyscanner)</a>
@@ -1105,7 +1100,7 @@
         let activeTipFilter = 'Tutti';
         let editingTipId = null;
 
-        // DIZIONARIO TRADUZIONI MULTILINGUA
+        // DIZIONARIO COMPLETO (Interfaccia + Manifesto)
         const translations = {
             it: {
                 subtitle: "La Roma non si discute, si ama",
@@ -1133,7 +1128,15 @@
                 tipsDesc: "Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.",
                 socialTitle: "❤️ Dona un Sorriso / Progetti Solidali",
                 socialDesc: "I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali.",
-                socialAddTitle: "🤝 Segnala o Proponi un'Iniziativa Solidale"
+                socialAddTitle: "🤝 Segnala o Proponi un'Iniziativa Solidale",
+                manifestoTitle: "Il Manifesto - Tessera #001",
+                manifestoText: [
+                    "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.",
+                    "Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.",
+                    "Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
+                    "Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.",
+                    "Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia."
+                ]
             },
             en: {
                 subtitle: "Roma is not discussed, it is loved",
@@ -1161,7 +1164,15 @@
                 tipsDesc: "Practical guide built by fans for fans: strategic hotels, transport, stadium info, and viewing spots worldwide.",
                 socialTitle: "❤️ Give a Smile / Solidarity Projects",
                 socialDesc: "AS Roma supporters know no distance when giving a helping hand. This section connects our community with charitable causes.",
-                socialAddTitle: "🤝 Propose or Report a Solidarity Cause"
+                socialAddTitle: "🤝 Propose or Report a Solidarity Cause",
+                manifestoTitle: "The Manifesto - Ticket #001",
+                manifestoText: [
+                    "It all started one evening in 1984. I was a child in the Asti area of Piedmont, watching the European Cup final: Roma-Liverpool. It wasn't a victory that enchanted me, but the drama, the passion in the stands, the tragic and visceral beauty of those colors. From then on, inspired by Franco Tancredi's saves, I became a goalkeeper and a Roma fan.",
+                    "Supporting Roma from here, amidst the Piedmont fog and daily battles with rival fans, has never been an easy choice. But in 49 years of life, in happy days and especially in the darkest ones, this team has been an unshakable anchor. A consolation.",
+                    "I remember the night train taken alone from Turin to be at the Olimpico on June 17, 2001, and returning the same evening with my heart full of joy. Those who support Roma from afar experience a special kind of solitude, made of kilometers, night trains, and matches watched in silence.",
+                    "Whether you live one kilometer from the Olimpico or across the world, here there are no geographies: only the unanimous heartbeat of an invisible yet unbreakable faith.",
+                    "For my 50th birthday, I want to build a home for everyone who lives this same faith from a distance, often in solitude. A place where every story holds the same emotional weight. Join the Archive and tell us your story."
+                ]
             },
             es: {
                 subtitle: "A la Roma no se le discute, se le ama",
@@ -1189,7 +1200,15 @@
                 tipsDesc: "Guía práctica creada por aficionados: alojamientos estratégicos, transporte e información sobre el estadio.",
                 socialTitle: "❤️ Regala una Sonrisa / Proyectos Solidarios",
                 socialDesc: "Los aficionados romanistas no conocen distancias para tender una mano. Esta sección unirá nuestra comunidad a causas benéficas.",
-                socialAddTitle: "🤝 Propón una Causa Solidaria"
+                socialAddTitle: "🤝 Propón una Causa Solidaria",
+                manifestoTitle: "El Manifiesto - Carné #001",
+                manifestoText: [
+                    "Todo comenzó una noche de 1984. Era un niño en la zona de Asti, en Piamonte, viendo la final de la Copa de Europa: Roma-Liverpool. No fue una victoria lo que me cautivó, sino el drama, la pasión en las gradas, la belleza trágica y visceral de esos colores. A partir de ahí, inspirado por las paradas de Franco Tancredi, me convertí en portero y romanista.",
+                    "Apoyar a la Roma desde aquí, entre la niebla del Piamonte y las batallas diarias con los rivales, nunca ha sido una elección fácil. Pero en 49 años de vida, en los días felices y especialmente en los más oscuros, este equipo ha sido un apoyo inquebrantable. Un consuelo.",
+                    "Recuerdo el tren nocturno tomado solo desde Turín para estar en el Olímpico el 17 de junio de 2001, y regresar la misma noche con el corazón lleno de alegría. Quien apoya a la Roma desde la distancia vive una soledad especial, hecha de kilómetros, trenes nocturnos y partidos vistos en silencio.",
+                    "Vivas a un kilómetro del Olímpico o en el fin del mundo, aquí no hay geografías: solo existe el latido unánime de una fe invisible pero inquebrantable.",
+                    "Para mi 50 cumpleaños quiero construir un hogar para todas las personas que viven esta misma fe a distancia, a menudo en la soledad. Un lugar donde cada historia tenga el mismo peso emocional. Únete al Archivo y cuéntanos tu historia."
+                ]
             },
             fr: {
                 subtitle: "La Roma ne se discute pas, elle s'aime",
@@ -1217,7 +1236,15 @@
                 tipsDesc: "Guide pratique créé par des fans: hébergements, transports et infos sur le stade.",
                 socialTitle: "❤️ Offre un Sourire / Projets Solidaires",
                 socialDesc: "La passion dei supporter della Roma dépasse toutes les distances. Cette section réunit notre communauté autour de projets caritatifs.",
-                socialAddTitle: "🤝 Proposer une Cause Solidaire"
+                socialAddTitle: "🤝 Proposer une Cause Solidaire",
+                manifestoTitle: "Le Manifeste - Carte #001",
+                manifestoText: [
+                    "Tout a commencé un soir de 1984. J'étais un enfant dans la région d'Asti, au Piémont, et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique et viscérale de ces couleurs. Dès lors, inspiré par les arrêts de Franco Tancredi, je suis devenu gardien et romanista.",
+                    "Supporter la Roma d'ici, entre les brumes du Piémont et les batailles quotidiennes avec les supporters rivaux, n'a jamais été un choix facile. Mais en 49 ans de vie, dans les jours heureux et surtout dans les plus sombres, cette équipe a été un point d'ancrage inébranlable. Une consolation.",
+                    "Je me souviens du train de nuit pris seul depuis Turin pour être à l'Olimpico le 17 juin 2001, et du retour le soir même le cœur comblé de joie. Ceux qui soutiennent la Roma de loin vivent une solitude particulière, faite de kilomètres, de trains de nuit et de matchs regardés en silence.",
+                    "Que vous viviez à un kilomètre de l'Olimpico ou au bout du monde, ici il n'y a pas de géographies : il n'y a que le battement unanime d'une foi invisible mais inébranlable.",
+                    "Pour mes 50 ans, je veux construire une maison pour toutes les personnes qui vivent cette même foi à distance, souvent dans la solitude. Un lieu où chaque histoire a le même poids émotionnel. Rejoignez l'Archive et racontez-nous votre histoire."
+                ]
             }
         };
 
@@ -1251,6 +1278,11 @@
             document.getElementById('t-social-title').innerText = t.socialTitle;
             document.getElementById('t-social-desc').innerText = t.socialDesc;
             document.getElementById('t-social-add-title').innerText = t.socialAddTitle;
+
+            // Traduzione dinamica del Manifesto
+            document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle.split('-')[0]} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- ${t.manifestoTitle.split('-')[1] || 'Tessera #001'}</span>`;
+            const manifestoContainer = document.getElementById('t-manifesto-content');
+            manifestoContainer.innerHTML = t.manifestoText.map(par => `<p>${par}</p>`).join('');
         };
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
@@ -1750,7 +1782,6 @@
             delete member.foto;
             localStorage.setItem('maiSoliMembers', JSON.stringify(members));
 
-            // Sincronizzazione immediata sul documento di Firebase
             if (member.firebaseId && window.setDocCloud && window.docCloud) {
                 try {
                     await window.setDocCloud(window.docCloud(window.firebaseDb, "members", member.firebaseId), member);
@@ -1887,6 +1918,7 @@
 
         window.onload = function() {
             initMap();
+            changeLanguage('it'); // Inizializza lingua di default
             renderArchive();
             renderTips();
             renderSocialProjects();
