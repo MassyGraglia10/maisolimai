@@ -208,42 +208,40 @@
             color: var(--roma-gold);
         }
 
-        /* WIDGET COMPLEANNI */
-        .birthdays-card {
+        /* COMPLEANNI COMPATTO */
+        .birthdays-card-compact {
             background: linear-gradient(145deg, #221217, var(--roma-card-bg));
             border: 1px solid var(--roma-gold);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 4px 15px rgba(212, 160, 23, 0.15);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
         }
 
-        .birthdays-card h3 {
+        .birthdays-card-compact h4 {
             color: var(--roma-gold);
+            font-size: 0.85rem;
             text-transform: uppercase;
-            font-size: 1.15rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .birthdays-grid-compact {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .birthday-badge-compact {
+            background: rgba(107, 0, 20, 0.6);
+            border: 1px solid var(--roma-gold);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .birthdays-grid {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .birthday-badge {
-            background: rgba(107, 0, 20, 0.4);
-            border: 1px solid var(--roma-gold);
-            border-radius: 8px;
-            padding: 10px 15px;
-            min-width: 200px;
-            flex-shrink: 0;
-            text-align: center;
         }
 
         .top-split-section {
@@ -508,7 +506,7 @@
 
         .tip-actions {
             display: flex;
-            gap: 3px;
+            gap: 5px;
         }
 
         .btn-tip-action {
@@ -516,7 +514,7 @@
             border: none;
             color: #aaa;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             padding: 2px 4px;
             border-radius: 3px;
             transition: color 0.2s;
@@ -570,7 +568,6 @@
             font-size: 0.8rem;
         }
 
-        /* SEZIONE SOCIALE / DONA UN SORRISO */
         .social-card {
             background: linear-gradient(145deg, #1f1218, #2a101b);
             border: 2px solid var(--roma-gold);
@@ -863,16 +860,9 @@
                 <p>Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.</p>
                 <p>Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.</p>
                 <p>Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.</p>
-                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.</p>
+                <p>Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: existe solo il battito unanime di una fede invisibile ma incrollabile.</p>
                 <p>Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia.</p>
             </div>
-        </div>
-
-        <!-- WIDGET CALENDARIO / TIFOSI DEL MESE -->
-        <div class="birthdays-card" id="birthdayWidgetContainer" style="display:none;">
-            <h3>🎂 Calendario dei Tifosi - Compleanni del Mese</h3>
-            <p style="font-size:0.85rem; color:#ccc; margin-bottom:10px;">Invia un augurio speciale o un coro da stadio virtuale ai tifosi che compiono gli anni in questo periodo!</p>
-            <div class="birthdays-grid" id="birthdayList"></div>
         </div>
 
         <div class="top-split-section" id="archivio">
@@ -908,6 +898,12 @@
             </div>
 
             <div class="archive-side">
+                <!-- WIDGET COMPLEANNI COMPATTO -->
+                <div class="birthdays-card-compact" id="birthdayWidgetContainer" style="display:none;">
+                    <h4>🎂 Compleanni di Questo Mese</h4>
+                    <div class="birthdays-grid-compact" id="birthdayList"></div>
+                </div>
+
                 <div class="section-header">
                     <h3 class="section-title" id="t-archive-title">Archivio Tifosi</h3>
                     <input type="text" id="searchInput" class="search-box" placeholder="🔍 Cerca nome/città...">
@@ -999,13 +995,30 @@
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
             { id: 1, nome: "Massimo Graglia", citta: "Torino (Italia)", compleanno: "25 Marzo", storia: "Tutto è iniziato nel 1984...", difficili: "Sempre al mio fianco.", fotos: [], lat: 45.07, lng: 7.68 }
         ];
+
         let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [
-            { id: 1, citta: "Roma (Stadio Olimpico)", categoria: "💡 Info Stadio", testo: "Arrivare in anticipo a Ponte Milvio per trovare parcheggio e vivere il pre-partita nei pub storici." }
+            { id: 1, citta: "Roma - Stadio Olimpico", categoria: "🛏️ Alloggio", testo: "Hotel Villa Glori" }
         ];
+
         let socialProjects = JSON.parse(localStorage.getItem('maiSoliSocial')) || [
             { id: 1, titolo: "Supporto ai Senza Dimora", citta: "Roma", descrizione: "Iniziativa spontanea dei tifosi per la distribuzione di coperte e pasti caldi nei pressi dello Stadio Olimpico e Termini." },
             { id: 2, titolo: "Vicini ai Piccoli Tifosi", citta: "Torino & Nazionale", descrizione: "Raccolta e donazione di sciarpe, maglie e libri di sport ai reparti pediatrici locali nel nome dei valori romanisti." }
         ];
+
+        // Pulizia automatica duplicati all'avvio
+        function removeDuplicateMembers() {
+            let seen = new Set();
+            members = members.filter(m => {
+                let identifier = m.nome.toLowerCase().trim() + '_' + m.citta.toLowerCase().trim();
+                if (seen.has(identifier)) {
+                    return false;
+                }
+                seen.add(identifier);
+                return true;
+            });
+            localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+        }
+        removeDuplicateMembers();
 
         const archiveGridContainer = document.getElementById('archiveGridContainer');
         const tifoForm = document.getElementById('tifoForm');
@@ -1074,28 +1087,34 @@
             renderBirthdays();
         }
 
-        // --- CALENDARIO COMPLEANNI ---
+        // --- COMPLEANNI SOLO MESE CORRENTE ---
         function renderBirthdays() {
             const container = document.getElementById('birthdayList');
             const widget = document.getElementById('birthdayWidgetContainer');
             if(!container || !widget) return;
             
             container.innerHTML = '';
-            const birthdayMembers = members.filter(m => m.compleanno);
+            const currentMonthName = new Date().toLocaleString('it-IT', { month: 'long' }).toLowerCase();
+            const currentMonthNum = String(new Date().getMonth() + 1).padStart(2, '0');
 
-            if(birthdayMembers.length === 0) {
+            const currentMonthMembers = members.filter(m => {
+                if (!m.compleanno) return false;
+                const compStr = m.compleanno.toLowerCase();
+                return compStr.includes(currentMonthName) || compStr.includes('/' + currentMonthNum) || compStr.includes('.' + currentMonthNum);
+            });
+
+            if(currentMonthMembers.length === 0) {
                 widget.style.display = 'none';
                 return;
             }
 
             widget.style.display = 'block';
-            birthdayMembers.forEach(m => {
+            currentMonthMembers.forEach(m => {
                 const badge = document.createElement('div');
-                badge.className = 'birthday-badge';
+                badge.className = 'birthday-badge-compact';
                 badge.innerHTML = `
-                    <div style="font-size: 0.8rem; color: var(--roma-gold); font-weight: bold;">🎂 ${escapeHtml(m.compleanno)}</div>
-                    <div style="font-size: 0.95rem; font-weight: bold; color: #fff; margin: 3px 0;">${escapeHtml(m.nome)}</div>
-                    <button style="margin-top: 5px; background: var(--roma-gold); color: #000; border: none; font-size: 0.7rem; font-weight: bold; padding: 3px 8px; border-radius: 4px; cursor: pointer;" onclick="openBirthdayWish(${m.id})">🎉 Invia Coro / Auguri</button>
+                    <span>🎂 <strong>${escapeHtml(m.nome)}</strong> (${escapeHtml(m.compleanno)})</span>
+                    <button style="background: var(--roma-gold); color: #000; border: none; font-size: 0.75rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="openBirthdayWish(${m.id})">🎉 Auguri</button>
                 `;
                 container.appendChild(badge);
             });
@@ -1125,7 +1144,7 @@
             ticketModal.style.display = 'none';
         };
 
-        // --- GESTIONE CONSIGLI ---
+        // --- GESTIONE CONSIGLI ED EDIT CORRETTO ---
         function renderTips() {
             const container = document.getElementById('tipsContainer');
             const searchVal = document.getElementById('searchTipInput').value.toLowerCase();
@@ -1151,8 +1170,8 @@
                         <span>${escapeHtml(tip.testo)}</span>
                     </div>
                     <div class="tip-actions">
-                        <button class="btn-tip-action" onclick="editTip(${tip.id})" title="Modifica">✏️</button>
-                        <button class="btn-tip-action" onclick="deleteTip(${tip.id})" title="Elimina">🗑️</button>
+                        <button class="btn-tip-action" onclick="editTip(${tip.id})" title="Modifica consiglio">✏️</button>
+                        <button class="btn-tip-action" onclick="deleteTip(${tip.id})" title="Elimina consiglio">🗑️</button>
                     </div>
                 `;
                 container.appendChild(item);
@@ -1320,7 +1339,7 @@
                 <div class="modal-actions">
                     <button class="btn-action btn-download" onclick="downloadTicketImage()">📥 Scarica Passaporto / Biglietto</button>
                     <button class="btn-action btn-edit" onclick="openEditForm(${member.id})">Modifica</button>
-                    ${member.id !== 1 ? `<button class="btn-action btn-delete" onclick="deleteMember(${member.id})">Elimina</button>` : ''}
+                    <button class="btn-action btn-delete" onclick="deleteMember(${member.id})">Elimina Tessera</button>
                 </div>
             `;
             ticketModal.style.display = 'flex';
@@ -1475,10 +1494,6 @@
         };
 
         window.deleteMember = async function(id) {
-            if(id === 1) {
-                alert("Non puoi eliminare il fondatore della pagina!");
-                return;
-            }
             if(confirm("Sei sicuro di voler eliminare questa tessera?")) {
                 const deleted = members.find(m => m.id === id);
                 members = members.filter(m => m.id !== id);
@@ -1530,7 +1545,7 @@
             tifoForm.reset();
             submitBtn.innerText = "Invia e ottieni la Tessera";
             submitBtn.disabled = false;
-            alert('Tessera creata con successo e foto sincronizzate su Cloud!');
+            alert('Tessera creata con successo!');
         });
 
         window.syncWithCloud = async function() {
@@ -1544,7 +1559,7 @@
 
                 if (cloudMembers.length > 0) {
                     members = cloudMembers;
-                    localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                    removeDuplicateMembers();
                     renderArchive();
                 }
 
