@@ -1029,6 +1029,35 @@
                 <a href="https://maps.google.com" target="_blank" class="btn-travel-tool" id="t-tool-maps">🗺️ Apri Google Maps</a>
             </div>
 
+            <!-- SCHEDA NAVIGATORE STADI E TRASFERTE -->
+            <div style="background: rgba(107, 0, 20, 0.3); border: 1px solid var(--roma-gold); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
+                <h4 style="color: var(--roma-gold); font-size: 1.05rem; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
+                    🏟️ Navigatore Percorsi Stadi & Trasferte
+                </h4>
+                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 1rem;">
+                    Calcola subito il percorso migliore con i mezzi pubblici dalla tua stazione o aeroporto di arrivo fino allo stadio!
+                </p>
+
+                <!-- Selezione Rapida Stadio Olimpico -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <span style="font-size: 0.8rem; color: var(--roma-gold); width: 100%; font-weight: bold;">📍 Rotte Rapide per lo STADIO OLIMPICO DI ROMA:</span>
+                    <a href="https://www.google.com/maps/dir/Stazione+di+Roma+Termini,+Piazza+dei+Cinquecento,+Rome,+RM/Stadio+Olimpico,+Viale+dei+Gladiatori,+Rome,+RM/@41.9135,12.4580,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f61a1532f38ad:0x77ae65be103f6f0f!2m2!1d12.5018!2d41.9014!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Stazione Termini</a>
+                    <a href="https://www.google.com/maps/dir/Stazione+Tiburtina,+Rome,+RM/Stadio+Olimpico,+Rome,+RM/@41.9175,12.4680,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f6176a9172bf5:0x524e93f35f29910!2m2!1d12.5298!2d41.9108!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Stazione Tiburtina</a>
+                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma+Fiumicino,+Via+dell'+Aeroporto+di+Fiumicino,+Fiumicino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8600,12.3000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x1325eff21e64983d:0x3980753856b3e32b!2m2!1d12.2462!2d41.7999!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Aeroporto Fiumicino (FCO)</a>
+                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma-Ciampino,+Via+Appia+Nuova,+Ciampino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8700,12.5000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x13258832a8a72bf3:0x1d03a1168532f83a!2m2!1d12.5949!2d41.7994!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Aeroporto Ciampino (CIA)</a>
+                </div>
+
+                <!-- Calcolatore Trasferte personalizzato -->
+                <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px dashed var(--roma-gold);">
+                    <span style="font-size: 0.8rem; color: #fff; font-weight: bold; display: block; margin-bottom: 6px;">🌍 Calcola percorso per Qualsiasi Trasferta:</span>
+                    <div class="tip-input-group">
+                        <input type="text" id="routeStart" placeholder="Origine (es. Stazione Milano Centrale / Aeroporto Londra Heathrow)">
+                        <input type="text" id="routeDest" placeholder="Stadio (es. San Siro / Stadio Olimpico / Wembley)">
+                        <button class="btn-add-tip" onclick="calculateCustomRoute()">🧭 Apri Mappa Percorso</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="tip-form-box">
                 <h4 id="tipFormTitle">➕ Aggiungi un consiglio utile:</h4>
                 <div class="tip-input-group">
@@ -1096,7 +1125,6 @@
         let activeTipFilter = 'Tutti';
         let editingTipId = null;
 
-        // DIZIONARIO TRADUZIONI MULTILINGUA
         const translations = {
             it: {
                 subtitle: "La Roma non si discute, si ama",
@@ -1151,10 +1179,9 @@
                     "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.",
                     "Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.",
                     "Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
-                    "Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.",
+                    "Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geographies: esiste solo il battito unanime di una fede invisibile ma incrollabile.",
                     "Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia."
                 ],
-                // Traduzioni Modal Biglietto
                 modalPassTitle: "PASS UFFICIALE",
                 modalCardHeader: "TESSERA #",
                 modalFounder: "FONDATORE",
@@ -1167,7 +1194,6 @@
                 modalBtnDownload: "📥 Scarica Passaporto / Biglietto",
                 modalBtnEdit: "Modifica",
                 modalBtnDelete: "Elimina Tessera",
-                // Traduzioni specifiche per la storia della Tessera #001 (Massimo Graglia)
                 card001Storia: "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
                 card001Difficili: "Da quel giorno la Roma c'è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo."
             },
@@ -1414,12 +1440,10 @@
             document.getElementById('t-tips-title').innerText = t.tipsTitle;
             document.getElementById('t-tips-desc').innerText = t.tipsDesc;
 
-            // Travel tools
             document.getElementById('t-tool-train').innerText = t.toolTrain;
             document.getElementById('t-tool-flight').innerText = t.toolFlight;
             document.getElementById('t-tool-maps').innerText = t.toolMaps;
 
-            // Form Consigli
             document.getElementById('tipFormTitle').innerText = t.tipFormTitle;
             document.getElementById('tipCitta').placeholder = t.phTipCitta;
             document.getElementById('tipTesto').placeholder = t.phTipTesto;
@@ -1429,7 +1453,6 @@
             document.getElementById('opt-cat-cibo').innerText = t.optCibo;
             document.getElementById('opt-cat-stadio').innerText = t.optStadio;
 
-            // Filtri Consigli
             document.getElementById('flt-all').innerText = t.fltAll;
             document.getElementById('flt-acc').innerText = t.fltAcc;
             document.getElementById('flt-trsp').innerText = t.fltTrsp;
@@ -1437,7 +1460,6 @@
             document.getElementById('flt-std').innerText = t.fltStd;
             document.getElementById('searchTipInput').placeholder = t.phSearchTip;
 
-            // Solidarietà
             document.getElementById('t-social-title').innerText = t.socialTitle;
             document.getElementById('t-social-desc').innerText = t.socialDesc;
             document.getElementById('t-social-add-title').innerText = t.socialAddTitle;
@@ -1446,12 +1468,24 @@
             document.getElementById('socialDescrizione').placeholder = t.phSocialDesc;
             document.getElementById('t-btn-add-social').innerText = t.btnAddSocial;
 
-            // Manifesto
             document.getElementById('t-manifesto-title').innerHTML = `${t.manifestoTitle.split('-')[0]} <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- ${t.manifestoTitle.split('-')[1] || ''}</span>`;
             const manifestoContainer = document.getElementById('t-manifesto-content');
             manifestoContainer.innerHTML = t.manifestoText.map(par => `<p>${par}</p>`).join('');
 
             renderArchive();
+        };
+
+        window.calculateCustomRoute = function() {
+            const start = document.getElementById('routeStart').value.trim();
+            const dest = document.getElementById('routeDest').value.trim();
+
+            if(!start || !dest) {
+                alert('Inserisci sia il punto di partenza (stazione/aeroporto) che lo stadio di destinazione!');
+                return;
+            }
+
+            const mapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(dest)}&travelmode=transit`;
+            window.open(mapUrl, '_blank');
         };
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
@@ -1761,8 +1795,7 @@
             }
         };
 
-        // APERTURA DETTAGLIO BIGLIETTO CON TRADUZIONE DINAMICA DEL TESTO INTERNO (#001)
-        function openTicketDetail(id) {
+        window.openTicketDetail = function(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
             const t = translations[currentLang] || translations.it;
@@ -1770,7 +1803,6 @@
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
             const compDisplay = member.compleanno || member.dataNascita || '';
 
-            // Se la tessera è la #001 (Massimo Graglia), usa i testi dinamici tradotti
             let storiaTesto = member.storia;
             let difficiliTesto = member.difficili;
             if (member.id === 1) {
@@ -1816,7 +1848,7 @@
                 </div>
             `;
             ticketModal.style.display = 'flex';
-        }
+        };
 
         window.downloadTicketImage = function() {
             const ticketElement = document.getElementById('ticketToDownload');
