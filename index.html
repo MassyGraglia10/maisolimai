@@ -1166,7 +1166,10 @@
                 modalGalleryTitle: "GALLERIA FOTO:",
                 modalBtnDownload: "📥 Scarica Passaporto / Biglietto",
                 modalBtnEdit: "Modifica",
-                modalBtnDelete: "Elimina Tessera"
+                modalBtnDelete: "Elimina Tessera",
+                // Traduzioni specifiche per la storia della Tessera #001 (Massimo Graglia)
+                card001Storia: "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
+                card001Difficili: "Da quel giorno la Roma c'è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo."
             },
             en: {
                 subtitle: "Roma is not discussed, it is loved",
@@ -1235,7 +1238,9 @@
                 modalGalleryTitle: "PHOTO GALLERY:",
                 modalBtnDownload: "📥 Download Passport / Ticket",
                 modalBtnEdit: "Edit",
-                modalBtnDelete: "Delete Ticket"
+                modalBtnDelete: "Delete Ticket",
+                card001Storia: "It all started one evening in 1984. I was a child in the Asti area of Piedmont, watching the European Cup final: Roma-Liverpool. It wasn't a victory that enchanted me, but the drama, the passion in the stands, the tragic and visceral beauty of those colors. Supporting Roma from here, amidst the Piedmont fog and daily battles with rival fans, has never been an easy choice. I remember the night train taken alone from Turin to be at the Olimpico on June 17, 2001, and returning the same evening with my heart full of joy. Those who support Roma from afar experience a special kind of solitude, made of kilometers, night trains, and matches watched in silence.",
+                card001Difficili: "Since that day, Roma has always been there, every single day. In moments of joy as in the darkest ones, it has never left me alone."
             },
             es: {
                 subtitle: "A la Roma no se le discute, se le ama",
@@ -1304,7 +1309,9 @@
                 modalGalleryTitle: "GALERÍA DE FOTOS:",
                 modalBtnDownload: "📥 Descargar Pasaporte / Carné",
                 modalBtnEdit: "Editar",
-                modalBtnDelete: "Eliminar Carné"
+                modalBtnDelete: "Eliminar Carné",
+                card001Storia: "Todo comenzó una noche de 1984. Era un niño en la zona de Asti, en Piamonte, viendo la final de la Copa de Europa: Roma-Liverpool. No fue una victoria lo que me cautivó, sino el drama, la pasión en las gradas, la belleza trágica y visceral de esos colores. Apoyar a la Roma desde aquí, entre la niebla del Piamonte y las batallas diarias con los rivales, nunca ha sido una elección fácil. Recuerdo el tren nocturno tomado solo desde Turín para estar en el Olímpico el 17 de junio de 2001, y regresar la misma noche con el corazón lleno de alegría. Quien apoya a la Roma desde la distancia vive una soledad especial, hecha de kilómetros, trenes nocturnos y partidos vistos en silencio.",
+                card001Difficili: "Desde aquel día la Roma siempre ha estado ahí, cada día. En los momentos de alegría como en los más oscuros, nunca me ha dejado solo."
             },
             fr: {
                 subtitle: "La Roma ne se discute pas, elle s'aime",
@@ -1373,7 +1380,9 @@
                 modalGalleryTitle: "GALERIE PHOTOS:",
                 modalBtnDownload: "📥 Télécharger Passeport / Carte",
                 modalBtnEdit: "Modifier",
-                modalBtnDelete: "Supprimer la Carte"
+                modalBtnDelete: "Supprimer la Carte",
+                card001Storia: "Tout a commencé un soir de 1984. J'étais un enfant dans la région d'Asti, au Piémont, et je regardais la finale de la Coupe des Champions : Roma-Liverpool. Ce n'est pas une victoire qui m'a ensorcelé, mais le drame, la passion dans les tribunes, la beauté tragique et viscérale de ces couleurs. Supporter la Roma d'ici, entre les brumes du Piémont et les batailles quotidiennes avec les supporters rivaux, n'a jamais été un choix facile. Je me souviens du train de nuit pris seul depuis Turin pour être à l'Olimpico le 17 juin 2001, et du retour le soir même le cœur comblé de joie. Ceux qui soutiennent la Roma de loin vivent une solitude particulière, faite de kilomètres, de trains de nuit et de matchs regardés en silence.",
+                card001Difficili: "Depuis ce jour, la Roma a toujours été là, chaque jour. Dans les moments de joie comme dans les plus sombres, elle ne m'a jamais laissé seul."
             }
         };
 
@@ -1752,7 +1761,7 @@
             }
         };
 
-        // APERTURA DETTAGLIO BIGLIETTO CON TRADUZIONI APPLICATE
+        // APERTURA DETTAGLIO BIGLIETTO CON TRADUZIONE DINAMICA DEL TESTO INTERNO (#001)
         function openTicketDetail(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
@@ -1760,6 +1769,14 @@
             const formattedId = String(member.id).padStart(3, '0');
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
             const compDisplay = member.compleanno || member.dataNascita || '';
+
+            // Se la tessera è la #001 (Massimo Graglia), usa i testi dinamici tradotti
+            let storiaTesto = member.storia;
+            let difficiliTesto = member.difficili;
+            if (member.id === 1) {
+                storiaTesto = t.card001Storia || member.storia;
+                difficiliTesto = t.card001Difficili || member.difficili;
+            }
 
             let galleryHtml = fotos.length > 0 ? `
                 <div style="margin-top:15px;">
@@ -1787,9 +1804,9 @@
 
                 <div style="margin-top:15px;">
                     <strong style="color:var(--roma-gold); font-size:0.85rem;">${t.modalSparkTitle}</strong>
-                    <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.storia)}"</p>
+                    <p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(storiaTesto)}"</p>
                 </div>
-                ${member.difficili ? `<div style="margin-top:10px;"><strong style="color:var(--roma-gold); font-size:0.85rem;">${t.modalHardTitle}</strong><p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(member.difficili)}"</p></div>` : ''}
+                ${difficiliTesto ? `<div style="margin-top:10px;"><strong style="color:var(--roma-gold); font-size:0.85rem;">${t.modalHardTitle}</strong><p style="font-size:0.9rem; color:#eee; background:rgba(0,0,0,0.25); padding:10px; border-radius:4px; margin-top:3px;">"${escapeHtml(difficiliTesto)}"</p></div>` : ''}
                 ${galleryHtml}
 
                 <div class="modal-actions">
