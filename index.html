@@ -1022,43 +1022,9 @@
         <div id="consigli" class="exchange-card">
             <h3 id="t-tips-title">🏨 Guida & Consigli Collaborativi</h3>
             <p id="t-tips-desc">Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
-            
-            <div class="travel-tools-bar">
-                <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool" id="t-tool-train">🚆 Cerca Treno (Trainline)</a>
-                <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool" id="t-tool-flight">✈️ Cerca Voli (Skyscanner)</a>
-                <a href="https://maps.google.com" target="_blank" class="btn-travel-tool" id="t-tool-maps">🗺️ Apri Google Maps</a>
-            </div>
 
-            <!-- SCHEDA NAVIGATORE STADI E TRASFERTE -->
-            <div style="background: rgba(107, 0, 20, 0.3); border: 1px solid var(--roma-gold); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
-                <h4 style="color: var(--roma-gold); font-size: 1.05rem; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
-                    🏟️ Navigatore Percorsi Stadi & Trasferte
-                </h4>
-                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 1rem;">
-                    Calcola subito il percorso migliore con i mezzi pubblici dalla tua stazione o aeroporto di arrivo fino allo stadio!
-                </p>
-
-                <!-- Selezione Rapida Stadio Olimpico -->
-                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <span style="font-size: 0.8rem; color: var(--roma-gold); width: 100%; font-weight: bold;">📍 Rotte Rapide per lo STADIO OLIMPICO DI ROMA:</span>
-                    <a href="https://www.google.com/maps/dir/Stazione+di+Roma+Termini,+Piazza+dei+Cinquecento,+Rome,+RM/Stadio+Olimpico,+Viale+dei+Gladiatori,+Rome,+RM/@41.9135,12.4580,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f61a1532f38ad:0x77ae65be103f6f0f!2m2!1d12.5018!2d41.9014!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Stazione Termini</a>
-                    <a href="https://www.google.com/maps/dir/Stazione+Tiburtina,+Rome,+RM/Stadio+Olimpico,+Rome,+RM/@41.9175,12.4680,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f6176a9172bf5:0x524e93f35f29910!2m2!1d12.5298!2d41.9108!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Stazione Tiburtina</a>
-                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma+Fiumicino,+Via+dell'+Aeroporto+di+Fiumicino,+Fiumicino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8600,12.3000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x1325eff21e64983d:0x3980753856b3e32b!2m2!1d12.2462!2d41.7999!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Aeroporto Fiumicino (FCO)</a>
-                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma-Ciampino,+Via+Appia+Nuova,+Ciampino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8700,12.5000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x13258832a8a72bf3:0x1d03a1168532f83a!2m2!1d12.5949!2d41.7994!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Aeroporto Ciampino (CIA)</a>
-                </div>
-
-                <!-- Calcolatore Trasferte personalizzato -->
-                <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px dashed var(--roma-gold);">
-                    <span style="font-size: 0.8rem; color: #fff; font-weight: bold; display: block; margin-bottom: 6px;">🌍 Calcola percorso per Qualsiasi Trasferta:</span>
-                    <div class="tip-input-group">
-                        <input type="text" id="routeStart" placeholder="Origine (es. Stazione Milano Centrale / Aeroporto Londra Heathrow)">
-                        <input type="text" id="routeDest" placeholder="Stadio (es. San Siro / Stadio Olimpico / Wembley)">
-                        <button class="btn-add-tip" onclick="calculateCustomRoute()">🧭 Apri Mappa Percorso</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tip-form-box">
+            <!-- FORM AGGIUNGI CONSIGLIO (SPOSTATO IN ALTO) -->
+            <div class="tip-form-box" style="margin-top: 1rem;">
                 <h4 id="tipFormTitle">➕ Aggiungi un consiglio utile:</h4>
                 <div class="tip-input-group">
                     <input type="text" id="tipCitta" placeholder="Città / Zona (es. Roma Flaminio, Londra)">
@@ -1071,6 +1037,44 @@
                     <input type="text" id="tipTesto" placeholder="Descrizione, indirizzo o consiglio...">
                     <button class="btn-add-tip" id="btnSaveTip" onclick="saveTip()">Pubblica</button>
                     <button class="btn-add-tip" id="btnCancelTip" style="display:none; background:#555; color:#fff;" onclick="cancelTipEdit()">Annulla</button>
+                </div>
+            </div>
+
+            <!-- BOTTONI STRUMENTI VIAGGIO -->
+            <div class="travel-tools-bar">
+                <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool" id="t-tool-train">🚆 Cerca Treno (Trainline)</a>
+                <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool" id="t-tool-flight">✈️ Cerca Voli (Skyscanner)</a>
+                <a href="https://maps.google.com" target="_blank" class="btn-travel-tool" id="t-tool-maps">🗺️ Apri Google Maps</a>
+            </div>
+
+            <!-- SCHEDA NAVIGATORE STADI, TRASFERTE & B&B -->
+            <div style="background: rgba(107, 0, 20, 0.3); border: 1px solid var(--roma-gold); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
+                <h4 style="color: var(--roma-gold); font-size: 1.05rem; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
+                    🏟️ Navigatore Percorsi Stadi, Trasferte & B&B
+                </h4>
+                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 1rem;">
+                    Calcola subito i percorsi migliori con i mezzi pubblici ed esplora B&B e Hotel con valutazioni eccellenti nei paraggi!
+                </p>
+
+                <!-- Selezione Rapida Stadio Olimpico -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <span style="font-size: 0.8rem; color: var(--roma-gold); width: 100%; font-weight: bold;">📍 Rotte Rapide & B&B Consigliati per lo STADIO OLIMPICO DI ROMA:</span>
+                    <a href="https://www.google.com/maps/dir/Stazione+di+Roma+Termini,+Piazza+dei+Cinquecento,+Rome,+RM/Stadio+Olimpico,+Viale+dei+Gladiatori,+Rome,+RM/@41.9135,12.4580,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f61a1532f38ad:0x77ae65be103f6f0f!2m2!1d12.5018!2d41.9014!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Termini</a>
+                    <a href="https://www.google.com/maps/dir/Stazione+Tiburtina,+Rome,+RM/Stadio+Olimpico,+Rome,+RM/@41.9175,12.4680,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f6176a9172bf5:0x524e93f35f29910!2m2!1d12.5298!2d41.9108!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Tiburtina</a>
+                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma+Fiumicino,+Via+dell'+Aeroporto+di+Fiumicino,+Fiumicino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8600,12.3000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x1325eff21e64983d:0x3980753856b3e32b!2m2!1d12.2462!2d41.7999!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Fiumicino (FCO)</a>
+                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma-Ciampino,+Via+Appia+Nuova,+Ciampino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8700,12.5000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x13258832a8a72bf3:0x1d03a1168532f83a!2m2!1d12.5949!2d41.7994!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Ciampino (CIA)</a>
+                    <a href="https://www.google.com/maps/search/Hotel+B%26B+vicino+Stadio+Olimpico+Roma+recensioni+eccellenti/@41.933,12.455,14z" target="_blank" class="btn-travel-tool" style="background:rgba(212, 160, 23, 0.2); color:var(--roma-gold);">⭐ Trova B&B / Hotel Ottimi vicino all'Olimpico</a>
+                </div>
+
+                <!-- Calcolatore Trasferte & B&B personalizzato -->
+                <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px dashed var(--roma-gold);">
+                    <span style="font-size: 0.8rem; color: #fff; font-weight: bold; display: block; margin-bottom: 6px;">🌍 Calcola percorso e cerca B&B per Qualsiasi Trasferta:</span>
+                    <div class="tip-input-group">
+                        <input type="text" id="routeStart" placeholder="Origine (es. Stazione Milano Centrale / Aeroporto Londra)">
+                        <input type="text" id="routeDest" placeholder="Stadio Destinazione (es. San Siro / Wembley)">
+                        <button class="btn-add-tip" onclick="calculateCustomRoute()">🧭 Percorso</button>
+                        <button class="btn-add-tip" style="background:#25d366; color:#fff;" onclick="searchHotelsForStadio()">⭐ Cerca B&B Vicini</button>
+                    </div>
                 </div>
             </div>
 
@@ -1179,7 +1183,7 @@
                     "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Da lì, ispirato dalle parate di Franco Tancredi, sono diventato portiere e romanista.",
                     "Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ma in 49 anni di vita, nei giorni felici e soprattutto in quelli più bui, questa squadra è stata un appiglio incrollabile. Una consolazione.",
                     "Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
-                    "Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geographies: esiste solo il battito unanime di una fede invisibile ma incrollabile.",
+                    "Che tu viva a un chilometro dall'Olimpico o in capo al mondo, qui non ci sono geografie: esiste solo il battito unanime di una fede invisibile ma incrollabile.",
                     "Per i miei 50 anni voglio costruire una casa per tutte le persone che vivono questa stessa fede a distanza, spesso in solitudine. Un luogo dove ogni storia ha lo stesso peso emotivo. Unisciti all'Archivio e raccontaci la tua storia."
                 ],
                 modalPassTitle: "PASS UFFICIALE",
@@ -1486,6 +1490,16 @@
 
             const mapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(start)}&destination=${encodeURIComponent(dest)}&travelmode=transit`;
             window.open(mapUrl, '_blank');
+        };
+
+        window.searchHotelsForStadio = function() {
+            const dest = document.getElementById('routeDest').value.trim();
+            if(!dest) {
+                alert('Inserisci lo stadio di destinazione per cercare i B&B vicini!');
+                return;
+            }
+            const hotelUrl = `https://www.google.com/maps/search/Hotel+B%26B+vicino+${encodeURIComponent(dest)}+recensioni+eccellenti`;
+            window.open(hotelUrl, '_blank');
         };
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
