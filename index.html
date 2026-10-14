@@ -13,7 +13,7 @@
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyASQS_69h4oJkLZp9VzsyULjIoCB1xVPKU",
@@ -33,6 +33,7 @@
         window.colTips = collection(db, "tips");
         window.colSocial = collection(db, "socialProjects");
         window.addDocCloud = addDoc;
+        window.setDocCloud = setDoc;
         window.getDocsCloud = getDocs;
         window.deleteDocCloud = deleteDoc;
         window.docCloud = doc;
@@ -412,7 +413,6 @@
             z-index: 1;
         }
 
-        /* BAR ROMA - SEZIONE SOCIAL COMPATTA */
         .bar-roma-card {
             background: linear-gradient(145deg, #1a1014, #2c121a);
             border: 1px solid var(--roma-gold);
@@ -916,12 +916,12 @@
 <body>
 
     <nav class="main-nav">
-        <a href="#manifesto">Il Manifesto</a>
-        <a href="#archivio">Archivio & Prendi Tessera</a>
-        <a href="#mappa-mondo">Mappa Globale</a>
-        <a href="#bar-roma">Bar Roma</a>
-        <a href="#consigli">Info & Alloggi</a>
-        <a href="#solidarieta">Dona un Sorriso</a>
+        <a href="#manifesto" id="nav-manifesto">Il Manifesto</a>
+        <a href="#archivio" id="nav-archivio">Archivio & Prendi Tessera</a>
+        <a href="#mappa-mondo" id="nav-mappa">Mappa Globale</a>
+        <a href="#bar-roma" id="nav-bar">Bar Roma</a>
+        <a href="#consigli" id="nav-consigli">Info & Alloggi</a>
+        <a href="#solidarieta" id="nav-solidarieta">Dona un Sorriso</a>
     </nav>
 
     <header>
@@ -939,7 +939,7 @@
             <div class="header-titles">
                 <h1 id="t-title">MAI SOLI MAI</h1>
                 <p class="subtitle-main" id="t-subtitle">La Roma non si discute, si ama</p>
-                <p class="subtitle-archive">Archivio del Tifo Romanista a Distanza</p>
+                <p class="subtitle-archive" id="t-subtitle-arch">Archivio del Tifo Romanista a Distanza</p>
             </div>
             <img src="lupetto.webp" alt="Lupetto di Gratton" class="header-logo">
         </div>
@@ -971,7 +971,7 @@
                         <input type="text" id="citta" required placeholder="Es. Torino (Italia) / Londra (UK)">
                     </div>
                     <div class="form-group">
-                        <label for="compleanno">Data di Nascita (Giorno e Mese) *</label>
+                        <label for="compleanno" id="t-lbl-compleanno">Data di Nascita (Giorno e Mese) *</label>
                         <input type="text" id="compleanno" required placeholder="Es. 25 Marzo o 12/05">
                     </div>
                     <div class="form-group">
@@ -993,7 +993,7 @@
             <div class="archive-side">
                 <!-- WIDGET COMPLEANNI COMPATTO -->
                 <div class="birthdays-card-compact" id="birthdayWidgetContainer" style="display:none;">
-                    <h4>🎂 Compleanni di Questo Mese</h4>
+                    <h4 id="t-birthday-title">🎂 Compleanni di Questo Mese</h4>
                     <div class="birthdays-grid-compact" id="birthdayList"></div>
                 </div>
 
@@ -1008,16 +1008,16 @@
         </div>
 
         <div id="mappa-mondo" class="world-map-card">
-            <h3>🌍 La Rete Globale del Tifo Romanista</h3>
-            <p>Esplora la mappa interattiva: ogni segnalino rappresenta un tifoso a distanza. Clicca sul punto per leggere chi c'è dietro!</p>
+            <h3 id="t-map-title">🌍 La Rete Globale del Tifo Romanista</h3>
+            <p id="t-map-desc">Esplora la mappa interattiva: ogni segnalino rappresenta un tifoso a distanza. Clicca sul punto per leggere chi c'è dietro!</p>
             <div id="map"></div>
         </div>
 
-        <!-- SEZIONE BAR ROMA (Social compatto) -->
+        <!-- SEZIONE BAR ROMA -->
         <div id="bar-roma" class="bar-roma-card">
             <div class="bar-roma-info">
                 <h4>☕ Bar Roma – Community & Voice</h4>
-                <p>Il punto di ritrovo virtuale per i tifosi a distanza: chat, live vocali e aggiornamenti.</p>
+                <p id="t-bar-desc">Il punto di ritrovo virtuale per i tifosi a distanza: chat, live vocali e aggiornamenti.</p>
             </div>
             <div class="bar-roma-buttons">
                 <a href="https://whatsapp.com" target="_blank" class="btn-bar bar-wa">💬 WhatsApp</a>
@@ -1028,8 +1028,8 @@
         </div>
 
         <div id="consigli" class="exchange-card">
-            <h3>🏨 Guida & Consigli Collaborativi</h3>
-            <p>Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
+            <h3 id="t-tips-title">🏨 Guida & Consigli Collaborativi</h3>
+            <p id="t-tips-desc">Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
             
             <!-- LINK UTILI VIAGGI -->
             <div class="travel-tools-bar">
@@ -1068,15 +1068,14 @@
             <div class="tips-list" id="tipsContainer"></div>
         </div>
 
-        <!-- SEZIONE DONA UN SORRISO / PROGETTI SOLIDALI -->
         <div id="solidarieta" class="social-card">
-            <h3>❤️ Dona un Sorriso / Progetti Solidali</h3>
-            <p>I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali sul territorio, in linea con lo spirito di solidarietà di Roma Cares.</p>
+            <h3 id="t-social-title">❤️ Dona un Sorriso / Progetti Solidali</h3>
+            <p id="t-social-desc">I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali sul territorio, in linea con lo spirito di solidarietà di Roma Cares.</p>
             
             <div class="social-projects-grid" id="socialProjectsContainer"></div>
 
             <div class="social-form-box">
-                <h4>🤝 Segnala o Proponi un'Iniziativa Solidale</h4>
+                <h4 id="t-social-add-title">🤝 Segnala o Proponi un'Iniziativa Solidale</h4>
                 <div class="tip-input-group">
                     <input type="text" id="socialTitolo" placeholder="Titolo iniziativa (es. Raccolta beni / Adozione)">
                     <input type="text" id="socialCitta" placeholder="Città / Riferimento (es. Torino / Roma)">
@@ -1105,6 +1104,154 @@
         let map, markersGroup;
         let activeTipFilter = 'Tutti';
         let editingTipId = null;
+
+        // DIZIONARIO TRADUZIONI MULTILINGUA
+        const translations = {
+            it: {
+                subtitle: "La Roma non si discute, si ama",
+                subtitleArch: "Archivio del Tifo Romanista a Distanza",
+                navManifesto: "Il Manifesto",
+                navArchivio: "Archivio & Prendi Tessera",
+                navMappa: "Mappa Globale",
+                navBar: "Bar Roma",
+                navConsigli: "Info & Alloggi",
+                navSolidarieta: "Dona un Sorriso",
+                formTitle: "Prendi la tua Tessera",
+                lblNome: "Nome Cognome/ Soprannome *",
+                lblCitta: "Città e Nazione *",
+                lblCompleanno: "Data di Nascita (Giorno e Mese) *",
+                lblStoria: "La Scintilla e la tua Storia *",
+                lblDifficili: "Nei momenti difficili",
+                lblFoto: "Foto (opzionale)",
+                btnSubmit: "Invia e ottieni la Tessera",
+                archiveTitle: "Archivio Tifosi",
+                birthdayTitle: "🎂 Compleanni di Questo Mese",
+                mapTitle: "🌍 La Rete Globale del Tifo Romanista",
+                mapDesc: "Esplora la mappa interattiva: ogni segnalino rappresenta un tifoso a distanza. Clicca sul punto per leggere chi c'è dietro!",
+                barDesc: "Il punto di ritrovo virtuale per i tifosi a distanza: chat, live vocali e aggiornamenti.",
+                tipsTitle: "🏨 Guida & Consigli Collaborativi",
+                tipsDesc: "Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.",
+                socialTitle: "❤️ Dona un Sorriso / Progetti Solidali",
+                socialDesc: "I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali.",
+                socialAddTitle: "🤝 Segnala o Proponi un'Iniziativa Solidale"
+            },
+            en: {
+                subtitle: "Roma is not discussed, it is loved",
+                subtitleArch: "Distant Roma Supporters Archive",
+                navManifesto: "Manifesto",
+                navArchivio: "Archive & Get Ticket",
+                navMappa: "Global Map",
+                navBar: "Bar Roma",
+                navConsigli: "Info & Travel Tips",
+                navSolidarieta: "Give a Smile",
+                formTitle: "Get Your Membership Card",
+                lblNome: "Name Surname / Nickname *",
+                lblCitta: "City & Country *",
+                lblCompleanno: "Date of Birth (Day & Month) *",
+                lblStoria: "The Spark & Your Story *",
+                lblDifficili: "In Difficult Moments",
+                lblFoto: "Photos (optional)",
+                btnSubmit: "Submit & Get Ticket",
+                archiveTitle: "Supporters Archive",
+                birthdayTitle: "🎂 Birthdays This Month",
+                mapTitle: "🌍 Global Roma Supporters Network",
+                mapDesc: "Explore the interactive map: each pin represents a fan supporting from afar. Click on a pin to read their story!",
+                barDesc: "Virtual meeting place for fans from afar: chat, live voice calls and updates.",
+                tipsTitle: "🏨 Collaborative Travel Tips & Info",
+                tipsDesc: "Practical guide built by fans for fans: strategic hotels, transport, stadium info, and viewing spots worldwide.",
+                socialTitle: "❤️ Give a Smile / Solidarity Projects",
+                socialDesc: "AS Roma supporters know no distance when giving a helping hand. This section connects our community with charitable causes.",
+                socialAddTitle: "🤝 Propose or Report a Solidarity Cause"
+            },
+            es: {
+                subtitle: "A la Roma no se le discute, se le ama",
+                subtitleArch: "Archivo del Tifoso Romanista a Distancia",
+                navManifesto: "El Manifiesto",
+                navArchivio: "Archivo y Carné",
+                navMappa: "Mapa Global",
+                navBar: "Bar Roma",
+                navConsigli: "Info y Consejos",
+                navSolidarieta: "Regala una Sonrisa",
+                formTitle: "Consigue tu Carné",
+                lblNome: "Nombre / Apodo *",
+                lblCitta: "Ciudad y Nación *",
+                lblCompleanno: "Fecha de Nacimiento (Día y Mes) *",
+                lblStoria: "La Chispa y tu Historia *",
+                lblDifficili: "En los momentos difíciles",
+                lblFoto: "Fotos (opcional)",
+                btnSubmit: "Enviar y obtener Carné",
+                archiveTitle: "Archivo de Aficionados",
+                birthdayTitle: "🎂 Cumpleaños de este Mes",
+                mapTitle: "🌍 Red Global de Aficionados",
+                mapDesc: "Explora el mapa interactivo: cada marcador representa a un aficionado a distancia. ¡Haz clic para leer su historia!",
+                barDesc: "El punto de encuentro virtual para aficionados lejanos: chat, eventos de voz y novedades.",
+                tipsTitle: "🏨 Guía Colaborativa y Consejos",
+                tipsDesc: "Guía práctica creada por aficionados: alojamientos estratégicos, transporte e información sobre el estadio.",
+                socialTitle: "❤️ Regala una Sonrisa / Proyectos Solidarios",
+                socialDesc: "Los aficionados romanistas no conocen distancias para tender una mano. Esta sección unirá nuestra comunidad a causas benéficas.",
+                socialAddTitle: "🤝 Propón una Causa Solidaria"
+            },
+            fr: {
+                subtitle: "La Roma ne se discute pas, elle s'aime",
+                subtitleArch: "Archives dei Supporter della Roma a Distance",
+                navManifesto: "Le Manifeste",
+                navArchivio: "Archives & Carte",
+                navMappa: "Carte Globale",
+                navBar: "Bar Roma",
+                navConsigli: "Info & Voyage",
+                navSolidarieta: "Offre un Sourire",
+                formTitle: "Obtenez votre Carte",
+                lblNome: "Nom Prénom / Pseudo *",
+                lblCitta: "Ville et Pays *",
+                lblCompleanno: "Date de Naissance (Jour & Mois) *",
+                lblStoria: "L'Étincelle et votre Histoire *",
+                lblDifficili: "Dans les moments difficiles",
+                lblFoto: "Photos (optionnel)",
+                btnSubmit: "Envoyer et obtenir la Carte",
+                archiveTitle: "Archives dei Supporter",
+                birthdayTitle: "🎂 Anniversaires du Mois",
+                mapTitle: "🌍 Réseau Global dei Supporter",
+                mapDesc: "Explorez la carte interactive: chaque repère représente un supporter à distance. Cliquez pour lire sa passion!",
+                barDesc: "Espace virtuel pour supporter éloignés: chat, appels en direct et actus.",
+                tipsTitle: "🏨 Guide Collaboratif & Conseils",
+                tipsDesc: "Guide pratique créé par des fans: hébergements, transports et infos sur le stade.",
+                socialTitle: "❤️ Offre un Sourire / Projets Solidaires",
+                socialDesc: "La passion dei supporter della Roma dépasse toutes les distances. Cette section réunit notre communauté autour de projets caritatifs.",
+                socialAddTitle: "🤝 Proposer une Cause Solidaire"
+            }
+        };
+
+        window.changeLanguage = function(lang) {
+            currentLang = lang;
+            const t = translations[lang] || translations.it;
+
+            document.getElementById('t-subtitle').innerText = t.subtitle;
+            document.getElementById('t-subtitle-arch').innerText = t.subtitleArch;
+            document.getElementById('nav-manifesto').innerText = t.navManifesto;
+            document.getElementById('nav-archivio').innerText = t.navArchivio;
+            document.getElementById('nav-mappa').innerText = t.navMappa;
+            document.getElementById('nav-bar').innerText = t.navBar;
+            document.getElementById('nav-consigli').innerText = t.navConsigli;
+            document.getElementById('nav-solidarieta').innerText = t.navSolidarieta;
+            document.getElementById('t-form-title').innerText = t.formTitle;
+            document.getElementById('t-lbl-nome').innerText = t.lblNome;
+            document.getElementById('t-lbl-citta').innerText = t.lblCitta;
+            document.getElementById('t-lbl-compleanno').innerText = t.lblCompleanno;
+            document.getElementById('t-lbl-storia').innerText = t.lblStoria;
+            document.getElementById('t-lbl-difficili').innerText = t.lblDifficili;
+            document.getElementById('t-lbl-foto').innerText = t.lblFoto;
+            document.getElementById('t-btn-submit').innerText = t.btnSubmit;
+            document.getElementById('t-archive-title').innerText = t.archiveTitle;
+            document.getElementById('t-birthday-title').innerText = t.birthdayTitle;
+            document.getElementById('t-map-title').innerText = t.mapTitle;
+            document.getElementById('t-map-desc').innerText = t.mapDesc;
+            document.getElementById('t-bar-desc').innerText = t.barDesc;
+            document.getElementById('t-tips-title').innerText = t.tipsTitle;
+            document.getElementById('t-tips-desc').innerText = t.tipsDesc;
+            document.getElementById('t-social-title').innerText = t.socialTitle;
+            document.getElementById('t-social-desc').innerText = t.socialDesc;
+            document.getElementById('t-social-add-title').innerText = t.socialAddTitle;
+        };
 
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
             { id: 1, nome: "Massimo Graglia", citta: "Torino (Italia)", compleanno: "25 Marzo", storia: "Tutto è iniziato nel 1984...", difficili: "Sempre al mio fianco.", fotos: [], lat: 45.07, lng: 7.68 }
@@ -1210,8 +1357,8 @@
             const currentMonthNum = String(new Date().getMonth() + 1).padStart(2, '0');
 
             const currentMonthMembers = members.filter(m => {
-                if (!m.compleanno) return false;
-                const compStr = m.compleanno.toLowerCase();
+                const compStr = (m.compleanno || m.dataNascita || '').toLowerCase();
+                if (!compStr) return false;
                 return compStr.includes(currentMonthName) || compStr.includes('/' + currentMonthNum) || compStr.includes('.' + currentMonthNum);
             });
 
@@ -1224,8 +1371,9 @@
             currentMonthMembers.forEach(m => {
                 const badge = document.createElement('div');
                 badge.className = 'birthday-badge-compact';
+                const compDisplay = m.compleanno || m.dataNascita || '';
                 badge.innerHTML = `
-                    <span>🎂 <strong>${escapeHtml(m.nome)}</strong> (${escapeHtml(m.compleanno)})</span>
+                    <span>🎂 <strong>${escapeHtml(m.nome)}</strong> (${escapeHtml(compDisplay)})</span>
                     <button style="background: var(--roma-gold); color: #000; border: none; font-size: 0.75rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="openBirthdayWish(${m.id})">🎉 Auguri</button>
                 `;
                 container.appendChild(badge);
@@ -1416,6 +1564,7 @@
             if(!member) return;
             const formattedId = String(member.id).padStart(3, '0');
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
+            const compDisplay = member.compleanno || member.dataNascita || '';
 
             let galleryHtml = fotos.length > 0 ? `
                 <div style="margin-top:15px;">
@@ -1431,7 +1580,7 @@
                     </div>
                     <h2 style="color:var(--roma-gold); font-size:1.5rem; margin-bottom:5px;">TESSERA #${formattedId}</h2>
                     <div style="font-size:1.3rem; font-weight:bold; color:#fff; margin-bottom:3px;">${escapeHtml(member.nome)}</div>
-                    <div style="font-size:0.9rem; color:var(--roma-gold);">📍 ${escapeHtml(member.citta)} ${member.compleanno ? ' | 🎂 ' + escapeHtml(member.compleanno) : ''}</div>
+                    <div style="font-size:0.9rem; color:var(--roma-gold);">📍 ${escapeHtml(member.citta)} ${compDisplay ? ' | 🎂 ' + escapeHtml(compDisplay) : ''}</div>
                 </div>
 
                 <div class="social-cta-box">
@@ -1502,6 +1651,7 @@
             const member = members.find(m => m.id === id);
             if(!member) return;
             const fotos = member.fotos || (member.foto ? [member.foto] : []);
+            const compVal = member.compleanno || member.dataNascita || '';
 
             let photosManagerHtml = '';
             if(fotos.length > 0) {
@@ -1531,7 +1681,7 @@
                 </div>
                 <div class="form-group">
                     <label>Data di Nascita (Giorno e Mese)</label>
-                    <input type="text" id="editCompleanno" value="${escapeHtml(member.compleanno || '')}">
+                    <input type="text" id="editCompleanno" value="${escapeHtml(compVal)}">
                 </div>
                 <div class="form-group">
                     <label>La Scintilla e la Storia</label>
@@ -1567,9 +1717,12 @@
             const member = members.find(m => m.id === id);
             if(!member) return;
 
+            const updatedComp = document.getElementById('editCompleanno').value.trim();
+
             member.nome = document.getElementById('editNome').value;
             member.citta = document.getElementById('editCitta').value;
-            member.compleanno = document.getElementById('editCompleanno').value; // CORRETTO: adesso salva correttamente il compleanno modificato
+            member.compleanno = updatedComp;
+            member.dataNascita = updatedComp;
             member.storia = document.getElementById('editStoria').value;
             member.difficili = document.getElementById('editDifficili').value;
             
@@ -1597,8 +1750,17 @@
             delete member.foto;
             localStorage.setItem('maiSoliMembers', JSON.stringify(members));
 
-            if (window.addDocCloud && window.colMembers) {
-                try { await window.addDocCloud(window.colMembers, member); } catch(err){}
+            // Sincronizzazione immediata sul documento di Firebase
+            if (member.firebaseId && window.setDocCloud && window.docCloud) {
+                try {
+                    await window.setDocCloud(window.docCloud(window.firebaseDb, "members", member.firebaseId), member);
+                } catch(err){}
+            } else if (window.addDocCloud && window.colMembers) {
+                try {
+                    const docRef = await window.addDocCloud(window.colMembers, member);
+                    member.firebaseId = docRef.id;
+                    localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                } catch(err){}
             }
 
             renderArchive();
@@ -1634,11 +1796,14 @@
                 }
             }
 
+            const compVal = document.getElementById('compleanno').value.trim();
+
             const newMember = {
                 id: members.length > 0 ? Math.max(...members.map(m => m.id || 1)) + 1 : 1,
                 nome: document.getElementById('nome').value,
                 citta: document.getElementById('citta').value,
-                compleanno: document.getElementById('compleanno').value,
+                compleanno: compVal,
+                dataNascita: compVal,
                 storia: document.getElementById('storia').value,
                 difficili: document.getElementById('difficili').value,
                 fotos: photoUrls,
@@ -1650,7 +1815,11 @@
             localStorage.setItem('maiSoliMembers', JSON.stringify(members));
 
             if (window.addDocCloud && window.colMembers) {
-                try { await window.addDocCloud(window.colMembers, newMember); } catch(err){}
+                try {
+                    const docRef = await window.addDocCloud(window.colMembers, newMember);
+                    newMember.firebaseId = docRef.id;
+                    localStorage.setItem('maiSoliMembers', JSON.stringify(members));
+                } catch(err){}
             }
 
             renderArchive();
@@ -1666,7 +1835,12 @@
                 const querySnapshot = await window.getDocsCloud(window.colMembers);
                 let cloudMembers = [];
                 querySnapshot.forEach((docSnap) => {
-                    cloudMembers.push({ firebaseId: docSnap.id, ...docSnap.data() });
+                    const data = docSnap.data();
+                    cloudMembers.push({ 
+                        firebaseId: docSnap.id, 
+                        ...data,
+                        compleanno: data.compleanno || data.dataNascita || '' 
+                    });
                 });
 
                 if (cloudMembers.length > 0) {
