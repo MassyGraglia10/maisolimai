@@ -208,6 +208,44 @@
             color: var(--roma-gold);
         }
 
+        /* WIDGET COMPLEANNI */
+        .birthdays-card {
+            background: linear-gradient(145deg, #221217, var(--roma-card-bg));
+            border: 1px solid var(--roma-gold);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 15px rgba(212, 160, 23, 0.15);
+        }
+
+        .birthdays-card h3 {
+            color: var(--roma-gold);
+            text-transform: uppercase;
+            font-size: 1.15rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .birthdays-grid {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .birthday-badge {
+            background: rgba(107, 0, 20, 0.4);
+            border: 1px solid var(--roma-gold);
+            border-radius: 8px;
+            padding: 10px 15px;
+            min-width: 200px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
         .top-split-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -830,6 +868,13 @@
             </div>
         </div>
 
+        <!-- WIDGET CALENDARIO / TIFOSI DEL MESE -->
+        <div class="birthdays-card" id="birthdayWidgetContainer" style="display:none;">
+            <h3>🎂 Calendario dei Tifosi - Compleanni del Mese</h3>
+            <p style="font-size:0.85rem; color:#ccc; margin-bottom:10px;">Invia un augurio speciale o un coro da stadio virtuale ai tifosi che compiono gli anni in questo periodo!</p>
+            <div class="birthdays-grid" id="birthdayList"></div>
+        </div>
+
         <div class="top-split-section" id="archivio">
             <div id="iscriviti" class="form-card">
                 <h3 class="section-title" id="t-form-title" style="border:none; margin-bottom:0.8rem;">Prendi la tua Tessera</h3>
@@ -841,6 +886,10 @@
                     <div class="form-group">
                         <label for="citta" id="t-lbl-citta">Città e Nazione *</label>
                         <input type="text" id="citta" required placeholder="Es. Torino (Italia) / Londra (UK)">
+                    </div>
+                    <div class="form-group">
+                        <label for="compleanno">Data di Nascita (Giorno e Mese) *</label>
+                        <input type="text" id="compleanno" required placeholder="Es. 25 Marzo o 12/05">
                     </div>
                     <div class="form-group">
                         <label for="storia" id="t-lbl-storia">La Scintilla e la tua Storia *</label>
@@ -914,6 +963,8 @@
             <h3>❤️ Dona un Sorriso / Progetti Solidali</h3>
             <p>I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali sul territorio, in linea con lo spirito di solidarietà di Roma Cares.</p>
             
+            <div class="social-projects-grid" id="socialProjectsContainer"></div>
+
             <div class="social-form-box">
                 <h4>🤝 Segnala o Proponi un'Iniziativa Solidale</h4>
                 <div class="tip-input-group">
@@ -943,9 +994,14 @@
         let currentLang = 'it';
         let map, markersGroup;
         let activeTipFilter = 'Tutti';
+        let editingTipId = null;
 
-        let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [];
-        let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [];
+        let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
+            { id: 1, nome: "Massimo Graglia", citta: "Torino (Italia)", compleanno: "25 Marzo", storia: "Tutto è iniziato nel 1984...", difficili: "Sempre al mio fianco.", fotos: [], lat: 45.07, lng: 7.68 }
+        ];
+        let tipsList = JSON.parse(localStorage.getItem('maiSoliTips')) || [
+            { id: 1, citta: "Roma (Stadio Olimpico)", categoria: "💡 Info Stadio", testo: "Arrivare in anticipo a Ponte Milvio per trovare parcheggio e vivere il pre-partita nei pub storici." }
+        ];
         let socialProjects = JSON.parse(localStorage.getItem('maiSoliSocial')) || [
             { id: 1, titolo: "Supporto ai Senza Dimora", citta: "Roma", descrizione: "Iniziativa spontanea dei tifosi per la distribuzione di coperte e pasti caldi nei pressi dello Stadio Olimpico e Termini." },
             { id: 2, titolo: "Vicini ai Piccoli Tifosi", citta: "Torino & Nazionale", descrizione: "Raccolta e donazione di sciarpe, maglie e libri di sport ai reparti pediatrici locali nel nome dei valori romanisti." }
@@ -1015,10 +1071,167 @@
                 archiveGridContainer.appendChild(card);
             });
             updateMapMarkers();
+            renderBirthdays();
         }
 
+        // --- CALENDARIO COMPLEANNI ---
+        function renderBirthdays() {
+            const container = document.getElementById('birthdayList');
+            const widget = document.getElementById('birthdayWidgetContainer');
+            if(!container || !widget) return;
+            
+            container.innerHTML = '';
+            const birthdayMembers = members.filter(m => m.compleanno);
+
+            if(birthdayMembers.length === 0) {
+                widget.style.display = 'none';
+                return;
+            }
+
+            widget.style.display = 'block';
+            birthdayMembers.forEach(m => {
+                const badge = document.createElement('div');
+                badge.className = 'birthday-badge';
+                badge.innerHTML = `
+                    <div style="font-size: 0.8rem; color: var(--roma-gold); font-weight: bold;">🎂 ${escapeHtml(m.compleanno)}</div>
+                    <div style="font-size: 0.95rem; font-weight: bold; color: #fff; margin: 3px 0;">${escapeHtml(m.nome)}</div>
+                    <button style="margin-top: 5px; background: var(--roma-gold); color: #000; border: none; font-size: 0.7rem; font-weight: bold; padding: 3px 8px; border-radius: 4px; cursor: pointer;" onclick="openBirthdayWish(${m.id})">🎉 Invia Coro / Auguri</button>
+                `;
+                container.appendChild(badge);
+            });
+        }
+
+        window.openBirthdayWish = function(id) {
+            const member = members.find(m => m.id === id);
+            if(!member) return;
+            modalBody.innerHTML = `
+                <div style="text-align:center; padding:10px;">
+                    <h2 style="color:var(--roma-gold); margin-bottom:10px;">🎉 AUGURI CAPITANO!</h2>
+                    <p style="color:#fff; font-size:1.05rem; margin-bottom:15px;">Manda un messaggio di auguri o un coro virtuale a <strong>${escapeHtml(member.nome)}</strong> (${escapeHtml(member.citta)})!</p>
+                    <textarea id="wishText" placeholder="Scrivi qui i tuoi auguri o un coro da stadio..." style="width:100%; padding:10px; border-radius:6px; background:#2a2a2a; color:#fff; border:1px solid var(--roma-gold); min-height:80px; margin-bottom:15px;"></textarea>
+                    <button class="btn-action btn-edit" onclick="sendWish('${escapeHtml(member.nome)}')">🚀 Invia alla Community</button>
+                </div>
+            `;
+            ticketModal.style.display = 'flex';
+        };
+
+        window.sendWish = function(name) {
+            const text = document.getElementById('wishText').value.trim();
+            if(!text) {
+                alert("Scrivi un messaggio di auguri prima di inviare!");
+                return;
+            }
+            alert(`Auguri inviati con successo a ${name}! 💛❤️ " ${text} "`);
+            ticketModal.style.display = 'none';
+        };
+
+        // --- GESTIONE CONSIGLI ---
+        function renderTips() {
+            const container = document.getElementById('tipsContainer');
+            const searchVal = document.getElementById('searchTipInput').value.toLowerCase();
+            container.innerHTML = '';
+
+            const filtered = tipsList.filter(t => {
+                const matchCat = (activeTipFilter === 'Tutti' || t.categoria === activeTipFilter);
+                const matchSearch = (t.citta.toLowerCase().includes(searchVal) || t.testo.toLowerCase().includes(searchVal));
+                return matchCat && matchSearch;
+            });
+
+            if(filtered.length === 0) {
+                container.innerHTML = '<p style="color:#aaa; font-size:0.85rem; grid-column: 1/-1; text-align:center;">Nessun consiglio trovato.</p>';
+                return;
+            }
+
+            filtered.forEach(tip => {
+                const item = document.createElement('div');
+                item.className = 'tip-item';
+                item.innerHTML = `
+                    <div class="tip-content">
+                        <strong>${escapeHtml(tip.citta)} <span style="color:var(--roma-gold); font-weight:normal; font-size:0.75rem;">(${escapeHtml(tip.categoria)})</span></strong>
+                        <span>${escapeHtml(tip.testo)}</span>
+                    </div>
+                    <div class="tip-actions">
+                        <button class="btn-tip-action" onclick="editTip(${tip.id})" title="Modifica">✏️</button>
+                        <button class="btn-tip-action" onclick="deleteTip(${tip.id})" title="Elimina">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        window.filterTips = function(category, btn) {
+            activeTipFilter = category;
+            document.querySelectorAll('.tip-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderTips();
+        };
+
+        window.saveTip = async function() {
+            const citta = document.getElementById('tipCitta').value.trim();
+            const categoria = document.getElementById('tipCategoria').value;
+            const testo = document.getElementById('tipTesto').value.trim();
+
+            if(!citta || !testo) {
+                alert('Inserisci la città/zona e la descrizione del consiglio!');
+                return;
+            }
+
+            if(editingTipId) {
+                const tip = tipsList.find(t => t.id === editingTipId);
+                if(tip) {
+                    tip.citta = citta;
+                    tip.categoria = categoria;
+                    tip.testo = testo;
+                }
+                editingTipId = null;
+                document.getElementById('btnSaveTip').innerText = 'Pubblica';
+                document.getElementById('btnCancelTip').style.display = 'none';
+            } else {
+                const newTip = { id: Date.now(), citta, categoria, testo };
+                tipsList.unshift(newTip);
+                if (window.addDocCloud && window.colTips) {
+                    try { await window.addDocCloud(window.colTips, newTip); } catch(e){}
+                }
+            }
+
+            localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
+            document.getElementById('tipCitta').value = '';
+            document.getElementById('tipTesto').value = '';
+            renderTips();
+        };
+
+        window.editTip = function(id) {
+            const tip = tipsList.find(t => t.id === id);
+            if(!tip) return;
+            document.getElementById('tipCitta').value = tip.citta;
+            document.getElementById('tipCategoria').value = tip.categoria;
+            document.getElementById('tipTesto').value = tip.testo;
+            editingTipId = id;
+            document.getElementById('btnSaveTip').innerText = 'Salva Modifica';
+            document.getElementById('btnCancelTip').style.display = 'inline-block';
+            document.getElementById('consigli').scrollIntoView({behavior: 'smooth'});
+        };
+
+        window.cancelTipEdit = function() {
+            editingTipId = null;
+            document.getElementById('tipCitta').value = '';
+            document.getElementById('tipTesto').value = '';
+            document.getElementById('btnSaveTip').innerText = 'Pubblica';
+            document.getElementById('btnCancelTip').style.display = 'none';
+        };
+
+        window.deleteTip = function(id) {
+            if(confirm("Vuoi eliminare questo consiglio?")) {
+                tipsList = tipsList.filter(t => t.id !== id);
+                localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
+                renderTips();
+            }
+        };
+
+        // --- GESTIONE PROGETTI SOLIDALI ---
         function renderSocialProjects() {
             const container = document.getElementById('socialProjectsContainer');
+            if(!container) return;
             container.innerHTML = '';
             if(socialProjects.length === 0) {
                 container.innerHTML = '<p style="color:#aaa; font-size:0.85rem;">Nessun progetto solidale attivo al momento.</p>';
@@ -1052,9 +1265,7 @@
             renderSocialProjects();
 
             if (window.addDocCloud && window.colSocial) {
-                try {
-                    await window.addDocCloud(window.colSocial, newProj);
-                } catch(e) { console.log("Cloud social sync warning:", e); }
+                try { await window.addDocCloud(window.colSocial, newProj); } catch(e){}
             }
 
             document.getElementById('socialTitolo').value = '';
@@ -1091,7 +1302,7 @@
                     </div>
                     <h2 style="color:var(--roma-gold); font-size:1.5rem; margin-bottom:5px;">TESSERA #${formattedId}</h2>
                     <div style="font-size:1.3rem; font-weight:bold; color:#fff; margin-bottom:3px;">${escapeHtml(member.nome)}</div>
-                    <div style="font-size:0.9rem; color:var(--roma-gold);">📍 ${escapeHtml(member.citta)}</div>
+                    <div style="font-size:0.9rem; color:var(--roma-gold);">📍 ${escapeHtml(member.citta)} ${member.compleanno ? ' | 🎂 ' + escapeHtml(member.compleanno) : ''}</div>
                 </div>
 
                 <div class="social-cta-box">
@@ -1188,6 +1399,10 @@
                     <input type="text" id="editCitta" value="${escapeHtml(member.citta)}">
                 </div>
                 <div class="form-group">
+                    <label>Data di Nascita (Giorno e Mese)</label>
+                    <input type="text" id="editCompleanno" value="${escapeHtml(member.compleanno || '')}">
+                </div>
+                <div class="form-group">
                     <label>La Scintilla e la Storia</label>
                     <textarea id="editStoria">${escapeHtml(member.storia)}</textarea>
                 </div>
@@ -1223,6 +1438,7 @@
 
             member.nome = document.getElementById('editNome').value;
             member.citta = document.getElementById('editCitta').value;
+            member.compleanno = document.getElementById('editCompleanno').value;
             member.storia = document.getElementById('editStoria').value;
             member.difficili = document.getElementById('editDifficili').value;
             
@@ -1251,9 +1467,7 @@
             localStorage.setItem('maiSoliMembers', JSON.stringify(members));
 
             if (window.addDocCloud && window.colMembers) {
-                try {
-                    await window.addDocCloud(window.colMembers, member);
-                } catch(err) { console.log("Cloud sync error:", err); }
+                try { await window.addDocCloud(window.colMembers, member); } catch(err){}
             }
 
             renderArchive();
@@ -1273,9 +1487,7 @@
                 renderArchive();
 
                 if (deleted && deleted.firebaseId && window.deleteDocCloud) {
-                    try {
-                        await window.deleteDocCloud(window.docCloud(window.firebaseDb, "members", deleted.firebaseId));
-                    } catch(e) { console.log("Cloud delete warning:", e); }
+                    try { await window.deleteDocCloud(window.docCloud(window.firebaseDb, "members", deleted.firebaseId)); } catch(e){}
                 }
             }
         };
@@ -1299,6 +1511,7 @@
                 id: members.length > 0 ? Math.max(...members.map(m => m.id || 1)) + 1 : 1,
                 nome: document.getElementById('nome').value,
                 citta: document.getElementById('citta').value,
+                compleanno: document.getElementById('compleanno').value,
                 storia: document.getElementById('storia').value,
                 difficili: document.getElementById('difficili').value,
                 fotos: photoUrls,
@@ -1310,9 +1523,7 @@
             localStorage.setItem('maiSoliMembers', JSON.stringify(members));
 
             if (window.addDocCloud && window.colMembers) {
-                try {
-                    await window.addDocCloud(window.colMembers, newMember);
-                } catch(err) { console.log("Cloud sync error:", err); }
+                try { await window.addDocCloud(window.colMembers, newMember); } catch(err){}
             }
 
             renderArchive();
@@ -1337,6 +1548,19 @@
                     renderArchive();
                 }
 
+                if (window.colTips) {
+                    const tipsSnap = await window.getDocsCloud(window.colTips);
+                    let cloudTips = [];
+                    tipsSnap.forEach((docSnap) => {
+                        cloudTips.push(docSnap.data());
+                    });
+                    if(cloudTips.length > 0) {
+                        tipsList = cloudTips;
+                        localStorage.setItem('maiSoliTips', JSON.stringify(tipsList));
+                        renderTips();
+                    }
+                }
+
                 if (window.colSocial) {
                     const socialSnap = await window.getDocsCloud(window.colSocial);
                     let cloudSocial = [];
@@ -1349,7 +1573,7 @@
                         renderSocialProjects();
                     }
                 }
-            } catch(e) { console.log("Firebase sync fallback ready.", e); }
+            } catch(e) {}
         };
 
         closeModal.addEventListener('click', () => ticketModal.style.display = 'none');
@@ -1363,6 +1587,7 @@
         window.onload = function() {
             initMap();
             renderArchive();
+            renderTips();
             renderSocialProjects();
             if (window.syncWithCloud) {
                 window.syncWithCloud();
