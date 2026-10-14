@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAI SOLI MAI - Archivio del Tifo a Distanza</title>
-    <!-- Libreria per scaricare il biglietto come immagine -->
+    
+    <!-- ================================================================= -->
+    <!-- 1. LIBRERIE E SDK ESTERNI (html2canvas, Leaflet Maps, Firebase)   -->
+    <!-- ================================================================= -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <!-- Libreria Mappe Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -43,6 +44,9 @@
         }
     </script>
 
+    <!-- ================================================================= -->
+    <!-- 2. STILI CSS (Layout, Colori Roma, Bottoni e Responsività)        -->
+    <!-- ================================================================= -->
     <style>
         :root {
             --roma-bordeaux: #6b0014;
@@ -72,6 +76,7 @@
             line-height: 1.6;
         }
 
+        /* --- STILI MENU NAVIGAZIONE --- */
         nav.main-nav {
             position: sticky;
             top: 0;
@@ -100,6 +105,7 @@
             color: var(--roma-gold);
         }
 
+        /* --- STILI HEADER & LOGHI --- */
         header {
             background: linear-gradient(135deg, var(--roma-dark-bordeaux) 0%, var(--roma-bordeaux) 100%);
             border-bottom: 3px solid var(--roma-gold);
@@ -175,6 +181,7 @@
             font-weight: 600;
         }
 
+        /* --- CONTENITORE PRINCIPALE & MANIFESTO --- */
         .container {
             max-width: 1050px;
             margin: 0 auto;
@@ -211,6 +218,7 @@
             color: var(--roma-gold);
         }
 
+        /* --- STILI WIDGET COMPLEANNI --- */
         .birthdays-card-compact {
             background: linear-gradient(145deg, #221217, var(--roma-card-bg));
             border: 1px solid var(--roma-gold);
@@ -246,6 +254,7 @@
             gap: 8px;
         }
 
+        /* --- SEZIONE SPLIT: TESSERA & ARCHIVIO TIFOSI --- */
         .top-split-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -379,6 +388,7 @@
             background-color: #b88a10;
         }
 
+        /* --- STILI MAPPA MONDIALE --- */
         .world-map-card {
             background: linear-gradient(145deg, #181818, #221217);
             border: 1px solid var(--roma-gold);
@@ -413,6 +423,7 @@
             z-index: 1;
         }
 
+        /* --- STILI BAR ROMA --- */
         .bar-roma-card {
             background: linear-gradient(145deg, #1a1014, #2c121a);
             border: 1px solid var(--roma-gold);
@@ -468,6 +479,7 @@
         .bar-meet { background: var(--meet-blue); }
         .bar-ig { background: var(--ig-gradient); }
 
+        /* --- STILI GUIDA & CONSIGLI E NAVIGATORE --- */
         .exchange-card {
             background-color: var(--roma-card-bg);
             border: 1px solid rgba(212, 160, 23, 0.4);
@@ -653,6 +665,7 @@
             font-size: 0.8rem;
         }
 
+        /* --- STILI PROGETTI SOLIDALI --- */
         .social-card {
             background: linear-gradient(145deg, #1f1218, #2a101b);
             border: 2px solid var(--roma-gold);
@@ -792,6 +805,7 @@
             width: 180px;
         }
 
+        /* --- STILI FINESTRA MODALE PASSAPORTO / TESSERA --- */
         .modal {
             display: none;
             position: fixed;
@@ -916,6 +930,9 @@
 </head>
 <body>
 
+    <!-- ================================================================= -->
+    <!-- 3. MENU DI NAVIGAZIONE SUPERIORE                                  -->
+    <!-- ================================================================= -->
     <nav class="main-nav">
         <a href="#manifesto" id="nav-manifesto">Il Manifesto</a>
         <a href="#archivio" id="nav-archivio">Archivio & Prendi Tessera</a>
@@ -925,6 +942,9 @@
         <a href="#solidarieta" id="nav-solidarieta">Dona un Sorriso</a>
     </nav>
 
+    <!-- ================================================================= -->
+    <!-- 4. HEADER PRINCIPALE CON LOGHI E SELETTORE LINGUA                 -->
+    <!-- ================================================================= -->
     <header>
         <div class="lang-selector">
             <select id="langSelect" onchange="changeLanguage(this.value)">
@@ -948,12 +968,19 @@
 
     <div class="container">
 
+        <!-- ================================================================= -->
+        <!-- 5. BLOCCO 1: IL MANIFESTO & TESSERA #001                           -->
+        <!-- ================================================================= -->
         <div id="manifesto" class="manifesto-card">
             <h2 id="t-manifesto-title">Il Manifesto <span style="font-size:0.85rem; color:#aaa; font-weight:normal;">- Tessera #001</span></h2>
             <div class="manifesto-text" id="t-manifesto-content"></div>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- 6. BLOCCO 2: FORM CREAZIONE TESSERA & ARCHIVIO TIFOSI             -->
+        <!-- ================================================================= -->
         <div class="top-split-section" id="archivio">
+            <!-- Form per prendere la Tessera -->
             <div id="iscriviti" class="form-card">
                 <h3 class="section-title" id="t-form-title" style="border:none; margin-bottom:0.8rem;">Prendi la tua Tessera</h3>
                 <form id="tifoForm">
@@ -985,6 +1012,7 @@
                 </form>
             </div>
 
+            <!-- Griglia Archivio Tifosi e Compleanni del Mese -->
             <div class="archive-side">
                 <div class="birthdays-card-compact" id="birthdayWidgetContainer" style="display:none;">
                     <h4 id="t-birthday-title">🎂 Compleanni di Questo Mese</h4>
@@ -1001,12 +1029,18 @@
             </div>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- 7. BLOCCO 3: MAPPA INTERATTIVA MONDIALE                            -->
+        <!-- ================================================================= -->
         <div id="mappa-mondo" class="world-map-card">
             <h3 id="t-map-title">🌍 La Rete Globale del Tifo Romanista</h3>
             <p id="t-map-desc">Esplora la mappa interattiva: ogni segnalino rappresenta un tifoso a distanza. Clicca sul punto per leggere chi c'è dietro!</p>
             <div id="map"></div>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- 8. BLOCCO 4: BAR ROMA - COMMUNITY & VOICE                         -->
+        <!-- ================================================================= -->
         <div id="bar-roma" class="bar-roma-card">
             <div class="bar-roma-info">
                 <h4>☕ Bar Roma – Community & Voice</h4>
@@ -1020,65 +1054,15 @@
             </div>
         </div>
 
-        <!-- SEZIONE GUIDA & CONSIGLI RIORDINATA -->
+        <!-- ================================================================= -->
+        <!-- 9. BLOCCO 5: GUIDA & CONSIGLI COLLABORATIVI + NAVIGATORE STADI   -->
+        <!-- ================================================================= -->
         <div id="consigli" class="exchange-card">
             <h3 id="t-tips-title">🏨 Guida & Consigli Collaborativi</h3>
             <p id="t-tips-desc">Guida pratica creata dai tifosi per i tifosi: alloggi strategici, mezzi di trasporto, consigli per lo stadio e varie per vedere la Roma nel mondo.</p>
             
-            <!-- 1. BOTTONI STRUMENTI VIAGGIO IN CIMA -->
-            <div class="travel-tools-bar" style="margin-top: 1rem;">
-                <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool" id="t-tool-train">🚆 Cerca Treno (Trainline)</a>
-                <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool" id="t-tool-flight">✈️ Cerca Voli (Skyscanner)</a>
-                <a href="https://maps.google.com" target="_blank" class="btn-travel-tool" id="t-tool-maps">🗺️ Apri Google Maps</a>
-            </div>
-
-            <!-- 2. NAVIGATORE STADI, TRASFERTE & B&B -->
-            <div style="background: rgba(107, 0, 20, 0.3); border: 1px solid var(--roma-gold); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
-                <h4 style="color: var(--roma-gold); font-size: 1.05rem; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
-                    🏟️ Navigatore Percorsi Stadi, Trasferte & B&B
-                </h4>
-                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 1rem;">
-                    Calcola subito i percorsi migliori con i mezzi pubblici ed esplora B&B e Hotel con valutazioni eccellenti nei paraggi!
-                </p>
-
-                <!-- Selezione Rapida Stadio Olimpico -->
-                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <span style="font-size: 0.8rem; color: var(--roma-gold); width: 100%; font-weight: bold;">📍 Rotte Rapide & B&B Consigliati per lo STADIO OLIMPICO DI ROMA:</span>
-                    <a href="https://www.google.com/maps/dir/Stazione+di+Roma+Termini,+Piazza+dei+Cinquecento,+Rome,+RM/Stadio+Olimpico,+Viale+dei+Gladiatori,+Rome,+RM/@41.9135,12.4580,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f61a1532f38ad:0x77ae65be103f6f0f!2m2!1d12.5018!2d41.9014!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Termini</a>
-                    <a href="https://www.google.com/maps/dir/Stazione+Tiburtina,+Rome,+RM/Stadio+Olimpico,+Rome,+RM/@41.9175,12.4680,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f6176a9172bf5:0x524e93f35f29910!2m2!1d12.5298!2d41.9108!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Tiburtina</a>
-                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma+Fiumicino,+Via+dell'+Aeroporto+di+Fiumicino,+Fiumicino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8600,12.3000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x1325eff21e64983d:0x3980753856b3e32b!2m2!1d12.2462!2d41.7999!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Fiumicino (FCO)</a>
-                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma-Ciampino,+Via+Appia+Nuova,+Ciampino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8700,12.5000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x13258832a8a72bf3:0x1d03a1168532f83a!2m2!1d12.5949!2d41.7994!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Ciampino (CIA)</a>
-                    <a href="https://www.google.com/maps/search/Hotel+B%26B+vicino+Stadio+Olimpico+Roma+recensioni+eccellenti/@41.933,12.455,14z" target="_blank" class="btn-travel-tool" style="background:rgba(212, 160, 23, 0.2); color:var(--roma-gold);">⭐ Trova B&B / Hotel Ottimi vicino all'Olimpico</a>
-                </div>
-
-                <!-- Calcolatore Trasferte & B&B personalizzato -->
-                <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px dashed var(--roma-gold);">
-                    <span style="font-size: 0.8rem; color: #fff; font-weight: bold; display: block; margin-bottom: 6px;">🌍 Calcola percorso e cerca B&B per Qualsiasi Trasferta:</span>
-                    <div class="tip-input-group">
-                        <input type="text" id="routeStart" placeholder="Origine (es. Stazione Milano Centrale / Aeroporto Londra)">
-                        <input type="text" id="routeDest" placeholder="Stadio Destinazione (es. San Siro / Wembley)">
-                        <button class="btn-add-tip" onclick="calculateCustomRoute()">🧭 Percorso</button>
-                        <button class="btn-add-tip" style="background:#25d366; color:#fff;" onclick="searchHotelsForStadio()">⭐ Cerca B&B Vicini</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. LISTA CONSIGLI FILTRABILI & RICERCA -->
-            <div class="tip-toolbar">
-                <div class="tip-filters">
-                    <button class="tip-filter-btn active" id="flt-all" onclick="filterTips('Tutti', this)">Tutti</button>
-                    <button class="tip-filter-btn" id="flt-acc" onclick="filterTips('🛏️ Alloggio', this)">🛏️ Alloggi</button>
-                    <button class="tip-filter-btn" id="flt-trsp" onclick="filterTips('🚆 Trasporti', this)">🚆 Trasporti</button>
-                    <button class="tip-filter-btn" id="flt-food" onclick="filterTips('🍕 Cibo/Pub', this)">🍕 Cibo / Pub</button>
-                    <button class="tip-filter-btn" id="flt-std" onclick="filterTips('💡 Info Stadio', this)">💡 Info Stadio</button>
-                </div>
-                <input type="text" id="searchTipInput" class="search-tip-box" oninput="renderTips()" placeholder="🔍 Cerca città o stadio...">
-            </div>
-
-            <div class="tips-list" id="tipsContainer"></div>
-
-            <!-- 4. FORM AGGIUNGI CONSIGLIO IN FONDO -->
-            <div class="tip-form-box">
+            <!-- 9.1 Form "Aggiungi Consiglio" (Subito sotto il titolo) -->
+            <div class="tip-form-box" style="margin-top: 1rem;">
                 <h4 id="tipFormTitle">➕ Aggiungi un consiglio utile:</h4>
                 <div class="tip-input-group">
                     <input type="text" id="tipCitta" placeholder="Città / Zona (es. Roma Flaminio, Londra)">
@@ -1093,8 +1077,64 @@
                     <button class="btn-add-tip" id="btnCancelTip" style="display:none; background:#555; color:#fff;" onclick="cancelTipEdit()">Annulla</button>
                 </div>
             </div>
+
+            <!-- 9.2 Filtri Categoria e Barra Ricerca Consigli -->
+            <div class="tip-toolbar">
+                <div class="tip-filters">
+                    <button class="tip-filter-btn active" id="flt-all" onclick="filterTips('Tutti', this)">Tutti</button>
+                    <button class="tip-filter-btn" id="flt-acc" onclick="filterTips('🛏️ Alloggio', this)">🛏️ Alloggi</button>
+                    <button class="tip-filter-btn" id="flt-trsp" onclick="filterTips('🚆 Trasporti', this)">🚆 Trasporti</button>
+                    <button class="tip-filter-btn" id="flt-food" onclick="filterTips('🍕 Cibo/Pub', this)">🍕 Cibo / Pub</button>
+                    <button class="tip-filter-btn" id="flt-std" onclick="filterTips('💡 Info Stadio', this)">💡 Info Stadio</button>
+                </div>
+                <input type="text" id="searchTipInput" class="search-tip-box" oninput="renderTips()" placeholder="🔍 Cerca città o stadio...">
+            </div>
+
+            <!-- 9.3 Lista dei Consigli visualizzati -->
+            <div class="tips-list" id="tipsContainer"></div>
+
+            <!-- 9.4 Navigatore Percorsi Stadi, Trasferte & B&B -->
+            <div style="background: rgba(107, 0, 20, 0.3); border: 1px solid var(--roma-gold); border-radius: 8px; padding: 1.2rem; margin-top: 1.5rem;">
+                <h4 style="color: var(--roma-gold); font-size: 1.05rem; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
+                    🏟️ Navigatore Percorsi Stadi, Trasferte & B&B
+                </h4>
+                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 1rem;">
+                    Calcola subito i percorsi migliori con i mezzi pubblici ed esplora B&B e Hotel con valutazioni eccellenti nei paraggi!
+                </p>
+
+                <!-- Rotte Rapide Stadio Olimpico -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <span style="font-size: 0.8rem; color: var(--roma-gold); width: 100%; font-weight: bold;">📍 Rotte Rapide & B&B Consigliati per lo STADIO OLIMPICO DI ROMA:</span>
+                    <a href="https://www.google.com/maps/dir/Stazione+di+Roma+Termini,+Piazza+dei+Cinquecento,+Rome,+RM/Stadio+Olimpico,+Viale+dei+Gladiatori,+Rome,+RM/@41.9135,12.4580,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f61a1532f38ad:0x77ae65be103f6f0f!2m2!1d12.5018!2d41.9014!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Termini</a>
+                    <a href="https://www.google.com/maps/dir/Stazione+Tiburtina,+Rome,+RM/Stadio+Olimpico,+Rome,+RM/@41.9175,12.4680,13z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x132f6176a9172bf5:0x524e93f35f29910!2m2!1d12.5298!2d41.9108!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">🚆 Da Tiburtina</a>
+                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma+Fiumicino,+Via+dell'+Aeroporto+di+Fiumicino,+Fiumicino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8600,12.3000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x1325eff21e64983d:0x3980753856b3e32b!2m2!1d12.2462!2d41.7999!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Fiumicino (FCO)</a>
+                    <a href="https://www.google.com/maps/dir/Aeroporto+di+Roma-Ciampino,+Via+Appia+Nuova,+Ciampino,+RM/Stadio+Olimpico,+Rome,+RM/@41.8700,12.5000,11z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x13258832a8a72bf3:0x1d03a1168532f83a!2m2!1d12.5949!2d41.7994!1m5!1m1!1s0x132f601b31525bf7:0xc752ee015a963283!2m2!1d12.4547!2d41.9341!3e3" target="_blank" class="btn-travel-tool">✈️ Da Ciampino (CIA)</a>
+                    <a href="https://www.google.com/maps/search/Hotel+B%26B+vicino+Stadio+Olimpico+Roma+recensioni+eccellenti/@41.933,12.455,14z" target="_blank" class="btn-travel-tool" style="background:rgba(212, 160, 23, 0.2); color:var(--roma-gold);">⭐ Trova B&B / Hotel Ottimi vicino all'Olimpico</a>
+                </div>
+
+                <!-- Calcolatore Trasferte & B&B Custom -->
+                <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border: 1px dashed var(--roma-gold); margin-bottom: 1rem;">
+                    <span style="font-size: 0.8rem; color: #fff; font-weight: bold; display: block; margin-bottom: 6px;">🌍 Calcola percorso e cerca B&B per Qualsiasi Trasferta:</span>
+                    <div class="tip-input-group">
+                        <input type="text" id="routeStart" placeholder="Origine (es. Stazione Milano Centrale / Aeroporto Londra)">
+                        <input type="text" id="routeDest" placeholder="Stadio Destinazione (es. San Siro / Wembley)">
+                        <button class="btn-add-tip" onclick="calculateCustomRoute()">🧭 Percorso</button>
+                        <button class="btn-add-tip" style="background:#25d366; color:#fff;" onclick="searchHotelsForStadio()">⭐ Cerca B&B Vicini</button>
+                    </div>
+                </div>
+
+                <!-- Strumenti Rapidi Viaggio (Treni, Voli, Maps) -->
+                <div class="travel-tools-bar" style="margin-top: 0.8rem; margin-bottom: 0; justify-content: flex-start;">
+                    <a href="https://www.thetrainline.com/it" target="_blank" class="btn-travel-tool" id="t-tool-train">🚆 Cerca Treno (Trainline)</a>
+                    <a href="https://www.skyscanner.it" target="_blank" class="btn-travel-tool" id="t-tool-flight">✈️ Cerca Voli (Skyscanner)</a>
+                    <a href="https://maps.google.com" target="_blank" class="btn-travel-tool" id="t-tool-maps">🗺️ Apri Google Maps</a>
+                </div>
+            </div>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- 10. BLOCCO 6: PROGETTI SOLIDALI & DONA UN SORRISO                  -->
+        <!-- ================================================================= -->
         <div id="solidarieta" class="social-card">
             <h3 id="t-social-title">❤️ Dona un Sorriso / Progetti Solidali</h3>
             <p id="t-social-desc">I tifosi della Roma non conoscono distanze quando c'è da tendere una mano. Questa sezione unisce la nostra community a iniziative benefiche e sociali sul territorio, in linea con lo spirito di solidarietà di Roma Cares.</p>
@@ -1114,6 +1154,9 @@
 
     </div>
 
+    <!-- ================================================================= -->
+    <!-- 11. FINESTRA MODALE TESSERA / PASSAPORTO                          -->
+    <!-- ================================================================= -->
     <div class="modal" id="ticketModal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
@@ -1121,17 +1164,24 @@
         </div>
     </div>
 
+    <!-- ================================================================= -->
+    <!-- 12. FOOTER DI PIÈ DI PAGINA                                       -->
+    <!-- ================================================================= -->
     <footer>
         <p>MAI SOLI MAI - La Roma non si discute, si ama</p>
         <p style="margin-top:0.3rem;" id="t-footer-sub">Iniziativa creata in occasione del 50° Compleanno di Massimo Graglia</p>
     </footer>
 
+    <!-- ================================================================= -->
+    <!-- 13. JAVASCRIPT LOGICA, TRADUZIONI & GESTIONE DATI                 -->
+    <!-- ================================================================= -->
     <script>
         let currentLang = 'it';
         let map, markersGroup;
         let activeTipFilter = 'Tutti';
         let editingTipId = null;
 
+        /* --- 13.1 TRADUZIONI MULTILINGUA --- */
         const translations = {
             it: {
                 subtitle: "La Roma non si discute, si ama",
@@ -1482,6 +1532,7 @@
             renderArchive();
         };
 
+        /* --- 13.2 LOGICA NAVIGATORE E RICERCA B&B --- */
         window.calculateCustomRoute = function() {
             const start = document.getElementById('routeStart').value.trim();
             const dest = document.getElementById('routeDest').value.trim();
@@ -1505,6 +1556,7 @@
             window.open(hotelUrl, '_blank');
         };
 
+        /* --- 13.3 ARCHIVIO TIFOSI E MEMBRI LOCAL STORAGE --- */
         let members = JSON.parse(localStorage.getItem('maiSoliMembers')) || [
             { id: 1, nome: "Massimo Graglia", citta: "Torino (Italia)", compleanno: "25 Marzo", storia: "Tutto è iniziato nel 1984...", difficili: "Sempre al mio fianco.", fotos: [], lat: 45.07, lng: 7.68 }
         ];
@@ -1539,6 +1591,7 @@
         const modalBody = document.getElementById('modalBody');
         const closeModal = document.getElementById('closeModal');
 
+        /* --- 13.4 GESTIONE MAPPA INTERATTIVA LEAFLET --- */
         function initMap() {
             if (map) return;
             map = L.map('map').setView([42.5000, 12.5000], 4);
@@ -1570,6 +1623,7 @@
             });
         }
 
+        /* --- 13.5 RENDERING TESSERE ARCHIVIO & COMPLEANNI --- */
         function renderArchive(filter = '') {
             archiveGridContainer.innerHTML = '';
             const t = translations[currentLang] || translations.it;
@@ -1657,6 +1711,7 @@
             ticketModal.style.display = 'none';
         };
 
+        /* --- 13.6 RENDERING & GESTIONE CONSIGLI --- */
         function renderTips() {
             const container = document.getElementById('tipsContainer');
             const searchVal = document.getElementById('searchTipInput').value.toLowerCase();
@@ -1759,6 +1814,7 @@
             }
         };
 
+        /* --- 13.7 RENDERING & GESTIONE PROGETTI SOLIDALI --- */
         function renderSocialProjects() {
             const container = document.getElementById('socialProjectsContainer');
             if(!container) return;
@@ -1812,6 +1868,7 @@
             }
         };
 
+        /* --- 13.8 APERTURA DETTAGLIO E MODALE TESSERA --- */
         window.openTicketDetail = function(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
@@ -1867,6 +1924,7 @@
             ticketModal.style.display = 'flex';
         };
 
+        /* --- 13.9 DOWNLOAD IMMAGINE BIGLIETTO --- */
         window.downloadTicketImage = function() {
             const ticketElement = document.getElementById('ticketToDownload');
             html2canvas(ticketElement, { scale: 2, backgroundColor: null }).then(canvas => {
@@ -1877,6 +1935,7 @@
             });
         };
 
+        /* --- 13.10 COMPRESSIONE IMMAGINI UPLOADATE --- */
         function compressDataUrl(dataUrl, maxWidth = 800, quality = 0.7) {
             return new Promise((resolve) => {
                 const img = new Image();
@@ -1908,6 +1967,7 @@
             });
         }
 
+        /* --- 13.11 MODIFICA E CANCELLAZIONE TESSERA --- */
         window.openEditForm = function(id) {
             const member = members.find(m => m.id === id);
             if(!member) return;
@@ -2041,6 +2101,7 @@
             }
         };
 
+        /* --- 13.12 INVIO FORM NUOVA TESSERA --- */
         tifoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const fileInput = document.getElementById('fotoFiles');
@@ -2089,6 +2150,7 @@
             alert('Tessera creata con successo!');
         });
 
+        /* --- 13.13 SINCRONIZZAZIONE FIREBASE CLOUD --- */
         window.syncWithCloud = async function() {
             if (!window.getDocsCloud || !window.colMembers) return;
             try {
@@ -2145,6 +2207,7 @@
             return text.replace(/[&<>"']/g, m => map[m]);
         }
 
+        /* --- 13.14 INIZIALIZZAZIONE AL CARICAMENTO PAGINA --- */
         window.onload = function() {
             initMap();
             changeLanguage('it');
