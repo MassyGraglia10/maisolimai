@@ -6,7 +6,28 @@
     <title>MAI SOLI MAI - Archivio del Tifo a Distanza</title>
     
     <!-- ================================================================= -->
-    <!-- 1. LIBRERIE E SDK ESTERNI (html2canvas, Leaflet Maps, Firebase;)   -->
+    <!-- 0. TAG PWA E CONFIGURAZIONE PER APPLICAZIONE MOBILE               -->
+    <!-- ================================================================= -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6b0014">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MAI SOLI MAI">
+    <link rel="apple-touch-icon" href="asr.webp">
+
+    <script>
+        // Registrazione Service Worker per PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('PWA Service Worker registrato! Scope:', reg.scope))
+                    .catch(err => console.warn('Registrazione Service Worker fallita:', err));
+            });
+        }
+    </script>
+
+    <!-- ================================================================= -->
+    <!-- 1. LIBRERIE E SDK ESTERNI (html2canvas, Leaflet Maps, Firebase)   -->
     <!-- ================================================================= -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -45,7 +66,7 @@
     </script>
 
     <!-- ================================================================= -->
-    <!-- 2. STILI CSS (Layout, Colori Roma, Bottoni e Responsività)        -->
+    <!-- 2. STILI CSS (Layout, Colori Roma, Bottoni e Responsività Mobile) -->
     <!-- ================================================================= -->
     <style>
         :root {
@@ -85,7 +106,8 @@
             z-index: 1000;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            align-items: center;
+            gap: 15px;
             padding: 0.8rem 1rem;
             flex-wrap: wrap;
             backdrop-filter: blur(5px);
@@ -103,6 +125,27 @@
 
         nav.main-nav a:hover {
             color: var(--roma-gold);
+        }
+
+        /* BOTTONE INSTALLA APP PWA */
+        .btn-pwa-install {
+            background: var(--roma-gold);
+            color: #000 !important;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem !important;
+            font-weight: 800 !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(212, 160, 23, 0.4);
+            border: none;
+            transition: transform 0.2s;
+        }
+        .btn-pwa-install:hover {
+            transform: scale(1.05);
+            background: #e5b128;
         }
 
         /* --- STILI HEADER & LOGHI --- */
@@ -261,12 +304,6 @@
             gap: 1.5rem;
             margin-bottom: 2.5rem;
             align-items: start;
-        }
-
-        @media (max-width: 850px) {
-            .top-split-section {
-                grid-template-columns: 1fr;
-            }
         }
 
         .archive-side {
@@ -926,12 +963,66 @@
             border-top: 1px solid #222;
             margin-top: 3rem;
         }
+
+        /* --- OTTIMIZZAZIONE SPECIFICA PER SMARTPHONE & TABLET MOBILE --- */
+        @media (max-width: 850px) {
+            .top-split-section {
+                grid-template-columns: 1fr;
+            }
+
+            .tip-input-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .tip-input-group input, 
+            .tip-input-group select, 
+            .tip-input-group button {
+                width: 100%;
+                min-width: 100%;
+            }
+
+            .tip-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .tip-filters {
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .tip-filter-btn {
+                flex: 0 0 auto;
+                padding: 0.5rem 0.9rem;
+                font-size: 0.85rem;
+            }
+
+            .search-tip-box {
+                width: 100%;
+            }
+
+            .travel-tools-bar {
+                flex-direction: column;
+            }
+
+            .btn-travel-tool {
+                width: 100%;
+                justify-content: center;
+                padding: 0.65rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- ================================================================= -->
-    <!-- 3. MENU DI NAVIGAZIONE SUPERIORE                                  -->
+    <!-- 3. MENU DI NAVIGAZIONE SUPERIORE CON PULSANTE INSTALLA APP       -->
     <!-- ================================================================= -->
     <nav class="main-nav">
         <a href="#manifesto" id="nav-manifesto">Il Manifesto</a>
@@ -940,6 +1031,7 @@
         <a href="#bar-roma" id="nav-bar">Bar Roma</a>
         <a href="#consigli" id="nav-consigli">Info & Alloggi</a>
         <a href="#solidarieta" id="nav-solidarieta">Dona un Sorriso</a>
+        <button id="pwaInstallBtn" class="btn-pwa-install" onclick="installPWA()">📲 Installa App</button>
     </nav>
 
     <!-- ================================================================= -->
@@ -1173,13 +1265,36 @@
     </footer>
 
     <!-- ================================================================= -->
-    <!-- 13. JAVASCRIPT LOGICA, TRADUZIONI & GESTIONE DATI                 -->
+    <!-- 13. JAVASCRIPT LOGICA, TRADUZIONI, PWA & GESTIONE DATI            -->
     <!-- ================================================================= -->
     <script>
         let currentLang = 'it';
         let map, markersGroup;
         let activeTipFilter = 'Tutti';
         let editingTipId = null;
+        let deferredPrompt = null;
+
+        /* --- 13.0 LOGICA INSTALLAZIONE PWA --- */
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const btn = document.getElementById('pwaInstallBtn');
+            if(btn) btn.style.display = 'inline-flex';
+        });
+
+        window.installPWA = function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('L\'utente ha accettato l\'installazione dell\'App!');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("Per installare l'App:\n\n📱 Su iPhone (Safari): Clicca il tasto Condividi 📤 e seleziona 'Aggiungi alla schermata Home'.\n🤖 Su Android (Chrome): Apri il menu in alto a destra ⋮ e seleziona 'Aggiungi a schermata Home'.");
+            }
+        };
 
         /* --- 13.1 TRADUZIONI MULTILINGUA --- */
         const translations = {
@@ -1252,7 +1367,7 @@
                 modalBtnEdit: "Modifica",
                 modalBtnDelete: "Elimina Tessera",
                 card001Storia: "Tutto è iniziato una sera del 1984. Ero un bambino nell’astigiano in Piemonte e guardavo la finale di Coppa dei Campioni: Roma-Liverpool. Non fu una vittoria a stregarmi, ma il dramma, la passione sugli spalti, la bellezza tragica e viscerale di quei colori. Tifare Roma da qui, tra le nebbie del Piemonte e le battaglie quotidiane con gli 'strisciati', non è mai stata una scelta facile. Ricordo il treno della notte preso da solo da Torino per essere all'Olimpico il 17 giugno 2001, e il ritorno la sera stessa con il cuore colmo di gioia. Chi tifa la Roma da lontano vive una solitudine speciale, fatta di chilometri, treni notturni e partite guardate in silenzio.",
-                card001Difficili: "Da quel giorno la Roma c'è sempre stata, ogni singolo giorno. Nei momenti di gioia come in quelli più bui, non mi ha mai lasciato solo."
+                card001Difficili: "Da quel giorno la Roma c'è sempre stata, ogni singolo giorno. Nei moments di gioia come in quelli più bui, non mi ha mai lasciato solo."
             },
             en: {
                 subtitle: "Roma is not discussed, it is loved",
