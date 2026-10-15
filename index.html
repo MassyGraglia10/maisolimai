@@ -963,32 +963,30 @@
             border-top: 1px solid #222;
             margin-top: 3rem;
         }
-/* --- INCOLLA QUI IL NUOVO BLOCCO PER L'APP MOBILE --- */
-        @media (max-width: 850px) {
-            header {
-                padding: 1.8rem 1rem 1.5rem 1rem;
-            }
-            header h1 {
-                font-size: 2.2rem;
-            }
-            nav.main-nav {
-                justify-content: flex-start;
-                overflow-x: auto;
-                white-space: nowrap;
-                padding: 0.6rem 0.8rem;
-                -webkit-overflow-scrolling: touch;
-                gap: 12px;
-            }
-            nav.main-nav::-webkit-scrollbar {
-                display: none;
-            }
-            nav.main-nav a {
-                font-size: 0.78rem;
-                flex: 0 0 auto;
-            }
+/* --- INCOLLALO SUBITO PRIMA DELLA CHIUSURA DEL TAG STYLE --- */
+    @media (max-width: 850px) {
+        header {
+            padding: 1.8rem 1rem 1.5rem 1rem;
         }
-    </style> <!-- Qui si chiude il tag style -->
-</head>
+        header h1 {
+            font-size: 2.2rem;
+        }
+        nav.main-nav {
+            justify-content: flex-start;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0.6rem 0.8rem;
+            -webkit-overflow-scrolling: touch;
+            gap: 12px;
+        }
+        nav.main-nav::-webkit-scrollbar {
+            display: none;
+        }
+        nav.main-nav a {
+            font-size: 0.78rem;
+            flex: 0 0 auto;
+        }
+    }
         /* --- OTTIMIZZAZIONE SPECIFICA PER SMARTPHONE & TABLET MOBILE --- */
         @media (max-width: 850px) {
             .top-split-section {
