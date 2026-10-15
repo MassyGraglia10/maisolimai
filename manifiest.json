@@ -1,0 +1,17 @@
+{
+  "name": "MAI SOLI MAI - Archivio Tifo ASR",
+  "short_name": "MAI SOLI MAI",
+  "description": "Archivio e Guida per i tifosi della Roma a distanza nel mondo.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#6b0014",
+  "icons": [
+    {
+      "src": "asr.webp",
+      "sizes": "192x192 512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}
